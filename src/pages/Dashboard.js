@@ -1,6 +1,9 @@
-import React from 'react'
+import React from 'react';
+import '../css_folder/style.css';
+import Form from '../components/Form'
 
 export default function Dashboard() {
+	
     return (
         <main class="content">
         <div class="container-fluid p-0">
@@ -55,67 +58,15 @@ export default function Dashboard() {
                             <div class="modal-header">
                                 
                                 <div class="col-12 col-xl-12">
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                
 							         <div class="card">
                                          
-								        <div class="card-header">
-                                            <h5 class="card-title">Horizontal form</h5>
-                                            <h6 class="card-subtitle text-muted">Horizontal Bootstrap layout.</h6>
-								        </div>
-								        <div class="card-body">
-									        <form>
-										        <div class="mb-3 row">
-                                                    <label class="col-form-label col-sm-2 text-sm-right">Email</label>
-                                                    <div class="col-sm-10">
-												        <input type="email" class="form-control" placeholder="Email"/>
-											        </div>
-										        </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-form-label col-sm-2 text-sm-right">Password</label>
-                                                    <div class="col-sm-10">
-                                                    <input type="password" class="form-control" placeholder="Password"/>
-                                                </div>
-										</div>
-										<div class="mb-3 row">
-											<label class="col-form-label col-sm-2 text-sm-right">Textarea</label>
-											<div class="col-sm-10">
-												<textarea class="form-control" placeholder="Textarea" rows="3"></textarea>
-											</div>
-										</div>
-										<fieldset class="mb-3">
-											<div class="row">
-												<label class="col-form-label col-sm-2 text-sm-right pt-sm-0">Radios</label>
-												<div class="col-sm-10">
-													<label class="form-check">
-                  <input name="radio-3" type="radio" class="form-check-input" checked />
-                  <span class="form-check-label">Default radio</span>
-                </label>
-													<label class="form-check">
-                  <input name="radio-3" type="radio" class="form-check-input"/>
-                  <span class="form-check-label">Second default radio</span>
-                </label>
-													<label class="form-check">
-                  <input name="radio-3" type="radio" class="form-check-input" disabled />
-                  <span class="form-check-label">Disabled radio</span>
-                </label>
+									 <div class="modal-header">
+													<h5 class="modal-title">Ajouter utilisateur</h5>
+													<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
-											</div>
-										</fieldset>
-										<div class="mb-3 row">
-											<label class="col-form-label col-sm-2 text-sm-right pt-sm-0">Checkbox</label>
-											<div class="col-sm-10">
-												<label class="form-check m-0">
-                <input type="checkbox" class="form-check-input" />
-                <span class="form-check-label">Check me out</span>
-              </label>
-											</div>
-										</div>
-										<div class="mb-3 row">
-											<div class="col-sm-10 ml-sm-auto">
-												<button type="submit" class="btn btn-primary">Submit</button>
-											</div>
-										</div>
-									</form>
+								        <div class="card-body">
+									        <Form />
 								</div>
 							</div>
                            

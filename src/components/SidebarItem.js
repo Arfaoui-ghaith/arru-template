@@ -1,12 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export default function SidebarItem({title, icon}) {
+export default function SidebarItem({title, icon,l}) {
     return (
-        <li className="sidebar-item">
-            <a className="sidebar-link" href="pages-profile.html">
+        //active
+        <li className="sidebar-item " >
+            <Link className="sidebar-link" to={l}>
             <i className="align-middle" data-feather={icon}></i> 
             <span className="align-middle">{title}</span>
-            </a>
+            </Link>
        </li>
     )
 }

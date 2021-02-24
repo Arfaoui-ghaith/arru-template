@@ -1,5 +1,6 @@
 import React, { Profiler } from 'react'
 import SidebarItem from './SidebarItem';
+
 export default function Sidebar(props) {
     console.log(props.user);
     return (
@@ -16,13 +17,8 @@ export default function Sidebar(props) {
 						droits d'accés
 					</li>
 
-					<li className="sidebar-item active">
-						<a className="sidebar-link" href="index.html">
-              <i className="align-middle" data-feather="users"></i> <span className="align-middle">Utilisateurs</span>
-            </a>
-					</li>
-
-					<SidebarItem title="Roles" icon="briefcase" />
+					<SidebarItem title="Utilisateurs" icon="users" l="/" />
+					<SidebarItem title="Roles" icon="briefcase" l="/role"/>
 
 					<SidebarItem title="Groupes" icon="book" />
 					<SidebarItem title="Interfaces" icon="layout" />
