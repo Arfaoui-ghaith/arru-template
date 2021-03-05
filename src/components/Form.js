@@ -1,16 +1,25 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Div from '../components/Div'
+import React from 'react';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
+const animatedComponents = makeAnimated();
 export default function Form() {
-    
-    function handleChange(e) {
-        
-        if(e.target.checked){
-        const element= <Div />;
-        ReactDOM.render(element, document.getElementById('box'));}
-        else{  const element= <div> </div>;
-            ReactDOM.render(element, document.getElementById('box'));}
-	  }
+const [selected,setSelected]=React.useState([]);
+	const options = [
+		{ value: 'chef de projet', label: 'chef de projet' },
+		{ value: 'directeur', label: 'directeur' },
+		{ value: 'admin', label: 'admin' }
+	  ]
+	  const optionsSpec = [
+		{ value: 'Mahdia', label: 'Mahdia' },
+		{ value: 'Ariana', label: 'Ariana' },
+		{ value: 'Tunis', label: 'Tunis' }
+	  ]
+	 
+  const handleChange = (e) => {
+    setSelected(Array.isArray(e) ? e.map(x => x.value) : []);
+  }
+
     return (
         <form>
 
@@ -57,34 +66,39 @@ export default function Form() {
                                                     <input type="tel" class="form-control" placeholder="telephone"/>
                                                 </div>
 										</div>
+
 										<div class="mb-3 row">
-                                            <label class="col-form-label col-sm-2 text-sm-right">groupe</label>
+                                            <label class="col-form-label col-sm-2 text-sm-right">roles</label>
 											<div class="col-sm-10">
 												<div class="boxes" >
-													<input type="checkbox" id="box-1" value="chef projet" onChange={(e)=> handleChange(e)}/>
-													<label for="box-1">chef projet</label>
-
-													<input type="checkbox" id="box-2" value="admin" onChange={handleChange}/>
-													<label for="box-2">admin </label>
-
-													<input type="checkbox" id="box-3" value="directeur" onChange={handleChange}/>
-													<label for="box-3">directeur</label>
-
-													<input type="checkbox" id="box-4" value="g1" onChange={handleChange}/>
-													<label for="box-4">groupe 1</label>
-
-													<input type="checkbox" id="box-5" value="g2" onChange={handleChange}/>
-													<label for="box-5">groupe 2</label>
-													
+											    <Select
+													closeMenuOnSelect={false}
+													components={animatedComponents}
+													isMulti
+													options={options}
+													onChange={handleChange}
+												/>
+														
 												</div>
 											</div>
 										</div>
 
 										<div class="mb-3 row">
-                                            <label class="col-form-label col-sm-2 text-sm-right">role</label>
+                                            <label class="col-form-label col-sm-2 text-sm-right">specifications</label>
 											<div class="col-sm-10">
 												<div class="boxes" id="box" >
-													
+												{selected && <div style={{ marginTop: 20, lineHeight: '25px' }}>
+													<div>{
+														selected.map((role) =>( 
+														<li> {role}  <Select
+														closeMenuOnSelect={false}
+														components={animatedComponents}
+														options={optionsSpec}
+													/></li> 
+														
+														))
+														}</div>
+												</div>}
 													
 												</div>
 											</div>
@@ -96,5 +110,5 @@ export default function Form() {
 											</div>
 										</div>
 									</form>
-    )
+    );
 }

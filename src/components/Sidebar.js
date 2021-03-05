@@ -2,6 +2,8 @@ import React, { Profiler } from 'react'
 import SidebarItem from './SidebarItem';
 
 export default function Sidebar(props) {
+	const [selectedItem, setSelectedItem]=React.useState(window.location.href.slice(22,window.location.href.length));
+
     console.log(props.user);
     return (
         <nav id="sidebar" className="sidebar">
@@ -17,18 +19,18 @@ export default function Sidebar(props) {
 						droits d'accés
 					</li>
 
-					<SidebarItem title="Utilisateurs" icon="users" l="/" />
-					<SidebarItem title="Roles" icon="briefcase" l="/role"/>
+					<SidebarItem title="Utilisateurs" icon="users" l="/Utilisateurs" selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
+					<SidebarItem title="Roles" icon="briefcase" l="/Roles"  selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
 
-					<SidebarItem title="Groupes" icon="book" />
-					<SidebarItem title="Interfaces" icon="layout" />
+					<SidebarItem title="Groupes" icon="book" l="/Groupes"  selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+					<SidebarItem title="Interfaces" icon="layout" l="/Interfaces"  selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
 					
 
-					<li className="sidebar-header">
+					<li className="sidebar-header"  selectedItem={selectedItem} setSelectedItem={setSelectedItem}>
 						profile
 					</li>
-					<SidebarItem title="Mon profile" icon="user" />
-					<SidebarItem title="deconnection" icon="log-out" />
+					<SidebarItem title="Mon profile" title2="settings" icon="user" l="/Profile"  selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+					<SidebarItem title="deconnection" icon="log-out" l="/login"  selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
 					
 				</ul>
 

@@ -92,14 +92,14 @@ export default function Navbar(props) {
                         </a>
 
                         <a className="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-                            <img src="img/avatars/avatar.jpg" className="avatar img-fluid rounded mr-1" alt="Charles Hall" /> <span className="text-dark">Charles Hall</span>
+                            <img src="img/photos/user-01.png" className="avatar img-fluid rounded mr-1" alt="user" /> <span className="text-dark">Aladin labidi</span>
                         </a>
 
                         <div className="dropdown-menu dropdown-menu-right">
-                            <a className="dropdown-item" href="pages-profile.html"><i className="align-middle mr-1" data-feather="user"></i> Profile</a>
+                            <a className="dropdown-item" href="/Profile"><i className="align-middle mr-1" data-feather="user"></i> Profile</a>
                           
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="pages-settings.html"><i className="align-middle mr-1" data-feather="settings"></i> Settings & Privacy</a>
+                            <a className="dropdown-item" href="/settings"><i className="align-middle mr-1" data-feather="settings"></i> Settings & Privacy</a>
                           
                             <div className="dropdown-divider"></div>
                             <a className="dropdown-item" href="#">Log out</a>

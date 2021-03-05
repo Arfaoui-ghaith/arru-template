@@ -1,16 +1,15 @@
-import React from 'react';
-import '../css_folder/style.css';
-import Form from '../components/Form'
+import React from 'react'
+import '../css_folder/style.css'
+import GroupForm from '../components/GroupForm'
 
-export default function Dashboard() {
-	
+export default function Group() {
     return (
         <main class="content">
         <div class="container-fluid p-0">
 
             <div class="row mb-2 mb-xl-3">
                 <div class="col-auto d-none d-sm-block">
-                    <h3><strong>Gestion des utilisateurs </strong></h3>
+                    <h3><strong>Gestion des groupes </strong></h3>
                 </div>
 
             </div>
@@ -18,40 +17,57 @@ export default function Dashboard() {
 						<div class="col-12 col-xl-12">
 							<div class="card">
 								<div class="card-header">
-									<h5 class="card-title">Liste des utilisateurs</h5>
+									<h5 class="card-title">Liste des groupes</h5>
 								</div>
 								<table class="table">
 									<thead>
 										<tr>
-											<th style={{"width":"13%"}}>Nom</th>
-											<th style={{"width":"13%"}}>Adresse</th>
-											<th style={{"width":"13%"}}>telephone</th>
-											<th class="d-none d-md-table-cell" style={{"width":"13%"}}>Role</th>
-											<th style={{"width":"14%"}}>date de creation</th>
-											<th style={{"width":"17%"}}>derniere modification </th>
-											<th style={{"width":"10%"}}><a href="#"><i class="align-middle" data-feather="user-plus"data-toggle="modal" data-target="#defaultModalPrimary"></i></a></th>
+											<th style={{"width":"30%"}}>titre</th>
+											<th style={{"width":"60%"}}>specifications</th>
+											
+											<th style={{"width":"10%"}}><a href="#"><i class="align-middle" data-feather="folder-plus"data-toggle="modal" data-target="#defaultModalPrimary"></i></a></th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td>Vanessa Tucker</td>
-											<td>vanessa@gmail.com</td>
-											<td class="d-none d-md-table-cell">22 898 972</td>
-											<td class="d-none d-md-table-cell">chef projet</td>
-											<td class="d-none d-md-table-cell">12/07/2019</td>
-											<td class="d-none d-md-table-cell">10/11/2019</td>
+											<td>chef projet</td>
+											<td>
+                                            <table class="table">
+									<tbody>
+										<tr>
+											<td>Mahdia</td>
+                                            </tr>
+                                            <tr>
+											<td>Tunis</td>
+											
+										</tr>
+										
+									</tbody>
+								</table>
+                                            </td>
+								
 											<td class="table-action">
 												<a href="#"><i class="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
 												<a href="#"><i class="align-middle" data-feather="trash"></i></a>
 											</td>
 										</tr>
+                                        <tr>
+											<td>directeur</td>
+											<td>
+                                            <table class="table">
+									<tbody>
 										<tr>
-											<td>William Harris</td>
-											<td>william@gmail.com</td>
-											<td class="d-none d-md-table-cell">22 898 972</td>
-											<td class="d-none d-md-table-cell">admin</td>
-											<td class="d-none d-md-table-cell">12/07/2019</td>
-											<td class="d-none d-md-table-cell">10/11/2019</td>
+											<td>financier</td>
+                                            </tr>
+                                            <tr>
+											<td>Traveaux</td>
+											
+										</tr>
+										
+									</tbody>
+								</table>
+                                            </td>
+										
 											<td class="table-action">
 												<a href="#"><i class="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
 												<a href="#"><i class="align-middle" data-feather="trash"></i></a>
@@ -71,11 +87,11 @@ export default function Dashboard() {
 							         <div class="card">
                                          
 									 <div class="modal-header">
-													<h5 class="modal-title">Ajouter utilisateur</h5>
+													<h5 class="modal-title">Ajouter role</h5>
 													<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
 								        <div class="card-body">
-									        <Form />
+									        <GroupForm />
 								</div>
 							</div>
                            
@@ -97,11 +113,11 @@ export default function Dashboard() {
 							         <div class="card">
                                          
 									 <div class="modal-header">
-													<h5 class="modal-title">Modifier utilisateur</h5>
+													<h5 class="modal-title">Modifier role</h5>
 													<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
 								        <div class="card-body">
-									        <Form />
+									        <GroupForm />
 								</div>
 							</div>
                            
