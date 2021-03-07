@@ -19,18 +19,18 @@ export default function Sidebar(props) {
 						droits d'accés
 					</li>
 
-					<SidebarItem title="Utilisateurs" icon="users" l="/Utilisateurs" selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
-					<SidebarItem title="Roles" icon="briefcase" l="/Roles"  selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
+					<SidebarItem title="Utilisateurs" icon="users" l="/Utilisateurs" selecteditem={selectedItem} setselecteditem={setSelectedItem}/>
+					<SidebarItem title="Roles" icon="briefcase" l="/Roles" selecteditem={selectedItem} setselecteditem={setSelectedItem}/>
 
-					<SidebarItem title="Groupes" icon="book" l="/Groupes"  selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
-					<SidebarItem title="Interfaces" icon="layout" l="/Interfaces"  selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+					<SidebarItem title="Groupes" icon="book" l="/Groupes" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Interfaces" icon="layout" l="/Interfaces" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					
 
-					<li className="sidebar-header"  selectedItem={selectedItem} setSelectedItem={setSelectedItem}>
+					<li className="sidebar-header">
 						profile
 					</li>
-					<SidebarItem title="Mon profile" title2="settings" icon="user" l="/Profile"  selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
-					<SidebarItem title="deconnection" icon="log-out" l="/login"  selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+					<SidebarItem title="Mon profile" title2="settings" icon="user" l="/Profile" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="deconnection" icon="log-out" l="/login" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					
 				</ul>
 

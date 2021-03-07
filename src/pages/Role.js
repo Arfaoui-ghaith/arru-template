@@ -4,35 +4,35 @@ import RoleForm from '../components/RoleForm'
 
 export default function Role() {
     return (
-        <main class="content">
-        <div class="container-fluid p-0">
+        <main className="content">
+        <div className="container-fluid p-0">
 
-            <div class="row mb-2 mb-xl-3">
-                <div class="col-auto d-none d-sm-block">
+            <div className="row mb-2 mb-xl-3">
+                <div className="col-auto d-none d-sm-block">
                     <h3><strong>Gestion des roles </strong></h3>
                 </div>
 
             </div>
-            <div class="row">
-						<div class="col-12 col-xl-12">
-							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title">Liste des roles</h5>
+            <div className="row">
+						<div className="col-12 col-xl-12">
+							<div className="card">
+								<div className="card-header">
+									<h5 className="card-title">Liste des roles</h5>
 								</div>
-								<table class="table">
+								<table className="table">
 									<thead>
 										<tr>
 											<th style={{"width":"30%"}}>titre</th>
 											<th style={{"width":"60%"}}>fonctionalités</th>
 											
-											<th style={{"width":"10%"}}><a href="#"><i class="align-middle" data-feather="folder-plus"data-toggle="modal" data-target="#defaultModalPrimary"></i></a></th>
+											<th style={{"width":"10%"}}><a href="#"><i className="align-middle" data-feather="folder-plus"data-toggle="modal" data-target="#defaultModalPrimary"></i></a></th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td>chef projet</td>
 											<td>
-                                            <table class="table">
+                                            <table className="table">
 									<tbody>
 										<tr>
 											<td>ajout projet</td>
@@ -46,15 +46,15 @@ export default function Role() {
 								</table>
                                             </td>
 								
-											<td class="table-action">
-												<a href="#"><i class="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
-												<a href="#"><i class="align-middle" data-feather="trash"></i></a>
+											<td className="table-action">
+												<a href="#"><i className="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
+												<a href="#"><i className="align-middle" data-feather="trash"></i></a>
 											</td>
 										</tr>
                                         <tr>
 											<td>directeur</td>
 											<td>
-                                            <table class="table">
+                                            <table className="table">
 									<tbody>
 										<tr>
 											<td>consulter les projet</td>
@@ -68,29 +68,29 @@ export default function Role() {
 								</table>
                                             </td>
 										
-											<td class="table-action">
-												<a href="#"><i class="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
-												<a href="#"><i class="align-middle" data-feather="trash"></i></a>
+											<td className="table-action">
+												<a href="#"><i className="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
+												<a href="#"><i className="align-middle" data-feather="trash"></i></a>
 											</td>
 										</tr>
 										
 									</tbody>
 								</table>
-                <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                <div className="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
                         
-                        <div class="modal-content">
-                            <div class="modal-header">
+                        <div className="modal-content">
+                            <div className="modal-header">
                                 
-                                <div class="col-12 col-xl-12">
+                                <div className="col-12 col-xl-12">
                                 
-							         <div class="card">
+							         <div className="card">
                                          
-									 <div class="modal-header">
-													<h5 class="modal-title">Ajouter role</h5>
-													<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+									 <div className="modal-header">
+													<h5 className="modal-title">Ajouter role</h5>
+													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
-								        <div class="card-body">
+								        <div className="card-body">
 									        <RoleForm />
 								</div>
 							</div>
@@ -102,21 +102,21 @@ export default function Role() {
                                         </div>
                                     </div>
 
-				<div class="modal fade" id="ModalMod" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+				<div className="modal fade" id="ModalMod" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
                         
-                        <div class="modal-content">
-                            <div class="modal-header">
+                        <div className="modal-content">
+                            <div className="modal-header">
                                 
-                                <div class="col-12 col-xl-12">
+                                <div className="col-12 col-xl-12">
                                 
-							         <div class="card">
+							         <div className="card">
                                          
-									 <div class="modal-header">
-													<h5 class="modal-title">Modifier role</h5>
-													<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+									 <div className="modal-header">
+													<h5 className="modal-title">Modifier role</h5>
+													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
-								        <div class="card-body">
+								        <div className="card-body">
 									        <RoleForm />
 								</div>
 							</div>

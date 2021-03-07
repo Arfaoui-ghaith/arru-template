@@ -1,14 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function SidebarItem({title, icon,l, selectedItem,title2, setSelectedItem}) {
+export default function SidebarItem({title, icon,l, selecteditem,title2, setselecteditem}) {
+    
+    const refreshPage = (e) => {
+        window.location.replace(l);
+    }
+
     return (
         //active
-        <li className={selectedItem === title || selectedItem === title2 ? "sidebar-item active" : "sidebar-item "}>
-            <Link className="sidebar-link" to={l} onClick={()=> setSelectedItem(title)}>
+        <li className={selecteditem === title || selecteditem === title2 ? "sidebar-item active" : "sidebar-item "} onClick={refreshPage}>
+            <span className="sidebar-link" onClick={()=> setselecteditem(title)} >
             <i className="align-middle" data-feather={icon}></i> 
             <span className="align-middle">{title}</span>
-            </Link>
+            </span>
        </li>
     )
 }

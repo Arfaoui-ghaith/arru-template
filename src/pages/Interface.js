@@ -4,22 +4,22 @@ import '../css_folder/style.css'
 
 export default function Interface() {
     return (
-        <main class="content">
-        <div class="container-fluid p-0">
+        <main className="content">
+        <div className="container-fluid p-0">
 
-            <div class="row mb-2 mb-xl-3">
-                <div class="col-auto d-none d-sm-block">
+            <div className="row mb-2 mb-xl-3">
+                <div className="col-auto d-none d-sm-block">
                     <h3><strong>Les Interfaces </strong></h3>
                 </div>
 
             </div>
-            <div class="row">
-					<div class="col-12 col-xl-12">
-						<div class="card">
-								<div class="card-header">
-									<h5 class="card-title">Liste des Interfaces</h5>
+            <div className="row">
+					<div className="col-12 col-xl-12">
+						<div className="card">
+								<div className="card-header">
+									<h5 className="card-title">Liste des Interfaces</h5>
 								</div>
-                            <table class="table">
+                            <table className="table">
 									<thead>
 										<tr>
 											<th style={{"width":"100%"}}>titre</th>

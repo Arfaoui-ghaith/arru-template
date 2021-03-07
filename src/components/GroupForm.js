@@ -16,42 +16,28 @@ export default function GroupForm() {
 	  ]
 	
     return (
-        <form>
-
-								
-												<div class="mb-3 row">
-                                                    <label class="col-form-label col-sm-2 text-sm-right">titre</label>
-                                                    <div class="col-sm-10">
-													<Select
-													components={animatedComponents}
-													options={optionsRole}
-												/>
-											        </div>
-										        </div>
+        <form>			
+			<div className="mb-3 row">
+            	<label className="col-form-label col-sm-2 text-sm-right">titre</label>
+                <div className="col-sm-10">
+					<Select components={animatedComponents} options={optionsRole} />
+				</div>
+			</div>
 												
-
-										<div class="mb-3 row">
-                                            <label class="col-form-label col-sm-2 text-sm-right">specifications</label>
-											<div class="col-sm-10">
-												<div class="boxes" >
-											    <Select
-													closeMenuOnSelect={false}
-													components={animatedComponents}
-													isMulti
-													options={optionsSpec}
-												/>
-														
-												</div>
-											</div>
-										</div>
-
-									
-										
-										<div class="mb-3 row">
-											<div class="col-sm-10 ml-sm-auto">
-												<button type="submit" class="btn btn-primary">Submit</button>
-											</div>
-										</div>
-									</form>
+			<div className="mb-3 row">
+				<label className="col-form-label col-sm-2 text-sm-right">specifications</label>
+				<div className="col-sm-10">
+					<div className="boxes" >
+					<Select closeMenuOnSelect={false} components={animatedComponents} isMulti options={optionsSpec} />						
+					</div>
+				</div>
+			</div>
+		
+			<div className="mb-3 row">
+				<div className="col-sm-10 ml-sm-auto">
+					<button type="submit" className="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
     );
 }
