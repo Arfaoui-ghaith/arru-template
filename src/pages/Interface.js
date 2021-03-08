@@ -1,15 +1,41 @@
 import React from 'react'
+import axios from 'axios';
 
 import '../css_folder/style.css'
 
 export default function Interface() {
+
+    const [interfaces, setInterfaces] = React.useState([]);
+
+	React.useEffect(() => {
+		fetchInterfaces();
+	},[])
+
+	  
+	const fetchInterfaces = async (e) => {
+		try {
+			const url ='http://localhost:4000/api/v1/fonctionalites/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+			});
+		
+			if (res.status === 200) {
+				setInterfaces(res.data.fonctionalites);
+			}
+			} catch (err) {
+				console.log("Alert",err);
+			}
+	}
+
     return (
         <main className="content">
         <div className="container-fluid p-0">
 
             <div className="row mb-2 mb-xl-3">
                 <div className="col-auto d-none d-sm-block">
-                    <h3><strong>Les Interfaces </strong></h3>
+                    <h3><strong>Les Fonctionalites </strong></h3>
                 </div>
 
             </div>
@@ -17,7 +43,7 @@ export default function Interface() {
 					<div className="col-12 col-xl-12">
 						<div className="card">
 								<div className="card-header">
-									<h5 className="card-title">Liste des Interfaces</h5>
+									<h5 className="card-title">Liste des Fonctionalites</h5>
 								</div>
                             <table className="table">
 									<thead>
@@ -27,18 +53,12 @@ export default function Interface() {
 									</thead>
 
 									<tbody>
+                                    {interfaces.map((fonctionalite,index) => (
 										<tr>
-											<td>Gestion des projets</td>
-											
-								
+											<td key={index}>{fonctionalite.titre}</td>
+										
                                         </tr>
-                                        <tr>
-											<td>Gestion des quartiers</td>
-											
-								
-                                        </tr>
-											
-											
+                                    ))}		
 									</tbody>
                                   
                             </table>

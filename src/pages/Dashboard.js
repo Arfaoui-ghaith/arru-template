@@ -1,8 +1,78 @@
 import React from 'react';
 import '../css_folder/style.css';
 import Form from '../components/Form'
+import axios from 'axios';
+import FeatherIcon from 'feather-icons-react';
+import { gql, useSubscription } from '@apollo/client'
+
+
+const UTILISATEURS = gql`
+subscription utilisateurs {
+	utilisateurs{
+    	nom, prenom, email, roles{titre}
+  	}
+}`
 
 export default function Dashboard() {
+	const [users,setUsers]= React.useState([]);
+
+	const [userEdit, setUserEdit] = React.useState({});
+	/*const { data: utilisateurs, error: messageError } = useSubscription(
+		UTILISATEURS
+	  )*/
+	
+
+	  //console.log('messageError', typeof(utilisateurs['utilisateurs']));
+	  //console.log('messageError', messageError);
+
+	
+	React.useEffect(() => {
+		fetchUsers();
+	},[])
+
+	  
+	const fetchUsers = async (e) => {
+		try {
+			const url ='http://localhost:4000/api/v1/utilisateurs/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+			});
+	
+			if (res.status === 200) {
+			  
+				setUsers(res.data.utilisateurs);
+			  	console.log(res);
+
+			}
+
+			} catch (err) {
+				console.log(err);
+				console.log("Alert");
+			}
+	}
+
+	const updateUser = async (id) => {
+		try {
+			const url =`http://localhost:4000/api/v1/utilisateurs/${id}`;
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'put',
+			  	url,
+			});
+	
+			if (res.status === 200) {
+			  
+				setUsers(res.data.utilisateurs);
+			  	console.log(res);
+
+			}
+			} catch (err) {
+				console.log(err);
+				console.log("Alert");
+			}
+	}
 	
     return (
         <main className="content">
@@ -27,60 +97,46 @@ export default function Dashboard() {
 											<th style={{"width":"13%"}}>Adresse</th>
 											<th style={{"width":"13%"}}>telephone</th>
 											<th className="d-none d-md-table-cell" style={{"width":"13%"}}>Role</th>
-											<th style={{"width":"14%"}}>date de creation</th>
-											<th style={{"width":"17%"}}>derniere modification </th>
 											<th style={{"width":"10%"}}><a href="#"><i className="align-middle" data-feather="user-plus"data-toggle="modal" data-target="#defaultModalPrimary"></i></a></th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>Vanessa Tucker</td>
-											<td>vanessa@gmail.com</td>
-											<td className="d-none d-md-table-cell">22 898 972</td>
-											<td className="d-none d-md-table-cell">chef projet</td>
-											<td className="d-none d-md-table-cell">12/07/2019</td>
-											<td className="d-none d-md-table-cell">10/11/2019</td>
-											<td className="table-action">
-												<a href="#"><i className="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
-												<a href="#"><i className="align-middle" data-feather="trash"></i></a>
-											</td>
-										</tr>
-										<tr>
-											<td>William Harris</td>
-											<td>william@gmail.com</td>
-											<td className="d-none d-md-table-cell">22 898 972</td>
-											<td className="d-none d-md-table-cell">admin</td>
-											<td className="d-none d-md-table-cell">12/07/2019</td>
-											<td className="d-none d-md-table-cell">10/11/2019</td>
-											<td className="table-action">
-												<a href="#"><i className="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
-												<a href="#"><i className="align-middle" data-feather="trash"></i></a>
-											</td>
-										</tr>
-										
+									{
+											users.map((utilisateur, index) => (
+												<tr key={index}>
+													<td>{ utilisateur.nom+" "+utilisateur.prenom }</td>
+													<td>{ utilisateur.email }</td>
+													<td className="d-none d-md-table-cell">{utilisateur.telephone}</td>
+													<td className="d-none d-md-table-cell"><ul>{utilisateur.roles.map((role, index) => (
+														
+															<li key={index}>{role.titre}</li>
+													
+													))}</ul> </td>
+													<td className="table-action">
+														<span style={{ "cursor": "pointer" }} data-toggle="modal" data-target="#ModalMod" onClick={(e) => setUserEdit(utilisateur)}><FeatherIcon icon="edit-2" /></span>
+														<span style={{ "cursor": "pointer" }} ><FeatherIcon icon="trash" /></span>
+													</td>
+												</tr>
+											))
+									}
 									</tbody>
 								</table>
-                <div className="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                
-                                <div className="col-12 col-xl-12">
-                                
-							         <div className="card">
-                                         
-									 <div className="modal-header">
-													<h5 className="modal-title">Ajouter utilisateur</h5>
-													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
-												</div>
-								        <div className="card-body">
-									        <Form />
-								</div>
-							</div>
-                           
-						</div>
 
+									<div className="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+										<div className="modal-dialog" role="document">
+											<div className="modal-content">
+												<div className="modal-header">
+													<div className="col-12 col-xl-12">
+														<div className="card">
+															<div className="modal-header">
+																<h5 className="modal-title">Ajouter utilisateur</h5>
+																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div className="card-body">
+																<Form   />
+															</div>
+														</div>
+													</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,7 +157,7 @@ export default function Dashboard() {
 													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
 								        <div className="card-body">
-									        <Form />
+									        <Form user={userEdit} />
 								</div>
 							</div>
                            

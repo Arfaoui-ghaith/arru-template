@@ -1,10 +1,14 @@
-import React, { Profiler } from 'react'
+import React, { Profiler } from 'react';
 import SidebarItem from './SidebarItem';
+import { useAuthState } from './../context/auth';
 
 export default function Sidebar(props) {
+
+	const { user } = useAuthState();
+	
 	const [selectedItem, setSelectedItem]=React.useState(window.location.href.slice(22,window.location.href.length));
 
-    console.log(props.user);
+	if(user !== null && user !== undefined){
     return (
         <nav id="sidebar" className="sidebar">
 			<div className="sidebar-content js-simplebar">
@@ -37,5 +41,9 @@ export default function Sidebar(props) {
 				
 			</div>
 		</nav>
-    )
+    ) } else {
+		return(
+			<React.Fragment></React.Fragment>
+		);
+	}
 }

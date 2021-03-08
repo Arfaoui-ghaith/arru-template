@@ -7,7 +7,9 @@ const AuthDispatchContext = React.createContext();
 let user = null;
 const token = localStorage.getItem("tokenARRU");
 
-if(token){
+
+if(token !== 'undefined' && token !== undefined && token !== null){
+
     const decodedToken = jwtDecode(token);
     const expiresAt = new Date(decodedToken.exp * 1000);
 
@@ -23,7 +25,8 @@ if(token){
 const authReducer = (state, action) => {
     switch(action.type) {
         case 'LOGIN' :
-            localStorage.setItem('tokenARRU',action.payload.token);
+            console.log('action', action);
+            localStorage.setItem('tokenARRU',action.payload);
             return {
                 ...state,
                 user: action.payload,

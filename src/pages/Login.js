@@ -1,6 +1,47 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
+import { useAuthDispatch } from '../context/auth';
+import { useAuthState } from './../context/auth';
 
 export default function Login() {
+
+	const { user } = useAuthState();
+
+	/*if(user && window.history){
+		window.history.back();
+	}*/
+
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
+
+	const dispatch = useAuthDispatch();
+
+	const login = async (e) => {
+		e.preventDefault();
+		const data = { email, password };
+		try {
+			const url ='http://localhost:4000/api/v1/utilisateurs/login';
+			const res = await axios({
+			  method: 'post',
+			  url,
+			  data,
+			});
+	
+			console.log(res);
+		
+			if (res.status === 200) {
+			  
+			  dispatch({ type:'LOGIN', payload: res.data.token });
+			  
+			  window.location.replace('/Utilisateurs');
+			}
+			} catch (err) {
+				console.log(err);
+				console.log("Alert");
+			}
+	}
+
+	if(!user){
     return (
         <main className="d-flex w-100">
 		<div className="container d-flex flex-column">
@@ -24,19 +65,19 @@ export default function Login() {
 									<form>
 										<div className="mb-3">
 											<label className="form-label">Email</label>
-											<input className="form-control form-control-lg" type="email" name="email" placeholder="Entrer votre email" />
+											<input className="form-control form-control-lg" type="email" onChange={(e) => setEmail(e.target.value)} name="email" placeholder="Entrer votre email" />
 										</div>
 										<div className="mb-3">
 											<label className="form-label">Mot de passe </label>
-											<input className="form-control form-control-lg" type="password" name="password" placeholder="Entrer votre mot de passe" />
+											<input className="form-control form-control-lg" type="password" onChange={(e) => setPassword(e.target.value)} name="password" placeholder="Entrer votre mot de passe" />
 											<small>
-            <a href="#">oublier mot de passe ?</a>
-          </small>
+            									<a href="#">oublier mot de passe ?</a>
+          									</small>
 										</div>
-										
 											
 										<div className="text-center mt-3">
-											 <button type="submit" className="btn btn-lg btn-primary">Sign in</button> 
+											 <span type="submit" className="btn btn-lg btn-primary" onClick={login}>Sign in</span> 
+
 										</div>
 									</form>
 								</div>
@@ -49,5 +90,10 @@ export default function Login() {
 		</div>
 	</main>
 
-    )
+    )}
+	else{
+		return (
+			<React.Fragment></React.Fragment>
+		)
+	}
 }

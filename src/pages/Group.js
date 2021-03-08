@@ -1,8 +1,40 @@
 import React from 'react'
 import '../css_folder/style.css'
 import GroupForm from '../components/GroupForm'
+import axios from 'axios';
+import FeatherIcon from 'feather-icons-react';
 
 export default function Group() {
+
+	const [roles, setRoles] = React.useState([]);
+
+	React.useEffect(() => {
+		fetchRoles();
+	},[])
+
+	  
+	const fetchRoles = async (e) => {
+		try {
+			const url ='http://localhost:4000/api/v1/roles/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+			});
+	
+		
+			if (res.status === 200) {
+			  
+				setRoles(res.data.roles);
+			  	console.log(res);
+
+			}
+			} catch (err) {
+				console.log(err);
+				console.log("Alert");
+			}
+	}
+
     return (
         <main className="content">
         <div className="container-fluid p-0">
@@ -29,50 +61,27 @@ export default function Group() {
 										</tr>
 									</thead>
 									<tbody>
+									{roles.map((role,index) => (
 										<tr>
-											<td>chef projet</td>
+											<td>{role.titre}</td>
 											<td>
-                                            <table className="table">
-									<tbody>
-										<tr>
-											<td>Mahdia</td>
-                                            </tr>
-                                            <tr>
-											<td>Tunis</td>
-											
-										</tr>
-										
-									</tbody>
-								</table>
+                                            	<table className="table">
+													<tbody>
+														{role.specification.map((specification,index) => (
+														<tr>
+															<td>{specification.titre}</td>
+														</tr>
+														))}
+													</tbody>
+												</table>
                                             </td>
 								
 											<td className="table-action">
-												<a href="#"><i className="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
-												<a href="#"><i className="align-middle" data-feather="trash"></i></a>
+												<span style={{ "cursor": "pointer" }} data-toggle="modal" data-target="#ModalMod"><FeatherIcon icon="edit-2" /></span>
+												<span style={{ "cursor": "pointer" }} ><FeatherIcon icon="trash" /></span>
 											</td>
 										</tr>
-                                        <tr>
-											<td>directeur</td>
-											<td>
-                                            <table className="table">
-									<tbody>
-										<tr>
-											<td>financier</td>
-                                            </tr>
-                                            <tr>
-											<td>Traveaux</td>
-											
-										</tr>
-										
-									</tbody>
-								</table>
-                                            </td>
-										
-											<td className="table-action">
-												<a href="#"><i className="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
-												<a href="#"><i className="align-middle" data-feather="trash"></i></a>
-											</td>
-										</tr>
+										))}
 										
 									</tbody>
 								</table>

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import FeatherIcon from 'feather-icons-react';
 
 export default function SidebarItem({title, icon,l, selecteditem,title2, setselecteditem}) {
     
@@ -11,7 +11,7 @@ export default function SidebarItem({title, icon,l, selecteditem,title2, setsele
         //active
         <li className={selecteditem === title || selecteditem === title2 ? "sidebar-item active" : "sidebar-item "} onClick={refreshPage}>
             <span className="sidebar-link" onClick={()=> setselecteditem(title)} >
-            <i className="align-middle" data-feather={icon}></i> 
+            <FeatherIcon icon={icon} />
             <span className="align-middle">{title}</span>
             </span>
        </li>

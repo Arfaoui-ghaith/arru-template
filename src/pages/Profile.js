@@ -1,6 +1,10 @@
 import React from 'react'
+import { useAuthState } from './../context/auth';
+import FeatherIcon from 'feather-icons-react';
 
 export default function Profile() {
+
+    const { user } = useAuthState();
 
     return (
         <main className="content">
@@ -15,9 +19,9 @@ export default function Profile() {
                             <h5 className="card-title mb-0">Mon Profile </h5>
                         </div>
                         <div className="card-body text-center">
-                            <img src="img/photos/user-01.png" alt="photo de profile" className="img-fluid rounded-circle mb-2" width="128" height="128" />
-                            <h5 className="card-title mb-0">Aladin Labidi</h5>
-                            <div className="text-muted mb-2">ala@gmail.com </div>
+                            <img src={user.payload.image === null ? "img/photos/user-01.png" : `http://localhost:4000/img/utilisateurs/${user.payload.image}`} alt="photo de profile" className="img-fluid rounded-circle mb-2" width="128" height="128" />
+                            <h5 className="card-title mb-0">{user.payload.nom+" "+user.payload.prenom}</h5>
+                            <div className="text-muted mb-2">{user.payload.email}</div>
 
                             <div>
                                 <a className="btn btn-primary btn-sm" href="/settings">Modifier mon profile</a>
@@ -26,16 +30,19 @@ export default function Profile() {
                         <hr className="my-0" />
                         <div className="card-body">
                             <h5 className="h6 card-title">Mes roles </h5>
-                            <a href="#" data-toggle="modal" data-target="#ModalMod" className="badge btn-primary mr-1 my-1">Administrateur</a>
-                            <a href="#" data-toggle="modal" data-target="#ModalMod" className="badge btn-primary mr-1 my-1">Informaticien</a>
+                            {
+                                user.payload.roles.map((role,index) => (
+                                    <span st href="#" data-toggle="modal" data-target="#ModalMod" className="badge btn-primary mr-1 my-1">{role.titre}</span>
+                                ))
+                            }
                         </div>
                         <hr className="my-0" />
                         <div className="card-body">
                             <h5 className="h6 card-title">plus d'iformations</h5>
                             <ul className="list-unstyled mb-0">
-                                <li className="mb-1"><span data-feather="home" className="feather-sm mr-1"></span> CIN <span style={{color :"#3B7DDD"}}>12345678</span> </li>
+                                <li className="mb-1"><FeatherIcon icon="user-check" /> CIN <span style={{color :"#3B7DDD"}}>{user.payload.cin}</span> </li>
 
-                                <li className="mb-1"><span data-feather="briefcase" className="feather-sm mr-1"></span> telephone <span style={{color :"#3B7DDD"}}>22898972</span> </li>
+                                <li className="mb-1"><FeatherIcon icon="phone" /> telephone <span style={{color :"#3B7DDD"}}>{user.payload.telephone}</span> </li>
                             </ul>
                         </div>
                         
@@ -51,10 +58,10 @@ export default function Profile() {
                         <div className="card-body h-100">
 
                             <div className="d-flex align-items-start">
-                                <img src="img/photos/user-01.png" width="36" height="36" className="rounded-circle mr-2" alt="Vanessa Tucker" />
+                                <img src={user.payload.image === null ? "img/photos/user-01.png" : `http://localhost:4000/img/utilisateurs/${user.payload.image}`} width="36" height="36" className="rounded-circle mr-2" alt="Vanessa Tucker" />
                                 <div className="flex-grow-1">
                                     <small className="float-right text-navy">5m ago</small>
-                                    <strong>Sarra gb</strong> started following <strong>Ghaith</strong><br />
+                                    Activities ....
                                     <small className="text-muted">Today 7:51 pm</small><br />
 
                                 </div>
@@ -70,48 +77,33 @@ export default function Profile() {
 
         </div>
         <div className="modal fade" id="ModalMod" tabIndex="-1" role="dialog" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                
-                                <div className="col-12 col-xl-12">
-                                
-							         <div className="card">
-                                         
-									 <div className="modal-header">
-													<h5 className="modal-title">liste des fonctionalités </h5>
-													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
-												</div>
-								        <div className="card-body">
-                                        <table className="table">
-									
-
-									<tbody>
-										<tr>
-											<td>Gestion des projets</td>
-											
-								
-                                        </tr>
-                                        <tr>
-											<td>Gestion des quartiers</td>
-											
-								
-                                        </tr>
-											
-											
-									</tbody>
-                                  
-                            </table>
+            <div className="modal-dialog" role="document">        
+                <div className="modal-content">
+                    <div className="modal-header"> 
+                        <div className="col-12 col-xl-12">
+							<div className="card">      
+								<div className="modal-header">
+									<h5 className="modal-title">liste des fonctionalités </h5>
+									<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div className="card-body">
+                                    <table className="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Gestion des projets</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gestion des quartiers</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 								</div>
 							</div>
-                           
 						</div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     )

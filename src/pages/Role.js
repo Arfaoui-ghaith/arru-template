@@ -1,8 +1,66 @@
 import React from 'react'
 import '../css_folder/style.css'
 import RoleForm from '../components/RoleForm'
+import axios from 'axios';
+import FeatherIcon from 'feather-icons-react';
 
 export default function Role() {
+
+	const [roles, setRoles] = React.useState([]);
+	const [roleEdit, setRoleEdit] = React.useState({});
+
+	React.useEffect(() => {
+		fetchRoles();
+	},[]);
+	  
+	const fetchRoles = async (e) => {
+		try {
+			const url ='http://localhost:4000/api/v1/roles/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+			});
+	
+		
+			if (res.status === 200) {
+			  
+				setRoles(res.data.roles);
+			  	console.log(res);
+
+			}
+			} catch (err) {
+				console.log(err);
+				console.log("Alert");
+			}
+	}
+
+	const deleteRole = async (role) => {
+		 // eslint-disable-next-line no-restricted-globals
+		 var del=confirm("Are you sure you want to delete this role "+role.titre+" ?");
+		 if (del){
+			try{
+				const url =`http://localhost:4000/api/v1/roles/${role.id}`;
+				const res = await axios({
+					headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+					  method: 'delete',
+					  url
+				});
+				
+				console.log(res);
+				alert (role.titre+" deleted.");
+				window.location.replace('/Roles');
+
+			}catch(err){
+				console.log(err);
+			}
+			 
+		 } else {
+			alert(role.titre+" not deleted");
+		 }
+	}
+
+
     return (
         <main className="content">
         <div className="container-fluid p-0">
@@ -25,58 +83,35 @@ export default function Role() {
 											<th style={{"width":"30%"}}>titre</th>
 											<th style={{"width":"60%"}}>fonctionalités</th>
 											
-											<th style={{"width":"10%"}}><a href="#"><i className="align-middle" data-feather="folder-plus"data-toggle="modal" data-target="#defaultModalPrimary"></i></a></th>
+											<th style={{"width":"10%"}}><a href="#"><span data-toggle="modal" data-target="#defaultModalPrimary"><FeatherIcon icon="user-plus" /></span></a></th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>chef projet</td>
+										{roles.map((role,index) => (
+										<tr key={index}>
+											<td>{role.titre}</td>
 											<td>
-                                            <table className="table">
-									<tbody>
-										<tr>
-											<td>ajout projet</td>
-                                            </tr>
-                                            <tr>
-											<td>modifier projet</td>
-											
-										</tr>
-										
-									</tbody>
-								</table>
+                                            	<table className="table">
+													<tbody>
+														{role.fonctionalites.map((fonctionalite,index) => (
+														<tr key={index}>
+															<td>{fonctionalite.titre}</td>
+														</tr>
+														))}
+													</tbody>
+												</table>
                                             </td>
 								
 											<td className="table-action">
-												<a href="#"><i className="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
-												<a href="#"><i className="align-middle" data-feather="trash"></i></a>
+												<span style={{ "cursor": "pointer" }} data-toggle="modal" data-target="#ModalMod" onClick={() => setRoleEdit(role)}><FeatherIcon icon="edit-2" /></span>
+												<span style={{ "cursor": "pointer" }} onClick={() => deleteRole(role)}><FeatherIcon icon="trash" /></span>
 											</td>
 										</tr>
-                                        <tr>
-											<td>directeur</td>
-											<td>
-                                            <table className="table">
-									<tbody>
-										<tr>
-											<td>consulter les projet</td>
-                                            </tr>
-                                            <tr>
-											<td>consulter l'avencement physico-financier</td>
-											
-										</tr>
+										))}
 										
 									</tbody>
 								</table>
-                                            </td>
-										
-											<td className="table-action">
-												<a href="#"><i className="align-middle" data-toggle="modal" data-target="#ModalMod" data-feather="edit-2"></i></a>
-												<a href="#"><i className="align-middle" data-feather="trash"></i></a>
-											</td>
-										</tr>
-										
-									</tbody>
-								</table>
-                <div className="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+                <div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         
                         <div className="modal-content">
@@ -102,7 +137,7 @@ export default function Role() {
                                         </div>
                                     </div>
 
-				<div className="modal fade" id="ModalMod" tabindex="-1" role="dialog" aria-hidden="true">
+				<div className="modal fade" id="ModalMod" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         
                         <div className="modal-content">
@@ -114,10 +149,10 @@ export default function Role() {
                                          
 									 <div className="modal-header">
 													<h5 className="modal-title">Modifier role</h5>
-													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+													<span type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></span>
 												</div>
 								        <div className="card-body">
-									        <RoleForm />
+									        <RoleForm role={roleEdit} />
 								</div>
 							</div>
                            

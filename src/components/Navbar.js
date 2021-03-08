@@ -1,7 +1,19 @@
 import React from 'react'
+import { useAuthState } from './../context/auth';
+import { useAuthDispatch } from '../context/auth';
+import FeatherIcon from 'feather-icons-react';
 
 export default function Navbar(props) {
-    
+    const { user } = useAuthState();
+
+    const dispatch = useAuthDispatch();
+
+    const logout = () => {
+        dispatch({ type:'LOGOUT' });
+        window.location.href = '/login';
+    }
+
+    if(user){
     return (
         <nav className="navbar navbar-expand navbar-light navbar-bg">
             <a className="sidebar-toggle d-flex">
@@ -22,7 +34,7 @@ export default function Navbar(props) {
                     <li className="nav-item dropdown">
                         <a className="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-toggle="dropdown">
                             <div className="position-relative">
-                                <i className="align-middle" data-feather="bell"></i>
+                                <FeatherIcon icon="bell" />
                                 <span className="indicator">4</span>
                             </div>
                         </a>
@@ -34,7 +46,7 @@ export default function Navbar(props) {
                                 <a href="#" className="list-group-item">
                                     <div className="row g-0 align-items-center">
                                         <div className="col-2">
-                                            <i className="text-danger" data-feather="alert-circle"></i>
+                                            <FeatherIcon className="text-danger" icon="alert-circle" />
                                         </div>
                                         <div className="col-10">
                                             <div className="text-dark">Update completed</div>
@@ -46,7 +58,8 @@ export default function Navbar(props) {
                                 <a href="#" className="list-group-item">
                                     <div className="row g-0 align-items-center">
                                         <div className="col-2">
-                                            <i className="text-warning" data-feather="bell"></i>
+                                            <FeatherIcon className="text-warning" icon="bell" />
+                                            
                                         </div>
                                         <div className="col-10">
                                             <div className="text-dark">Lorem ipsum</div>
@@ -58,7 +71,8 @@ export default function Navbar(props) {
                                 <a href="#" className="list-group-item">
                                     <div className="row g-0 align-items-center">
                                         <div className="col-2">
-                                            <i className="text-primary" data-feather="home"></i>
+                                            <FeatherIcon className="text-primary" icon="home" />
+                                            
                                         </div>
                                         <div className="col-10">
                                             <div className="text-dark">Login from 192.186.1.8</div>
@@ -69,7 +83,7 @@ export default function Navbar(props) {
                                 <a href="#" className="list-group-item">
                                     <div className="row g-0 align-items-center">
                                         <div className="col-2">
-                                            <i className="text-success" data-feather="user-plus"></i>
+                                            <FeatherIcon className="text-success" icon="user-plus" />
                                         </div>
                                         <div className="col-10">
                                             <div className="text-dark">New connection</div>
@@ -88,26 +102,30 @@ export default function Navbar(props) {
                     <li className="nav-item dropdown">
 
                         <a className="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
-                            <i className="align-middle" data-feather="settings"></i>
+                            <FeatherIcon className="align-middle" icon="settings" />
                         </a>
 
                         <a className="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-                            <img src="img/photos/user-01.png" className="avatar img-fluid rounded mr-1" alt="user" /> <span className="text-dark">Aladin labidi</span>
+                            <img src={user.payload.image === null ? "img/photos/user-01.png" : `http://localhost:4000/img/utilisateurs/${user.payload.image}`} className="avatar img-fluid rounded mr-1" alt="user" /> <span className="text-dark">{ user.payload.nom+" "+user.payload.prenom }</span>
                         </a>
 
                         <div className="dropdown-menu dropdown-menu-right">
-                            <a className="dropdown-item" href="/Profile"><i className="align-middle mr-1" data-feather="user"></i> Profile</a>
+                            <a className="dropdown-item" href="/Profile"><FeatherIcon className="align-middle mr-1" icon="user" /> Profile</a>
                           
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="/settings"><i className="align-middle mr-1" data-feather="settings"></i> Settings & Privacy</a>
+                            <a className="dropdown-item" href="/settings"><FeatherIcon className="align-middle mr-1" icon="settings" /> Settings & Privacy</a>
                           
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="#">Log out</a>
+                            <span className="dropdown-item" style={{ "cursor": "pointer" }} onClick={logout}><FeatherIcon className="align-middle mr-1" icon="log-out" /> Log out</span>
                         </div>
 
                     </li>
                 </ul>
             </div>
         </nav>
-    )
+    ) } else {
+        return (
+            <React.Fragment></React.Fragment>
+        )
+    }
 }

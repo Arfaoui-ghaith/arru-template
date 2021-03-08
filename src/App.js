@@ -11,8 +11,9 @@ import Interface from './pages/Interface'
 import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import Login from './pages/Login'
-import {BrowserRouter as Router,Route,Switch } from 'react-router-dom';
+import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
+import DynamicRoutes from './utils/DynamicRoutes';
 
 function App(props) {
  
@@ -22,25 +23,25 @@ function App(props) {
     <Router>
       <Switch>
         <div className="wrapper">
-		    <Sidebar />
-        <div className="main">
-        <Navbar />
+          <Sidebar />
+          <div className="main">
+          <Navbar />
 
-          <Route exact path="/Login" component={Login} />
-          <Route exact path="/Utilisateurs" component={Dashboard}/>
-          <Route exact path="/Roles" component={Role}/>
-          <Route exact path="/Groupes" component={Group}/>
-          <Route exact path="/Interfaces" component={Interface}/>
-          <Route exact path="/Profile" component={Profile}/>
-          <Route exact path="/Settings" component={Settings}/>
-        
-        <Footer />
+            <DynamicRoutes exact path="/Login" component={Login} guest />
+            <DynamicRoutes exact path="/Utilisateurs" component={Dashboard} authenticated />
+            <DynamicRoutes exact path="/Roles" component={Role} authenticated />
+            <DynamicRoutes exact path="/Groupes" component={Group} authenticated />
+            <DynamicRoutes exact path="/Interfaces" component={Interface} authenticated />
+            <DynamicRoutes exact path="/Profile" component={Profile} authenticated />
+            <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
+  
+          <Footer />
+          </div>
         </div>
-      </div>
       </Switch>
-  </Router>
-  </AuthProvider>
-  </ApolloProvider>
+    </Router>
+    </AuthProvider>
+    </ApolloProvider>
   );
 }
 
