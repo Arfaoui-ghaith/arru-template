@@ -27,7 +27,7 @@ export default function Login() {
 			  data,
 			});
 	
-			console.log(res);
+			
 		
 			if (res.status === 200) {
 			  

@@ -6,6 +6,8 @@ import FeatherIcon from 'feather-icons-react';
 export default function Navbar(props) {
     const { user } = useAuthState();
 
+    console.log(user);
+    
     const dispatch = useAuthDispatch();
 
     const logout = () => {
@@ -106,7 +108,7 @@ export default function Navbar(props) {
                         </a>
 
                         <a className="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-                            <img src={user.payload.image === null ? "img/photos/user-01.png" : `http://localhost:4000/img/utilisateurs/${user.payload.image}`} className="avatar img-fluid rounded mr-1" alt="user" /> <span className="text-dark">{ user.payload.nom+" "+user.payload.prenom }</span>
+                            <img src={user.payload.image === null || user.payload === undefined ? "img/photos/user-01.png" : `http://localhost:4000/img/utilisateurs/${user.payload.image}`} className="avatar img-fluid rounded mr-1" alt="user" /> <span className="text-dark">{ user.payload.nom+" "+user.payload.prenom }</span>
                         </a>
 
                         <div className="dropdown-menu dropdown-menu-right">

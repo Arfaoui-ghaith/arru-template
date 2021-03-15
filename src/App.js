@@ -15,18 +15,20 @@ import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
 import DynamicRoutes from './utils/DynamicRoutes';
 
-function App(props) {
+
+
+function App() {
  
   return (
     <ApolloProvider>
     <AuthProvider>
     <Router>
-      <Switch>
+      
         <div className="wrapper">
           <Sidebar />
           <div className="main">
           <Navbar />
-
+          <Switch>
             <DynamicRoutes exact path="/Login" component={Login} guest />
             <DynamicRoutes exact path="/Utilisateurs" component={Dashboard} authenticated />
             <DynamicRoutes exact path="/Roles" component={Role} authenticated />
@@ -34,11 +36,11 @@ function App(props) {
             <DynamicRoutes exact path="/Interfaces" component={Interface} authenticated />
             <DynamicRoutes exact path="/Profile" component={Profile} authenticated />
             <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
-  
+          </Switch>
           <Footer />
           </div>
         </div>
-      </Switch>
+      
     </Router>
     </AuthProvider>
     </ApolloProvider>

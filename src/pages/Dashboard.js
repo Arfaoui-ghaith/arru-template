@@ -4,6 +4,7 @@ import Form from '../components/Form'
 import axios from 'axios';
 import FeatherIcon from 'feather-icons-react';
 import { gql, useSubscription } from '@apollo/client'
+import { Table } from 'react-bootstrap';
 
 
 const UTILISATEURS = gql`
@@ -24,7 +25,6 @@ export default function Dashboard() {
 
 	  //console.log('messageError', typeof(utilisateurs['utilisateurs']));
 	  //console.log('messageError', messageError);
-
 	
 	React.useEffect(() => {
 		fetchUsers();
@@ -63,16 +63,37 @@ export default function Dashboard() {
 			});
 	
 			if (res.status === 200) {
-			  
 				setUsers(res.data.utilisateurs);
-			  	console.log(res);
-
 			}
 			} catch (err) {
 				console.log(err);
 				console.log("Alert");
 			}
 	}
+
+	const deleteUser = async (user) => {
+		// eslint-disable-next-line no-restricted-globals
+		var del=confirm("Are you sure you want to delete this user "+user.nom+" "+user.prenom+"?");
+		if (del){
+		   try{
+			   const url =`http://localhost:4000/api/v1/utilisateurs/${user.id}`;
+			   const res = await axios({
+				   headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+					 method: 'delete',
+					 url
+			   });
+			   
+			   alert (user.nom+" "+user.prenom+" deleted.");
+			   window.location.replace('/Utilisateurs');
+
+		   }catch(err){
+			   console.log(err);
+		   }
+			
+		} else {
+		   alert(user.nom+" "+user.prenom+" not deleted");
+		}
+   }
 	
     return (
         <main className="content">
@@ -90,39 +111,39 @@ export default function Dashboard() {
 								<div className="card-header">
 									<h5 className="card-title">Liste des utilisateurs</h5>
 								</div>
-								<table className="table">
+								<Table responsive>
 									<thead>
 										<tr>
 											<th style={{"width":"13%"}}>Nom</th>
 											<th style={{"width":"13%"}}>Adresse</th>
 											<th style={{"width":"13%"}}>telephone</th>
-											<th className="d-none d-md-table-cell" style={{"width":"13%"}}>Role</th>
-											<th style={{"width":"10%"}}><a href="#"><i className="align-middle" data-feather="user-plus"data-toggle="modal" data-target="#defaultModalPrimary"></i></a></th>
+											<th style={{"width":"13%"}}>Role</th>
+											<th style={{"width":"10%"}}><span data-toggle="modal" data-target="#defaultModalPrimary" style={{ "cursor": "pointer" }}><FeatherIcon icon="user-plus"/></span></th>
 										</tr>
 									</thead>
 									<tbody>
 									{
-											users.map((utilisateur, index) => (
-												<tr key={index}>
-													<td>{ utilisateur.nom+" "+utilisateur.prenom }</td>
-													<td>{ utilisateur.email }</td>
-													<td className="d-none d-md-table-cell">{utilisateur.telephone}</td>
-													<td className="d-none d-md-table-cell"><ul>{utilisateur.roles.map((role, index) => (
+										users.map((utilisateur, index) => (
+											<tr key={index}>
+												<td>{ utilisateur.nom+" "+utilisateur.prenom }</td>
+												<td>{ utilisateur.email }</td>
+												<td>{utilisateur.telephone}</td>
+												<td><ul className="px-0">{utilisateur.roles.map((role, index) => (
 														
-															<li key={index}>{role.titre}</li>
+														<li style={{ listStyleType: "none" }} key={index}>{role.titre}</li>
 													
 													))}</ul> </td>
-													<td className="table-action">
+												<td className="table-action">
 														<span style={{ "cursor": "pointer" }} data-toggle="modal" data-target="#ModalMod" onClick={(e) => setUserEdit(utilisateur)}><FeatherIcon icon="edit-2" /></span>
-														<span style={{ "cursor": "pointer" }} ><FeatherIcon icon="trash" /></span>
-													</td>
-												</tr>
-											))
+														<span style={{ "cursor": "pointer" }} onClick={() => deleteUser(utilisateur)}><FeatherIcon icon="trash" /></span>
+												</td>
+											</tr>
+										))
 									}
 									</tbody>
-								</table>
+								</Table>
 
-									<div className="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+									<div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
 										<div className="modal-dialog" role="document">
 											<div className="modal-content">
 												<div className="modal-header">
@@ -142,7 +163,7 @@ export default function Dashboard() {
                                         </div>
                                     </div>
 
-				<div className="modal fade" id="ModalMod" tabindex="-1" role="dialog" aria-hidden="true">
+				<div className="modal fade" id="ModalMod" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         
                         <div className="modal-content">
@@ -172,6 +193,7 @@ export default function Dashboard() {
                         </div>
 
         </div>
+		
     </main>
     )
 }

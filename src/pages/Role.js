@@ -3,6 +3,7 @@ import '../css_folder/style.css'
 import RoleForm from '../components/RoleForm'
 import axios from 'axios';
 import FeatherIcon from 'feather-icons-react';
+import { Table } from 'react-bootstrap';
 
 export default function Role() {
 
@@ -77,13 +78,13 @@ export default function Role() {
 								<div className="card-header">
 									<h5 className="card-title">Liste des roles</h5>
 								</div>
-								<table className="table">
+								<Table responsive>
 									<thead>
 										<tr>
 											<th style={{"width":"30%"}}>titre</th>
 											<th style={{"width":"60%"}}>fonctionalités</th>
 											
-											<th style={{"width":"10%"}}><a href="#"><span data-toggle="modal" data-target="#defaultModalPrimary"><FeatherIcon icon="user-plus" /></span></a></th>
+											<th style={{"width":"10%"}}><span data-toggle="modal" data-target="#defaultModalPrimary" style={{ "cursor": "pointer" }}><FeatherIcon icon="folder-plus"/></span></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -110,7 +111,7 @@ export default function Role() {
 										))}
 										
 									</tbody>
-								</table>
+								</Table>
                 <div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         

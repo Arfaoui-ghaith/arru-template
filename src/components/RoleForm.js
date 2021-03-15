@@ -2,15 +2,18 @@ import React from 'react'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import axios from 'axios';
-const animatedComponents = makeAnimated();
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default function RoleForm({ role }) {
+
+	const animatedComponents = makeAnimated();
 
 	const [fonctionalites, setFonctionalites] = React.useState([]);
 	const [titre, setTitre] = React.useState('');
 
 	const addRole = async () => {
-		console.log({ titre, fonctionalites: selected });
+		
 		if(titre === "") return console.log('titre obligatoire !!');
 		if(selected.length === 0) return console.log('fonctionalite obligatoire !!');
 		const data = { titre, fonctionalites: selected }
@@ -29,6 +32,15 @@ export default function RoleForm({ role }) {
 		}catch(err){
 			console.log(err);
 		}
+	}
+
+	const updateRole = async () => {
+		let relations = [];
+		for(const fonctionalite_id of selected){
+			let obj = { id: uuidv4(), role_id: role.id, fonctionalite_id }
+			relations.push(obj);
+		}
+		console.log(titre, relations);
 	}
 
 
@@ -90,12 +102,23 @@ export default function RoleForm({ role }) {
 					</div>
 				</div>
 			</div>
-						
+			{ role !== undefined && role !== null ? 
+			
+			<div className="mb-3 row">
+				<div className="col-sm-10 ml-sm-auto">
+					<span onClick={() => {updateRole()}} className="btn btn-primary">Submit</span>
+				</div>
+			</div>
+
+			:
+		
 			<div className="mb-3 row">
 				<div className="col-sm-10 ml-sm-auto">
 					<span onClick={() => {addRole()}} className="btn btn-primary">Submit</span>
 				</div>
 			</div>
+
+			}
 		</form>
     );
 }

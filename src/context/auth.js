@@ -25,11 +25,11 @@ if(token !== 'undefined' && token !== undefined && token !== null){
 const authReducer = (state, action) => {
     switch(action.type) {
         case 'LOGIN' :
-            console.log('action', action);
             localStorage.setItem('tokenARRU',action.payload);
+            const decodedToken = jwtDecode(action.payload);
             return {
                 ...state,
-                user: action.payload,
+                user: decodedToken,
             }
         case 'LOGOUT' :
             localStorage.removeItem('tokenARRU');

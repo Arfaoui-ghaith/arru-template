@@ -3,6 +3,7 @@ import '../css_folder/style.css'
 import GroupForm from '../components/GroupForm'
 import axios from 'axios';
 import FeatherIcon from 'feather-icons-react';
+import { Table } from 'react-bootstrap';
 
 export default function Group() {
 
@@ -12,7 +13,6 @@ export default function Group() {
 		fetchRoles();
 	},[])
 
-	  
 	const fetchRoles = async (e) => {
 		try {
 			const url ='http://localhost:4000/api/v1/roles/';
@@ -51,13 +51,12 @@ export default function Group() {
 								<div className="card-header">
 									<h5 className="card-title">Liste des groupes</h5>
 								</div>
-								<table className="table">
+								<Table responsive>
 									<thead>
 										<tr>
 											<th style={{"width":"30%"}}>titre</th>
-											<th style={{"width":"60%"}}>specifications</th>
-											
-											<th style={{"width":"10%"}}><a href="#"><i className="align-middle" data-feather="folder-plus"data-toggle="modal" data-target="#defaultModalPrimary"></i></a></th>
+											<th style={{"width":"60%"}}>specifications</th>										
+											<th style={{"width":"10%"}}><span data-toggle="modal" data-target="#defaultModalPrimary" style={{ "cursor": "pointer" }}><FeatherIcon icon="folder-plus"/></span></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -65,7 +64,7 @@ export default function Group() {
 										<tr>
 											<td>{role.titre}</td>
 											<td>
-                                            	<table className="table">
+                                            	<Table responsive>
 													<tbody>
 														{role.specification.map((specification,index) => (
 														<tr>
@@ -73,7 +72,7 @@ export default function Group() {
 														</tr>
 														))}
 													</tbody>
-												</table>
+												</Table>
                                             </td>
 								
 											<td className="table-action">
@@ -84,7 +83,7 @@ export default function Group() {
 										))}
 										
 									</tbody>
-								</table>
+								</Table>
                 <div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         
