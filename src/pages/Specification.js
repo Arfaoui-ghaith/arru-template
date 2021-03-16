@@ -1,66 +1,61 @@
 import React from 'react'
 import '../css_folder/style.css'
-import RoleForm from '../components/RoleForm'
+import GroupSpecification from '../components/GroupSpecification'
 import axios from 'axios';
 import FeatherIcon from 'feather-icons-react';
 import { Table } from 'react-bootstrap';
 
-export default function Role() {
-
-	const [roles, setRoles] = React.useState([]);
-	const [roleEdit, setRoleEdit] = React.useState({});
+export default function Specification() {
+    
+    const [specifications, setSpecifications] = React.useState([]);
+	const [specification, setSpecification] = React.useState({});
 
 	React.useEffect(() => {
-		fetchRoles();
-	},[]);
-	  
-	const fetchRoles = async (e) => {
+		fetchSpecifications();
+	},[])
+
+	const fetchSpecifications = async (e) => {
 		try {
-			const url ='http://localhost:4000/api/v1/roles/';
+			const url ='http://localhost:4000/api/v1/specifications/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
 			  	url,
 			});
 	
-		
 			if (res.status === 200) {
-			  
-				setRoles(res.data.roles);
+				setSpecifications(res.data.specifications);
 			  	console.log(res);
-
 			}
+
 			} catch (err) {
 				console.log(err);
-				console.log("Alert");
 			}
 	}
 
-	const deleteRole = async (role) => {
-		 // eslint-disable-next-line no-restricted-globals
-		 var del=confirm("Are you sure you want to delete this role "+role.titre+" ?");
-		 if (del){
-			try{
-				const url =`http://localhost:4000/api/v1/roles/${role.id}`;
-				const res = await axios({
-					headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-					  method: 'delete',
-					  url
-				});
-				
-				console.log(res);
-				alert (role.titre+" deleted.");
-				window.location.replace('/Roles');
+    const deleteSpecification = async (specification) => {
+      // eslint-disable-next-line no-restricted-globals
+		var del=confirm("Are you sure you want to delete this specification "+specification.titre+"?");
+		if (del){
+		   try{
+			   const url =`http://localhost:4000/api/v1/specifications/${specification.id}`;
+			   const res = await axios({
+				   headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+					 method: 'delete',
+					 url
+			   });
+			   
+			   alert (specification.titre+" deleted.");
+			   window.location.replace('/Specifications');
 
-			}catch(err){
-				console.log(err);
-			}
-			 
-		 } else {
-			alert(role.titre+" not deleted");
-		 }
-	}
-
+		   }catch(err){
+			   console.log(err);
+		   }
+			
+		} else {
+		   alert(specification.titre+" not deleted");
+		}
+    }
 
     return (
         <main className="content">
@@ -68,7 +63,7 @@ export default function Role() {
 
             <div className="row mb-2 mb-xl-3">
                 <div className="col-auto d-none d-sm-block">
-                    <h3><strong>Gestion des roles </strong></h3>
+                    <h3><strong>Gestion des specifications </strong></h3>
                 </div>
 
             </div>
@@ -76,55 +71,32 @@ export default function Role() {
 						<div className="col-12 col-xl-12">
 							<div className="card">
 								<div className="card-header">
-									<h5 className="card-title">Liste des roles</h5>
+									<h5 className="card-title">Liste des groupes</h5>
 								</div>
 								<Table responsive>
 									<thead>
 										<tr>
-											<th style={{"width":"20%"}}>Titre</th>
-											<th style={{"width":"35%"}}>Fonctionalités</th>
-											<th style={{"width":"35%"}}>Interfaces</th>
+											<th style={{"width":"90%"}}>Titre</th>
+																				
 											<th style={{"width":"10%"}}><span data-toggle="modal" data-target="#defaultModalPrimary" style={{ "cursor": "pointer" }}><FeatherIcon icon="folder-plus"/></span></th>
 										</tr>
 									</thead>
 									<tbody>
-										{roles.map((role,index) => (
-										<tr key={index}>
-											<td>{role.titre}</td>
-											<td>
-                                            	<table className="table">
-													<tbody>
-														{role.fonctionalites.map((fonctionalite,index) => (
-														<tr key={index}>
-															<td>{fonctionalite.titre}</td>
-														</tr>
-														))}
-													</tbody>
-												</table>
-                                            </td>
-
-											<td>
-                                            	<table className="table">
-													<tbody>
-														{role.interfaces.map((interf,index) => (
-														<tr key={index}>
-															<td>{interf.titre}</td>
-														</tr>
-														))}
-													</tbody>
-												</table>
-                                            </td>
+									{specifications.map((specification,index) => (
+										<tr>
+											<td>{specification.titre}</td>
 								
 											<td className="table-action">
-												<span style={{ "cursor": "pointer" }} data-toggle="modal" data-target="#ModalMod" onClick={() => setRoleEdit(role)}><FeatherIcon icon="edit-2" /></span>
-												<span style={{ "cursor": "pointer" }} onClick={() => deleteRole(role)}><FeatherIcon icon="trash" /></span>
+												<span style={{ "cursor": "pointer" }} onClick={() => setSpecification(specification)} data-toggle="modal" data-target="#ModalMod"><FeatherIcon icon="edit-2" /></span>
+												<span style={{ "cursor": "pointer" }} onClick={() => deleteSpecification(specification)}><FeatherIcon icon="trash" /></span>
 											</td>
 										</tr>
 										))}
 										
 									</tbody>
 								</Table>
-                <div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
+
+                    <div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         
                         <div className="modal-content">
@@ -135,11 +107,11 @@ export default function Role() {
 							         <div className="card">
                                          
 									 <div className="modal-header">
-													<h5 className="modal-title">Ajouter role</h5>
+													<h5 className="modal-title">Ajouter specification</h5>
 													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
 								        <div className="card-body">
-									        <RoleForm />
+									        <GroupSpecification/>
 								</div>
 							</div>
                            
@@ -149,6 +121,7 @@ export default function Role() {
                                             </div>
                                         </div>
                                     </div>
+               
 
 				<div className="modal fade" id="ModalMod" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
@@ -161,11 +134,11 @@ export default function Role() {
 							         <div className="card">
                                          
 									 <div className="modal-header">
-													<h5 className="modal-title">Modifier role</h5>
-													<span type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></span>
+													<h5 className="modal-title">Modifier specicifation</h5>
+													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
 								        <div className="card-body">
-									        <RoleForm role={roleEdit} />
+									        <GroupSpecification specification={specification}/>
 								</div>
 							</div>
                            

@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard'
 import Role from './pages/Role'
 import Group from './pages/Group'
 import Interface from './pages/Interface'
+import Specification from './pages/Specification'
 import Settings from './pages/Settings'
 import Profile from './pages/Profile'
 import Login from './pages/Login'
@@ -34,6 +35,7 @@ function App() {
             <DynamicRoutes exact path="/Roles" component={Role} authenticated />
             <DynamicRoutes exact path="/Groupes" component={Group} authenticated />
             <DynamicRoutes exact path="/Interfaces" component={Interface} authenticated />
+            <DynamicRoutes exact path="/Specifications" component={Specification} authenticated />
             <DynamicRoutes exact path="/Profile" component={Profile} authenticated />
             <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
           </Switch>

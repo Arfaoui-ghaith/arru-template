@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap';
 export default function Group() {
 
 	const [roles, setRoles] = React.useState([]);
+	const [role, setRole] = React.useState({});
 
 	React.useEffect(() => {
 		fetchRoles();
@@ -35,6 +36,8 @@ export default function Group() {
 			}
 	}
 
+	
+
     return (
         <main className="content">
         <div className="container-fluid p-0">
@@ -54,9 +57,9 @@ export default function Group() {
 								<Table responsive>
 									<thead>
 										<tr>
-											<th style={{"width":"30%"}}>titre</th>
-											<th style={{"width":"60%"}}>specifications</th>										
-											<th style={{"width":"10%"}}><span data-toggle="modal" data-target="#defaultModalPrimary" style={{ "cursor": "pointer" }}><FeatherIcon icon="folder-plus"/></span></th>
+											<th style={{"width":"30%"}}>Titre</th>
+											<th style={{"width":"60%"}}>Specifications</th>										
+											<th style={{"width":"10%"}}></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -76,39 +79,15 @@ export default function Group() {
                                             </td>
 								
 											<td className="table-action">
-												<span style={{ "cursor": "pointer" }} data-toggle="modal" data-target="#ModalMod"><FeatherIcon icon="edit-2" /></span>
-												<span style={{ "cursor": "pointer" }} ><FeatherIcon icon="trash" /></span>
+												<span style={{ "cursor": "pointer" }} onClick={() => setRole(role)} data-toggle="modal" data-target="#ModalMod"><FeatherIcon icon="edit-2" /></span>
+												
 											</td>
 										</tr>
 										))}
 										
 									</tbody>
 								</Table>
-                <div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                
-                                <div className="col-12 col-xl-12">
-                                
-							         <div className="card">
-                                         
-									 <div className="modal-header">
-													<h5 className="modal-title">Ajouter role</h5>
-													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
-												</div>
-								        <div className="card-body">
-									        <GroupForm />
-								</div>
-							</div>
-                           
-						</div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+               
 
 				<div className="modal fade" id="ModalMod" tabIndex="-1" role="dialog" aria-hidden="true">
                     <div className="modal-dialog" role="document">
@@ -125,7 +104,7 @@ export default function Group() {
 													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 												</div>
 								        <div className="card-body">
-									        <GroupForm />
+									        <GroupForm role={role}/>
 								</div>
 							</div>
                            
