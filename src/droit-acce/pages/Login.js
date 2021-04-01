@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { useAuthDispatch } from '../context/auth';
-import { useAuthState } from './../context/auth';
+import { useAuthDispatch } from '../../context/auth';
+import { useAuthState } from '../../context/auth';
 
 export default function Login() {
 

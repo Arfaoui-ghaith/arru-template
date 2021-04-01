@@ -1,5 +1,5 @@
 import React from 'react'
-import '../css_folder/style.css'
+import '../../css_folder/style.css'
 import GroupSpecification from '../components/GroupSpecification'
 import axios from 'axios';
 import FeatherIcon from 'feather-icons-react';

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuthState } from './../context/auth';
+import { useAuthState } from '../../context/auth';
 import FeatherIcon from 'feather-icons-react';
 
 export default function Profile() {

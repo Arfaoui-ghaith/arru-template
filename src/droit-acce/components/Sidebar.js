@@ -1,6 +1,6 @@
 import React, { Profiler } from 'react';
 import SidebarItem from './SidebarItem';
-import { useAuthState } from './../context/auth';
+import { useAuthState } from '../../context/auth';
 
 export default function Sidebar(props) {
 
@@ -41,6 +41,11 @@ export default function Sidebar(props) {
 
 					<SidebarItem title="Specifications" icon="layout" l="/Specifications" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 
+					<li className="sidebar-header">
+						Identification des projets
+					</li>
+					<SidebarItem title="Projets" icon="clipboard" l="/Projets" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Quartiers" icon="map" l="/Quartiers" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<li className="sidebar-header">
 						profile
 					</li>

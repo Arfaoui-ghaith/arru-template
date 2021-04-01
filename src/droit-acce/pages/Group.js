@@ -1,5 +1,5 @@
 import React from 'react'
-import '../css_folder/style.css'
+import '../../css_folder/style.css'
 import GroupForm from '../components/GroupForm'
 import axios from 'axios';
 import FeatherIcon from 'feather-icons-react';

@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 
-import '../css_folder/style.css'
+import '../../css_folder/style.css'
 
 export default function Interface() {
 
