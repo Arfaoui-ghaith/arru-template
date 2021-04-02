@@ -32,6 +32,31 @@ export default function Quartiers() {
                 
             </div>
 
+            <div className="modal fade" id="ModalMod" tabIndex="-1" role="dialog" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                        
+                    <div className="modal-content">
+                        <div className="modal-header">
+                                
+                            <div className="col-12 col-xl-12">
+                                
+							    <div className="card">
+                                         
+									<div className="modal-header">
+													<h5 className="modal-title">Ajouter Quartier</h5>
+													<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+									</div>
+								    <div className="card-body">
+									        
+								    </div>
+							    </div>
+                           
+						    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     )

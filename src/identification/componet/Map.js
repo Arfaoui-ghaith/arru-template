@@ -1,70 +1,49 @@
-import React,{useMemo,useState, clickedCount }from 'react'
-import { MapContainer, TileLayer, Marker, Popup, Tooltip, Rectangle, Polygon, CircleMarker} from 'react-leaflet'
-const center = [51.505, -0.09]
+import React from "react";
+import { MapContainer , Marker, Popup, TileLayer,FeatureGroup, Polygon, Tooltip } from "react-leaflet";
+import { EditControl } from "react-leaflet-draw"
 
-const multiPolygon = [
-  [
-    [51.51, -0.12],
-    [51.51, -0.13],
-    [51.53, -0.13],
-  ],
-  [
-    [51.51, -0.05],
-    [51.51, -0.07],
-    [51.53, -0.07],
-  ],
-]
+import "./map.css";
 
-const rectangle = [
-  [51.49, -0.08],
-  [51.5, -0.06],
-]
-
-function TooltipCircle() {
-  const [clickedCount, setClickedCount] = useState(0)
-  const eventHandlers = useMemo(
-    () => ({
-      click() {
-        setClickedCount((count) => count + 1)
-      },
-    }),
-    [],
-  )}
-
-  const clickedText =
-    clickedCount === 0
-      ? 'Click this Circle to change the Tooltip text'
-      : `Circle click: ${clickedCount}`
-
-   class Map extends React.Component {
-  	render() {
-      return (
-      <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+export default function Map() {
+  const multiPolygon = [
+    [
+      [51.51, -0.12],
+      [51.51, -0.13],
+      [51.53, -0.13],
+    ],
+    [
+      [51.51, -0.05],
+      [51.51, -0.07],
+      [51.53, -0.07],
+    ],
+  ]
+  
+  return (
+    <MapContainer  center={[33.886917, 9.537499]} zoom={6}>
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <FeatureGroup>
+        <EditControl
+          position='topright'
+          onCreated={(e) => console.log(e)}
+          onEditStart={(e) => console.log(e.layers)}
+          draw={{
+            rectangle: false
+          }}
         />
-        <TooltipCircle />
-        <CircleMarker
-          center={[51.51, -0.12]}
-          pathOptions={{ color: 'red' }}
-          radius={20}>
-          <Tooltip>Tooltip for CircleMarker</Tooltip>
-        </CircleMarker>
-        <Marker position={[51.51, -0.09]}>
-          <Popup>Popup for Marker</Popup>
-          <Tooltip>Tooltip for Marker</Tooltip>
-        </Marker>
-        <Polygon pathOptions={{ color: 'purple' }} positions={multiPolygon}>
-          <Tooltip sticky>sticky Tooltip for Polygon</Tooltip>
-        </Polygon>
-        <Rectangle bounds={rectangle} pathOptions={{ color: 'black' }}>
-          <Tooltip direction="bottom" offset={[0, 20]} opacity={1} permanent>
-            permanent Tooltip for Rectangle
-          </Tooltip>
-        </Rectangle>
-      </MapContainer> )
         
-      }
-    }
-  export default Map ;
+      </FeatureGroup>
+   
+      <Marker position={[36.25313319699069,9.613037109375002]}>
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Polygon pathOptions={{ color: 'purple' }} positions={multiPolygon}>
+      <Tooltip sticky>sticky Tooltip for Polygon</Tooltip>
+    </Polygon>
+    </MapContainer >
+  );
+}
