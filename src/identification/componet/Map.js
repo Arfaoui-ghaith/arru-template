@@ -1,70 +1,102 @@
-import React,{useMemo,useState, clickedCount }from 'react'
-import { MapContainer, TileLayer, Marker, Popup, Tooltip, Rectangle, Polygon, CircleMarker} from 'react-leaflet'
-const center = [51.505, -0.09]
+import React from "react";
+import { MapContainer , Marker, Popup, TileLayer, Polygon, Tooltip } from "react-leaflet";
+import { Container, Button } from 'react-bootstrap';
+import axios from 'axios';
 
-const multiPolygon = [
-  [
-    [51.51, -0.12],
-    [51.51, -0.13],
-    [51.53, -0.13],
-  ],
-  [
-    [51.51, -0.05],
-    [51.51, -0.07],
-    [51.53, -0.07],
-  ],
-]
 
-const rectangle = [
-  [51.49, -0.08],
-  [51.5, -0.06],
-]
+import "./map.css";
 
-function TooltipCircle() {
-  const [clickedCount, setClickedCount] = useState(0)
-  const eventHandlers = useMemo(
-    () => ({
-      click() {
-        setClickedCount((count) => count + 1)
-      },
-    }),
-    [],
-  )}
+export default function Map() {
+  const [quartiers, setQuartiers] = React.useState([]);
 
-  const clickedText =
-    clickedCount === 0
-      ? 'Click this Circle to change the Tooltip text'
-      : `Circle click: ${clickedCount}`
+  const fetchQuartiers = async () => {
+		try {
+			const url ='http://localhost:4000/api/v1/quartiers/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+			});
+	
+			console.log(res.data.projets);
 
-   class Map extends React.Component {
-  	render() {
-      return (
-      <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <TooltipCircle />
-        <CircleMarker
-          center={[51.51, -0.12]}
-          pathOptions={{ color: 'red' }}
-          radius={20}>
-          <Tooltip>Tooltip for CircleMarker</Tooltip>
-        </CircleMarker>
-        <Marker position={[51.51, -0.09]}>
-          <Popup>Popup for Marker</Popup>
-          <Tooltip>Tooltip for Marker</Tooltip>
-        </Marker>
-        <Polygon pathOptions={{ color: 'purple' }} positions={multiPolygon}>
-          <Tooltip sticky>sticky Tooltip for Polygon</Tooltip>
-        </Polygon>
-        <Rectangle bounds={rectangle} pathOptions={{ color: 'black' }}>
-          <Tooltip direction="bottom" offset={[0, 20]} opacity={1} permanent>
-            permanent Tooltip for Rectangle
-          </Tooltip>
-        </Rectangle>
-      </MapContainer> )
-        
-      }
+			if (res.status === 200) {
+				setQuartiers(res.data.quartiers);
+			}
+
+      console.log(quartiers);
+
+			} catch (err) {
+				console.log(err);
+			}
+	}
+
+  const deleteQuartier = async (id) => {
+		try {
+			const url =`http://localhost:4000/api/v1/quartiers/${id}`;
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'delete',
+			  	url,
+			});
+
+      console.log(res.data);
+
+			if (res.status === 203) {
+				window.location.replace('/Quartiers');
+			}
+
+			} catch (err) {
+				console.log(err);
+			}
+	}
+
+  const multiPolygon = (limites) => {
+    let polys = [];
+    for(const limite of limites){
+      polys.push([limite.iat, limite.ing]);
     }
-  export default Map ;
+
+    return polys;
+    
+  }
+
+    React.useEffect(() => {
+        fetchQuartiers();
+    },[]);
+  
+  return (
+    <Container>
+    <MapContainer  center={[34.886917, 9.537499]} zoom={7}>
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+   
+      {
+      quartiers.map((quartier) => (
+            <Marker position={[quartier.iat,quartier.ing]}>
+              <Popup>
+                Projet: {quartier.projet_nom} <br />
+                Nom: {quartier.nom} <br />
+                <Button variant="danger" size="lg" block onClick={() => deleteQuartier(quartier.id)}>
+                    Delete
+                </Button>
+              </Popup>
+            </Marker>
+        ))
+      }
+    
+    
+    { 
+    quartiers.map((quartier) => ( 
+    <Polygon pathOptions={{ color: 'blue' }} positions={multiPolygon(quartier.limites)}>
+      <Tooltip sticky>sticky Tooltip for Polygon</Tooltip>
+    </Polygon> ))
+    }
+    
+    
+    </MapContainer>
+    </Container>
+  );
+}
