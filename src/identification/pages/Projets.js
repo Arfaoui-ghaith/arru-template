@@ -1,9 +1,68 @@
 import React from 'react';
-import Carte from '../componet/Carte';
-import Form from '../componet/FormProjet'
+import Carte from '../components/Carte';
+import Form from '../components/FormProjet'
 import FeatherIcon from 'feather-icons-react';
+import axios from 'axios';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
 export default function Projets() {
+
+	const [projets, setProjets] = React.useState([]);
+	const [show, setShow] = React.useState(false);
+	const [projet, setProjet] = React.useState({});
+
+	const fetchProjets = async () => {
+		try {
+			const url ='http://localhost:4000/api/v1/projets/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+			});
+
+			if (res.status === 200) {
+				setProjets(res.data.projets);
+			}
+
+			} catch (err) {
+				console.log(err.response.data.message);
+			}
+	}
+
+	const deleteProjet = async () => {
+		try {
+			const url =`http://localhost:4000/api/v1/projets/${projet.id}`;
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'delete',
+			  	url,
+			});
+
+			if (res.status === 203) {
+				toast.success('Success', {
+					position: 'top-right',
+					autoClose: 5000,
+					draggable: false
+				});
+				window.location.replace('/Projets');
+			}
+
+			} catch (err) {
+				toast.error(err.response.data.message, {
+					position: 'top-right',
+					autoClose: 5000,
+					draggable: true
+				});
+				setShow(false);
+			}
+	}
+
+	React.useEffect(() => {
+		fetchProjets();
+	},[])
+
     return (
         <main class="content">
 				<div class="container-fluid p-0">
@@ -25,10 +84,8 @@ export default function Projets() {
 									<table class="table mb-0">
 										<thead>
 											<tr>
-												<th scope="col">ID</th>
+												<th scope="col">#</th>
 												<th scope="col">Nom</th>
-												<th scope="col">Gouvernorat</th>
-												<th scope="col">Commune</th>
 												<th scope="col">Municipalité</th>
 												<th scope="col">Nombre de quartier</th>
 												<th scope="col">Nombre de maison</th>
@@ -37,34 +94,19 @@ export default function Projets() {
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<th scope="row">1</th>
-												<td>Cell</td>
-												<td>Cell</td>
-												<td>Cell</td>
-												<td>Cell</td>
-												<td>Cell</td>
-												<td>Cell</td>
-												<td>Cell</td>
-												<td><span style={{ "cursor": "pointer" }} data-toggle="modal" data-target="#ModalMod" ><FeatherIcon icon="edit-2" /></span>
-														<span style={{ "cursor": "pointer" }} ><FeatherIcon icon="trash" /></span>
-											</td>
-											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<td>Cell</td>
-												<td>Cell</td>
-												<td>Cell</td>
-												<td>Cell</td>
+											{ projets.map((projet,index) => (
+											<tr key={index}>
+												<td>{index+1}</td>
+												<td>{projet.nom}</td>
+												<td></td>
 												<td>Cell</td>
 												<td>Cell</td>
 												<td>Cell</td>
 												<td><span style={{ "cursor": "pointer" }} data-toggle="modal" data-target="#ModalMod" ><FeatherIcon icon="edit-2" /></span>
-														<span style={{ "cursor": "pointer" }} ><FeatherIcon icon="trash" /></span>
+														<span style={{ "cursor": "pointer" }} onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="trash" /></span>
 											</td>
 											</tr>
-
-											
+											))}
 										</tbody>
 									</table>
 
@@ -95,6 +137,20 @@ export default function Projets() {
                                     </div>
 
 				</div>
+				<Modal show={show} onHide={() => setShow(false)}>
+					<Modal.Header closeButton>
+					<Modal.Title>Confirmation</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>Are you sure you want delete {projet.nom}!</Modal.Body>
+					<Modal.Footer>
+					<Button variant="secondary" onClick={() => setShow(false)}>
+						Close
+					</Button>
+					<Button variant="primary" onClick={() => { deleteProjet() }}>
+						Save Changes
+					</Button>
+					</Modal.Footer>
+				</Modal>
 			</main>
     )
 }

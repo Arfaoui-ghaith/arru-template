@@ -1,11 +1,11 @@
 import React from 'react'
-import Map from '../componet/Map'
+import Map from '../components/Map'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import axios from 'axios'
 
 import FeatherIcon from 'feather-icons-react';
-import MapFormAdd from './../componet/MapFormAdd'
+import MapFormAdd from '../components/MapFormAdd'
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
 export default function Quartiers() {
@@ -56,7 +56,7 @@ export default function Quartiers() {
                                     components={animatedComponents}
                                     options={[]}
                                 />	
-                                	   
+
                                 </Card.Body>
                             </Card>
                             </Col>
@@ -109,7 +109,7 @@ export default function Quartiers() {
         dialogClassName="modal-100w"
         aria-labelledby="example-custom-modal-styling-title"
         >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton >
           <Modal.Title id="example-custom-modal-styling-title">
             Ajouter Quartier
           </Modal.Title>
