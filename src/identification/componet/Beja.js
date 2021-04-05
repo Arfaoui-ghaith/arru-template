@@ -1,15 +1,11 @@
 import React from 'react';
 import "react-svg-map/lib/index.css";
-import Tunisia from '@svg-maps/tunisia';
-import Beja from './Beja';
-import Gabes from './Gabes';
-import Bizerte from './Bizerte'
-
+import Beja from '@svg-maps/beja';
 import { CheckboxSVGMap } from "react-svg-map";
 import { getLocationName } from './Utils';
-import ReactTooltip from 'react-tooltip';
 
-class Carte extends React.Component {
+
+class BejaC extends React.Component {
 	constructor(props) {
 		super(props);
 //tunisia 
@@ -29,7 +25,6 @@ class Carte extends React.Component {
 	handleLocationMouseOver(event) {
 		const pointedLocation = getLocationName(event);
 		this.setState({ pointedLocation: pointedLocation});
-   
 	}
 
 	handleLocationMouseOut() {
@@ -63,36 +58,19 @@ class Carte extends React.Component {
 	render() {
 		return (
 			<article className="examples__block">
-				<div class="row">
-        <div class="col-6">
+				
 				<div className="examples__block__map">
 					<CheckboxSVGMap
-          data-for='test'
-						map={Tunisia}
+						map={Beja}
 						onLocationMouseOver={this.handleLocationMouseOver}
 						onLocationMouseOut={this.handleLocationMouseOut}
 						onLocationFocus={this.handleLocationFocus}
 						onLocationBlur={this.handleLocationBlur}
 						onChange={this.handleOnChange} />
 				</div>
-        </div>
-        { this.state.selectedLocations[0]==="Beja" ?
-        <div class="col-6">
-        <Beja />
-        </div>: ''}
-		{ this.state.selectedLocations[0]==="Bizerte" ?
-        <div class="col-6">
-        <Bizerte />
-        </div>: ''}
-		{ this.state.selectedLocations[0]==="Gabes" ?
-        <div class="col-6">
-        <Gabes />
-        </div>: ''}
-        </div>
-        <ReactTooltip id='test'>{this.state.pointedLocation}</ReactTooltip>
 			</article>
 		);
 	}
 }
 
-export default Carte;
+export default BejaC;
