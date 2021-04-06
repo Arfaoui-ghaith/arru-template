@@ -1,10 +1,16 @@
 import React from "react";
-import { MapContainer , Marker, Popup, TileLayer, Polygon, Tooltip } from "react-leaflet";
+import { MapContainer , Marker, Popup, TileLayer, Polygon, Tooltip, LayersControl, 
+  withLeaflet } from "react-leaflet";
 import { Container, Button } from 'react-bootstrap';
 import axios from 'axios';
-
+import { SearchControl, OpenStreetMapProvider } from 'react-leaflet-geosearch'
 
 import "./map.css";
+
+const {BaseLayer} = LayersControl;
+
+const prov = OpenStreetMapProvider();
+const GeoSearchControlElement = withLeaflet(SearchControl);
 
 export default function Map() {
   const [quartiers, setQuartiers] = React.useState([]);
@@ -68,10 +74,24 @@ export default function Map() {
   return (
     <Container>
     <MapContainer  center={[34.886917, 9.537499]} zoom={7}>
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      <LayersControl>
+        <BaseLayer checked name="osm">
+          <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </BaseLayer>
+        <BaseLayer name="satellite">
+          <TileLayer
+          attribution='&copy; <a href="server.arcgisonline.com">arcgisonline Maps</a> contributors'
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          />
+        </BaseLayer>
+      </LayersControl>
+      
+      <GeoSearchControlElement provider={prov} showMarker= {true} showPopup={false} popupFormat={({ query, result }) => result.label} 
+                  maxMarkers={3}  retainZoomLevel= {false}  animateZoom= {true} autoClose= {false}  
+                  searchLabel={'Enter address, please'} keepResult= {true} />
    
       {
       quartiers.map((quartier) => (
