@@ -9,8 +9,6 @@ import "./map.css";
 
 const {BaseLayer} = LayersControl;
 
-const prov = OpenStreetMapProvider();
-const GeoSearchControlElement = withLeaflet(SearchControl);
 
 export default function Map() {
   const [quartiers, setQuartiers] = React.useState([]);
@@ -89,9 +87,7 @@ export default function Map() {
         </BaseLayer>
       </LayersControl>
       
-      <GeoSearchControlElement provider={prov} showMarker= {true} showPopup={false} popupFormat={({ query, result }) => result.label} 
-                  maxMarkers={3}  retainZoomLevel= {false}  animateZoom= {true} autoClose= {false}  
-                  searchLabel={'Enter address, please'} keepResult= {true} />
+    
    
       {
       quartiers.map((quartier) => (

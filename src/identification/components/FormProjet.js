@@ -81,7 +81,7 @@ export default function FormProjet() {
         <div>
 			<ToastContainer/>
 			<div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Nom :</label>
+                <label className="col-form-label col-sm-3 text-sm-left">Nom</label>
                 <div className="col-sm-9">
 					<input type="text" className="form-control"
                       placeholder= "Nom" onChange={(e) => setProjet({...projet, nom: e.target.value})}/>
@@ -103,21 +103,21 @@ export default function FormProjet() {
 			</div>
 			
 			<div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Nombre quartiers :</label>
+                <label className="col-form-label col-sm-3 text-sm-left">Nombre quartiers</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre quartiers"
 					onChange={(e) => setProjet({...projet, nbr_qaurtier: e.target.value})}/>
 				</div>
 			</div>
 			<div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Nombre maisons :</label>
+                <label className="col-form-label col-sm-3 text-sm-left">Nombre maisons</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre maisons"
 					onChange={(e) => setProjet({...projet, nbr_maison: e.target.value})}/>
 				</div>
 			</div>
             <div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Nombre habitants :</label>
+                <label className="col-form-label col-sm-3 text-sm-left">Nombre habitants</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre habitants"
 					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>

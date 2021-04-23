@@ -15,6 +15,7 @@ import Login from './droit-acce/pages/Login'
 import Quartiers from './identification/pages/Quartiers'
 import Projets from './identification/pages/Projets'
 import E404 from './identification/pages/E404'
+import Criteres from './identification/pages/Criteres'
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
 import DynamicRoutes from './utils/DynamicRoutes';
@@ -43,6 +44,7 @@ function App() {
             <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
             <DynamicRoutes exact path="/Quartiers" component={Quartiers} guest />
             <DynamicRoutes exact path="/Projets" component={Projets} guest />
+            <DynamicRoutes exact path="/Criteres" component={Criteres} guest />
             <DynamicRoutes exact path="/E404" component={E404} guest />
           </Switch>
           <Footer />

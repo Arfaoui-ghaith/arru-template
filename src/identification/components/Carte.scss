@@ -7,17 +7,17 @@
     stroke-linejoin: round;
   
     &__location {
-      fill: #a1d99b;
+      fill: #000099;
       cursor: pointer;
   
       &:focus,
       &:hover {
-        fill: #b8e2b3;
+        fill: #5a5ec3;
         outline: 0;
       }
   
       &[aria-checked="true"] {
-        fill: #f4bc44;
+        fill: #ffc547;
       }
     }
   }

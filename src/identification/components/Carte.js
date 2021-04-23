@@ -63,33 +63,39 @@ class Carte extends React.Component {
 	render() {
 		return (
 			<article className="examples__block">
-				<div class="row">
-        <div class="col-6">
+        <div >
 				<div className="examples__block__map">
+				<div class="card-body">
+					<div id="world_map" style={{"height":"350px"}} class="jvm-container">
 					<CheckboxSVGMap
-          data-for='test'
+        			    data-for='test'
 						map={Tunisia}
 						onLocationMouseOver={this.handleLocationMouseOver}
 						onLocationMouseOut={this.handleLocationMouseOut}
 						onLocationFocus={this.handleLocationFocus}
 						onLocationBlur={this.handleLocationBlur}
-						onChange={this.handleOnChange} />
+						onChange={this.handleOnChange} 
+					/>
+			
 				</div>
+				
         </div>
         { this.state.selectedLocations[0]==="Beja" ?
         <div class="col-6">
         
-        </div>: ''}
+        </div>: <div style={{"width": "0px"}}></div>}
 		{ this.state.selectedLocations[0]==="Bizerte" ?
         <div class="col-6">
         
-        </div>: ''}
+        </div>: <div style={{"width": "0px"}}></div>}
 		{ this.state.selectedLocations[0]==="Gabes" ?
         <div class="col-6">
         
-        </div>: ''}
-        </div>
+        </div>: <div style={{"width": "0px"}}></div>}
+    
         <ReactTooltip id='test'>{this.state.pointedLocation}</ReactTooltip>
+		</div>
+		</div>
 			</article>
 		);
 	}

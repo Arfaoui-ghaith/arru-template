@@ -21,14 +21,18 @@ export default function Quartiers() {
 
             <div className="row">
                 <div className="col-12 col-lg-12" >
-                    <div className="card">
-                        <div className="card-header">
-                            <h5 className="card-title">Default Map</h5>
-                            <h6 className="card-subtitle text-muted">Displays the default road map view.</h6>
-                        </div>
-                    </div>
+                   
                     <Container>
                         <Row>
+                           
+                            <Col xs={12} md={9} >
+                            <Card>
+                                <Card.Body>
+                                    <Map />
+                                </Card.Body>
+                            </Card>
+                            </Col>
+
                             <Col xs={12} md={3}>
                             <Card>
                                 <Card.Header>
@@ -57,16 +61,6 @@ export default function Quartiers() {
                                     options={[]}
                                 />	
 
-                                </Card.Body>
-                            </Card>
-                            </Col>
-                            <Col xs={12} md={9} >
-                            <Card>
-                                <Card.Header>
-                    
-                                </Card.Header>
-                                <Card.Body>
-                                    <Map />
                                 </Card.Body>
                             </Card>
                             </Col>

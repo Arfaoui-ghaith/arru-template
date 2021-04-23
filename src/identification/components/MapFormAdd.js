@@ -189,7 +189,7 @@ export default function MapFormAdd() {
             </Modal.Header>
             <Modal.Body>
             <div className="row">
-                <label className="col-form-label col-sm-1 text-sm-left">nom: </label>
+                <label className="col-form-label col-sm-1 text-sm-left">nom </label>
                 <div className="col-sm-11">
                     <input type="text" className="form-control" onChange={(e) => setNom(e.target.value)} />
                 </div>

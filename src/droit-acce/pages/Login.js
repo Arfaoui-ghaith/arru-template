@@ -60,7 +60,7 @@ export default function Login() {
 							<div className="card-body">
 								<div className="m-sm-4">
 									<div className="text-center">
-										<img src="img/photos/logo.png" alt="ARRU" className="img-fluid " width="132" height="132" />
+										<img src="img/photos/priqh.png" alt="ARRU" className="img-fluid " width="132" height="132" />
 									</div>
 									<form>
 										<div className="mb-3">

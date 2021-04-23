@@ -22,14 +22,6 @@ export default function Navbar(props) {
                 <i className="hamburger align-self-center"></i>
             </a>
 
-            <form className="d-none d-sm-inline-block">
-                <div className="input-group input-group-navbar">
-                    <input type="text" className="form-control" placeholder="Search…" aria-label="Search" />
-                    <button className="btn" type="button">
-                        <i className="align-middle" data-feather="search"></i>
-                    </button>
-                </div>
-            </form>
 
             <div className="navbar-collapse collapse">
                 <ul className="navbar-nav navbar-align">
