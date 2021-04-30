@@ -1,6 +1,5 @@
 import ApolloProvider from './ApolloProvider';
 import React from 'react'
-import './App.css'
 import Sidebar from './droit-acce/components/Sidebar'
 import Navbar from './droit-acce/components/Navbar'
 import Footer from './droit-acce/components/Footer'
@@ -16,9 +15,12 @@ import Quartiers from './identification/pages/Quartiers'
 import Projets from './identification/pages/Projets'
 import E404 from './identification/pages/E404'
 import Criteres from './identification/pages/Criteres'
+import Zone from './identification/pages/Zone'
+import Elig from './identification/pages/Eligible'
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
 import DynamicRoutes from './utils/DynamicRoutes';
+import './App.css'
 
 
 
@@ -44,7 +46,9 @@ function App() {
             <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
             <DynamicRoutes exact path="/Quartiers" component={Quartiers} guest />
             <DynamicRoutes exact path="/Projets" component={Projets} guest />
-            <DynamicRoutes exact path="/Criteres" component={Criteres} guest />
+            <DynamicRoutes exact path="/Eligible" component={Elig} guest />
+            <DynamicRoutes exact path="/Critéres d'éligibilité" component={Criteres} guest />
+            <DynamicRoutes exact path="/Zone d'intervention" component={Zone} guest />
             <DynamicRoutes exact path="/E404" component={E404} guest />
           </Switch>
           <Footer />

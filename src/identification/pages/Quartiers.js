@@ -36,7 +36,7 @@ export default function Quartiers() {
                             <Col xs={12} md={3}>
                             <Card>
                                 <Card.Header>
-                                    <Button variant="primary" size="lg" block onClick={() => setShow(true)}>
+                                    <Button variant="primary" size="primary" block onClick={() => setShow(true)}>
                                         <FeatherIcon icon="map" /><FeatherIcon icon="plus" />
                                     </Button>
                                 </Card.Header>
@@ -54,12 +54,6 @@ export default function Quartiers() {
                                     components={animatedComponents}
                                     options={[]}
                                 />
-                                <Select className="py-2"
-                                    placeholder="Municipalite ..."
-                                    closeMenuOnSelect={false}
-                                    components={animatedComponents}
-                                    options={[]}
-                                />	
 
                                 </Card.Body>
                             </Card>

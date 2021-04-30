@@ -129,7 +129,7 @@ export default function MapFormAdd() {
     return (
         <React.Fragment>
         <Container>
-                { projet ?
+                
                     <Card>
                         <Card.Header>
             
@@ -137,7 +137,8 @@ export default function MapFormAdd() {
                         <Card.Body>
                             <MapContainer  center={[34.886917, 9.537499]} zoom={7} ref={mapRef}>
                             <TileLayer
-                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                attribution='&copy; <a href="http://osm.org/copyright">
+                                OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
                             
@@ -161,8 +162,7 @@ export default function MapFormAdd() {
                                 
                             </MapContainer >
                         </Card.Body>
-                    </Card> : ""
-                }
+                    </Card>
                     <Card>
                         <Card.Header>
                         <Select className="py-2"

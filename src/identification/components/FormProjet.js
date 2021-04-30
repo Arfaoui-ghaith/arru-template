@@ -6,8 +6,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function FormProjet() {
-
-	const animatedComponents = makeAnimated();
+    const animatedComponents = makeAnimated();
 	const [show, setShow] = React.useState(false);
 	const [projet, setProjet] = React.useState({});
 	const [error, setError] = React.useState("");
@@ -76,20 +75,13 @@ export default function FormProjet() {
 	React.useEffect(() => {
 		fetchMunicipalites();
 	},[])
-
+	
+	
     return (
         <div>
 			<ToastContainer/>
 			<div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Nom</label>
-                <div className="col-sm-9">
-					<input type="text" className="form-control"
-                      placeholder= "Nom" onChange={(e) => setProjet({...projet, nom: e.target.value})}/>
-				</div>
-			</div>
-          
-            <div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Municipalité</label>
+                <label className="col-form-label col-sm-3 text-sm-left">zone d'intervention</label>
 				<div className="col-sm-9">
 					<div className="boxes" >
 						<Select
@@ -101,30 +93,90 @@ export default function FormProjet() {
 					</div>
 				</div>
 			</div>
-			
 			<div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Nombre quartiers</label>
+                <label className="col-form-label col-sm-3 text-sm-left">quantité drainage</label>
                 <div className="col-sm-9">
-					<input type="number" className="form-control" placeholder="Nombre quartiers"
+					<input type="number" className="form-control" placeholder="quantité drainage (km)"
 					onChange={(e) => setProjet({...projet, nbr_qaurtier: e.target.value})}/>
 				</div>
 			</div>
 			<div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Nombre maisons</label>
+                <label className="col-form-label col-sm-3 text-sm-left">coût drainage</label>
                 <div className="col-sm-9">
-					<input type="number" className="form-control" placeholder="Nombre maisons"
+					<input type="number" className="form-control" placeholder="coût drainage"
 					onChange={(e) => setProjet({...projet, nbr_maison: e.target.value})}/>
 				</div>
 			</div>
             <div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">Nombre habitants</label>
+                <label className="col-form-label col-sm-3 text-sm-left">quantité voirie</label>
                 <div className="col-sm-9">
-					<input type="number" className="form-control" placeholder="Nombre habitants"
+					<input type="number" className="form-control" placeholder="quantité voirie (km)"
 					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
 				</div>
 			</div>
-
-			
+			<div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">coût voirie</label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="coût voirie"
+					onChange={(e) => setProjet({...projet, nbr_maison: e.target.value})}/>
+				</div>
+			</div>
+            <div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">quantité eau potable </label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="quantité eau potable (km)"
+					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+				</div>
+			</div>
+            <div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">coût eau potable</label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="coût eau potable"
+					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+				</div>
+			</div>
+            <div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">Nombre de poteaux lumineux</label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="Nombre de poteaux lumineux"
+					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+				</div>
+			</div>
+            <div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">coût éclairage public</label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="coût éclairage public"
+					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+				</div>
+			</div>
+			<div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left"> quantité assainissement</label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="quantité assainissement (km)"
+					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+				</div>
+			</div>
+            <div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">coût assainissement</label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="coût assainissement"
+					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+				</div>
+			</div>
+            <div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">bureau d'étude</label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="bureau d'étude"
+					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+				</div>
+			</div>
+            <div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">coût d'étude</label>
+                <div className="col-sm-9">
+					<input type="number" className="form-control" placeholder="coût d'étude"
+					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+				</div>
+			</div>
 			<div className="mb-3 row">
 				<div className="col-sm-9">
 					<span  className="btn btn-primary" onClick={() => addProjet()}>Submit</span>

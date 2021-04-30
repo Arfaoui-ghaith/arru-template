@@ -1,23 +1,22 @@
 import React, { useRef } from 'react';
 import Carte from '../components/Carte';
-import Form from '../components/FormProjet'
+import Form from '../components/FormZone'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-smart-data-table/dist/react-smart-data-table.css'
-import Print from '../components/PrintProjet'
-import FeatherIcon from 'feather-icons-react';
+import Print from '../components/PrintZone'
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
-export default function Projets(ref) {
 
-	const [projets, setProjets] = React.useState([]);
+export default function Zone(ref) {
+    const [Zones, setZones] = React.useState([]);
 	const [show, setShow] = React.useState(false);
 	const [projet, setProjet] = React.useState({});
 
-	const fetchProjets = async () => {
+	const fetchZones = async () => {
 		try {
-			const url ='http://localhost:4000/api/v1/projets/';
+			const url ='http://localhost:4000/api/v1/Zones/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -25,7 +24,7 @@ export default function Projets(ref) {
 			});
 
 			if (res.status === 200) {
-				setProjets(res.data.projets);
+				setZones(res.data.Zones);
 			}
 
 			} catch (err) {
@@ -35,7 +34,7 @@ export default function Projets(ref) {
 
 	const deleteProjet = async () => {
 		try {
-			const url =`http://localhost:4000/api/v1/projets/${projet.id}`;
+			const url =`http://localhost:4000/api/v1/Zones/${projet.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -48,7 +47,7 @@ export default function Projets(ref) {
 					autoClose: 5000,
 					draggable: false
 				});
-				window.location.replace('/Projets');
+				window.location.replace('/Zones');
 			}
 
 			} catch (err) {
@@ -62,18 +61,15 @@ export default function Projets(ref) {
 	}
 
 	React.useEffect(() => {
-		fetchProjets();
+		fetchZones();
 	},[])
 
-	const refreshPage = (e) => {
-        window.location.replace("/eligible");
-    }
-
+	
     return (
         <main className="content">
 				<div className="container-fluid p-0">
 
-					<h1 className="h3 mb-3">Gestion des projets</h1>
+					<h1 className="h3 mb-3">Les Zones d'intervention</h1>
 
 					<div className="row">
 
@@ -84,24 +80,11 @@ export default function Projets(ref) {
 						<div className="col-9">
 							<div className="card">
 								<div className="card-header">
-								<div className="row">
-
-									<div className="col-6">
-									<h5 className="card-title">Liste des projets</h5>
+									<h5 className="card-title">Liste des Zones d'intervention</h5>
 									</div>
-									<div className="col-4">
 									<Button  class="btn btn-primary mb-4 mt-n3 mr-5 ml-5" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
-									<i class="fas fa-plus"></i> Ajouter Projet
+									<i class="fas fa-plus"></i> Ajouter une zone
 									</Button>
-									</div>
-									<div className="col-2">
-									<Button  class="btn btn-primary mb-4 mt-n3 mr-5 ml-5" size="primary" onClick={refreshPage}>
-									<FeatherIcon icon="filter" />
-									</Button>
-										</div>
-									</div>
-									</div>
-									
 									<Print />
 							</div>
 						
@@ -115,7 +98,7 @@ export default function Projets(ref) {
 													<div className="col-12 col-xl-12">
 														<div className="card">
 															<div className="modal-header">
-																<h5 className="modal-title">Ajouter projet</h5>
+																<h5 className="modal-title">Ajouter une zone</h5>
 																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div className="card-body">
@@ -135,7 +118,7 @@ export default function Projets(ref) {
 													<div className="col-12 col-xl-12">
 														<div className="card">
 															<div className="modal-header">
-																<h5 className="modal-title">Modifier projet</h5>
+																<h5 className="modal-title">Modifier la zone</h5>
 																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div className="card-body">

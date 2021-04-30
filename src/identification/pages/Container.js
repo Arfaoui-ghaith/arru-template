@@ -1,15 +1,13 @@
 import React, { useRef } from 'react';
 import Carte from '../components/Carte';
-import Form from '../components/FormProjet'
+import Form from '../components/FormZone'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-smart-data-table/dist/react-smart-data-table.css'
-import Print from '../components/PrintProjet'
-import FeatherIcon from 'feather-icons-react';
-import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import { Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
-export default function Projets(ref) {
+export default function Container(ref) {
 
 	const [projets, setProjets] = React.useState([]);
 	const [show, setShow] = React.useState(false);
@@ -65,10 +63,7 @@ export default function Projets(ref) {
 		fetchProjets();
 	},[])
 
-	const refreshPage = (e) => {
-        window.location.replace("/eligible");
-    }
-
+	
     return (
         <main className="content">
 				<div className="container-fluid p-0">
@@ -84,25 +79,10 @@ export default function Projets(ref) {
 						<div className="col-9">
 							<div className="card">
 								<div className="card-header">
-								<div className="row">
-
-									<div className="col-6">
 									<h5 className="card-title">Liste des projets</h5>
 									</div>
-									<div className="col-4">
-									<Button  class="btn btn-primary mb-4 mt-n3 mr-5 ml-5" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
-									<i class="fas fa-plus"></i> Ajouter Projet
-									</Button>
-									</div>
-									<div className="col-2">
-									<Button  class="btn btn-primary mb-4 mt-n3 mr-5 ml-5" size="primary" onClick={refreshPage}>
-									<FeatherIcon icon="filter" />
-									</Button>
-										</div>
-									</div>
-									</div>
 									
-									<Print />
+								
 							</div>
 						
 					</div>
@@ -116,26 +96,6 @@ export default function Projets(ref) {
 														<div className="card">
 															<div className="modal-header">
 																<h5 className="modal-title">Ajouter projet</h5>
-																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
-															</div>
-															<div className="card-body">
-																<Form   />
-															</div>
-														</div>
-													</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-									<div className="modal fade" id="modif" tabIndex="-1" role="dialog" aria-hidden="true">
-										<div className="modal-dialog" role="document">
-											<div className="modal-content">
-												<div className="modal-header">
-													<div className="col-12 col-xl-12">
-														<div className="card">
-															<div className="modal-header">
-																<h5 className="modal-title">Modifier projet</h5>
 																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div className="card-body">

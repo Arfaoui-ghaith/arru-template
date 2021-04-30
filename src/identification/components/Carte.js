@@ -65,8 +65,8 @@ class Carte extends React.Component {
 			<article className="examples__block">
         <div >
 				<div className="examples__block__map">
-				<div class="card-body">
-					<div id="world_map" style={{"height":"350px"}} class="jvm-container">
+				<div className="card-body">
+					<div id="world_map" style={{"height":"350px"}} className="jvm-container">
 					<CheckboxSVGMap
         			    data-for='test'
 						map={Tunisia}
@@ -81,15 +81,15 @@ class Carte extends React.Component {
 				
         </div>
         { this.state.selectedLocations[0]==="Beja" ?
-        <div class="col-6">
+        <div className="col-6">
         
         </div>: <div style={{"width": "0px"}}></div>}
 		{ this.state.selectedLocations[0]==="Bizerte" ?
-        <div class="col-6">
+        <div className="col-6">
         
         </div>: <div style={{"width": "0px"}}></div>}
 		{ this.state.selectedLocations[0]==="Gabes" ?
-        <div class="col-6">
+        <div className="col-6">
         
         </div>: <div style={{"width": "0px"}}></div>}
     

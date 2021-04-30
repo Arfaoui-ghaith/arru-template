@@ -41,8 +41,9 @@ export default function Sidebar(props) {
 						Identification des projets
 					</li>
 					<SidebarItem title="Projets" icon="clipboard" l="/Projets" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Quartiers" icon="map" l="/Quartiers" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Critéres d'éligibilité" icon="user" l="/Criteres" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Quartiers" icon="map-pin" l="/Quartiers" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Critéres d'éligibilité" icon="filter" l="/Critéres d'éligibilité" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Zone d'intervention" icon="map" l="/Zone d'intervention" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<li className="sidebar-header">
 						profile
 					</li>

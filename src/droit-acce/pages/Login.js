@@ -76,7 +76,7 @@ export default function Login() {
 										</div>
 											
 										<div className="text-center mt-3">
-											 <span type="submit" className="btn btn-lg btn-primary" onClick={login}>Sign in</span> 
+											 <span type="submit" className="btn btn-primary btn-primary" onClick={login}>Sign in</span> 
 
 										</div>
 									</form>
