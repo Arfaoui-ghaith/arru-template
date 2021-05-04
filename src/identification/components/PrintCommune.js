@@ -1,6 +1,6 @@
 import React from "react";
 import ReactToPrint from 'react-to-print-advanced';
-import ComponentToPrint from './TableProj';
+import ComponentToPrint from './TableCommune';
 import FeatherIcon from 'feather-icons-react';
 import { Row, Col, Button } from 'react-bootstrap';
 
@@ -21,7 +21,7 @@ const pageStyle = `
     }
   }
 `;
-class PrintProjet extends React.Component {
+class PrintCommune extends React.Component {
     render() {
       return (
         <div>
@@ -42,11 +42,11 @@ class PrintProjet extends React.Component {
 						</Col>
 					</Row>
           
-          <ComponentToPrint />
+          <ComponentToPrint  />
         </div>
       );
     }
   }
   
-  export default PrintProjet;
+  export default PrintCommune;
   

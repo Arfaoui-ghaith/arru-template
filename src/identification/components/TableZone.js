@@ -3,309 +3,163 @@ import { MDBDataTableV5 } from 'mdbreact'
 import 'mdbreact/dist/css/mdb.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import FeatherIcon from 'feather-icons-react';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { useStoreDispatch } from '../../context/store';
+import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
-    
+export default function TableZone() {
+
+  const [datatable, setDatatable] = React.useState({});
+  const [show, setShow] = React.useState(false);
+  const dispatch = useStoreDispatch();
+  const [zone, setZone] = React.useState({});
+
+  const deleteZone = async () => {
+		try {
+			const url =`http://localhost:4000/api/v1/zoneIntervention/${zone.id}`;
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'delete',
+			  	url,
+			});
+
+			if (res.status === 203) {
+				toast.success('Success', {
+					position: 'top-right',
+					autoClose: 5000,
+					draggable: false
+				});
+				window.location.replace('/zoneInterventions');
+			}
+
+			} catch (err) {
+				toast.error(err.response.data.message, {
+					position: 'top-right',
+					autoClose: 5000,
+					draggable: true
+				});
+				setShow(false);
+			}
+	}
+
+  const fetchZonesInterventions = async () => {
+  
+    try {
+			const url ='http://localhost:4000/api/v1/zoneIntervention/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+			});
+
+			if (res.status === 200) {
+				console.log(res.data.zone_interventions);
+
+        let zones = [];
+        for(const zone of res.data.zone_interventions){
+          zones.push({
+              gouvernorat: zone.gouvernorat,
+              commune: zone.commune,
+              nom: zone.nom_fr,
+              quartier: <ul className="ml-n5" style={{"listStyleType":"none"}}>
+                {
+                  zone.quartiers.map((quartier, index) => (
+                    <p key={index}>{quartier.nom}{zone.quartiers.length - 1 > index ? <hr/> : ''}</p>
+                  ))
+                }
+              </ul>,
+              Nombre: zone.nbr_quartier,
+              Surfaces: zone.surface_totale,
+              Surface: zone.surface_urbanisée_totale,
+              logement: zone.nombre_logements_totale,
+              habitant : zone.nombre_habitants_totale,
+              
+              modifier :<span onClick={() => dispatch({ type:'zoneEdit', payload: zone })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
+              supprimer : <span onClick={() => { setZone(zone); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
+          });
+        }
+
+        setDatatable({
+          columns: [
+            {
+              label: 'Gouvernorat',
+              field: 'gouvernorat',
+              attributes: {
+                'aria-controls': 'DataTable',
+                'aria-label': 'gouvernorat',
+              },
+            },
+            {
+              label: 'Commune',
+              field: 'commune',
+            },
+            {
+              label: 'Nom',
+              field: 'nom',
+            },
+            {
+              label: 'Quartier',
+              field: 'quartier',
+            },
+            {
+              label: 'Nombre de quartier',
+              field: 'Nombre',
+              width: 200,
+            },
+            {
+              label: 'Surface Totale (Hectar)',
+              field: 'Surfaces',
+              width: 200,
+            },
+            {
+              label: 'Surface Urbanisée (Hectar)',
+              field: 'Surface',
+              width: 200,
+            },
+            {
+              label: 'Nombre de logements',
+              field: 'logement',
+              width: 200,
+            },
+            {
+              label: 'Nombre des habitants',
+              field: 'habitant',
+              width: 200,
+            },
+            {
+              label: 'Actions',
+              field: 'modifier',
+              sort : 'disabled',
+              width: 50,
+            },
+            {
+              label: '',
+              field: 'supprimer',
+              sort : 'disabled',
+              width: 50,
+            },
+          ],
+          rows: zones,
+        });
+
+      }
 
 
-class TableZone extends React.Component {
-  state = {
-    datatable:{
-      columns: [
-        {
-          label: 'Gouvernorat',
-          field: 'gouvernorat',
-          attributes: {
-            'aria-controls': 'DataTable',
-            'aria-label': 'gouvernorat',
-          },
-        },
-        {
-          label: 'Commune',
-          field: 'commune',
-        },
-        {
-          label: 'Quartier',
-          field: 'quartier',
-        },
-        {
-          label: 'Nombre de quartier',
-          field: 'Nombre',
-        },
-        {
-          label: 'Surface Totale (Hectar)',
-          field: 'Surfaces',
-        },
-        {
-          label: 'Surface Urbanisée (Hectar)',
-          field: 'Surface',
-        },
-        {
-          label: 'Nombre de logements',
-          field: 'logement',
-        },
-        {
-          label: 'Nombre des habitants',
-          field: 'habitant',
-        },
-        {
-          label: 'Modifier',
-          field: 'modifier',
-          sort : 'disabled',
-          width: 50,
-        },
-        {
-          label: 'Supprimer',
-          field: 'supprimer',
-          sort : 'disabled',
-          width: 50,
-        },
-      ],
-      rows: [
-        {
-          gouvernorat: 'Tunis',
-          commune: 'Tunis',
-          quartier: <ul className="ml-n5" style={{"list-style-type":"none"}}>
-            <li>quartier 1</li>
-            <hr/>
-            <li>quartier 2</li>
-          </ul>,
-          Nombre: '61',
-          Surfaces: '580',
-          Surface: '400',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Beja',
-          commune: 'Beja',
-          quartier: 'Omran',
-          Nombre: '63',
-          Surfaces: '320',
-          Surface: '170',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Sfax',
-          commune: 'Sfax',
-          quartier: 'mdina',
-          Nombre: '366',
-          Surfaces: '410',
-          Surface: '86',
-
-logement: '100',
-habitant : '3000',
-
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,
-},
-        {
-          gouvernorat: 'Tunis',
-          commune: 'Tunis',
-          quartier: 'Hay el khadhra',
-          Nombre: '61',
-          Surfaces: '580',
-          Surface: '400',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Beja',
-          commune: 'Beja',
-          quartier: 'Omran',
-          Nombre: '63',
-          Surfaces: '320',
-          Surface: '170',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Sfax',
-          commune: 'Sfax',
-          quartier: 'mdina',
-          Nombre: '366',
-          Surfaces: '410',
-          Surface: '86',
-
-logement: '100',
-habitant : '3000',
-
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,           },
-        {
-          gouvernorat: 'Tunis',
-          commune: 'Tunis',
-          quartier: 'Hay el khadhra',
-          Nombre: '61',
-          Surfaces: '580',
-          Surface: '400',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Beja',
-          commune: 'Beja',
-          quartier: 'Omran',
-          Nombre: '63',
-          Surfaces: '320',
-          Surface: '170',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Sfax',
-          commune: 'Sfax',
-          quartier: 'mdina',
-          Nombre: '366',
-          Surfaces: '410',
-          Surface: '86',
-
-logement: '100',
-habitant : '3000',
-
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,           },
-        {
-          gouvernorat: 'Tunis',
-          commune: 'Tunis',
-          quartier: 'Hay el khadhra',
-          Nombre: '61',
-          Surfaces: '580',
-          Surface: '400',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Beja',
-          commune: 'Beja',
-          quartier: 'Omran',
-          Nombre: '63',
-          Surfaces: '320',
-          Surface: '170',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Sfax',
-          commune: 'Sfax',
-          quartier: 'mdina',
-          Nombre: '366',
-          Surfaces: '410',
-          Surface: '86',
-
-logement: '100',
-habitant : '3000',
-
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,           },
-        {
-          gouvernorat: 'Tunis',
-          commune: 'Tunis',
-          quartier: 'Hay el khadhra',
-          Nombre: '61',
-          Surfaces: '580',
-          Surface: '400',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Beja',
-          commune: 'Beja',
-          quartier: 'Omran',
-          Nombre: '63',
-          Surfaces: '320',
-          Surface: '170',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Sfax',
-          commune: 'Sfax',
-          quartier: 'mdina',
-          Nombre: '366',
-          Surfaces: '410',
-          Surface: '86',
-
-logement: '100',
-habitant : '3000',
-
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,           },
-        {
-          gouvernorat: 'Tunis',
-          commune: 'Tunis',
-          quartier: 'Hay el khadhra',
-          Nombre: '61',
-          Surfaces: '580',
-          Surface: '400',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Beja',
-          commune: 'Beja',
-          quartier: 'Omran',
-          Nombre: '63',
-          Surfaces: '320',
-          Surface: '170',
-          logement: '100',
-          habitant : '3000',
-          
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,   
-        },
-        {
-          gouvernorat: 'Sfax',
-          commune: 'Sfax',
-          quartier: 'mdina',
-          Nombre: '366',
-          Surfaces: '410',
-          Surface: '86',
-
-logement: '100',
-habitant : '3000',
-modifier :<a data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2"/></a>,
-supprimer : <FeatherIcon icon="trash-2" />,        },
-        
-      ],
-    }
-    
+			} catch (err) {
+				console.log(err.response.data.message);
+			}
   }
-  render() {
+
+  React.useEffect(() => {
+    fetchZonesInterventions();
+  },[]);
+
+
     return (
+      <>
+      <ToastContainer />
         <div className="p-3">
             
 									<MDBDataTableV5 
@@ -315,13 +169,26 @@ supprimer : <FeatherIcon icon="trash-2" />,        },
                   entriesOptions={[5, 20, 25]}
                   striped
                   pagesAmount={5}
-                  data={this.state.datatable}
+                  data={datatable}
                   paging
-                  searchTop
-                  searchBottom={false}
+                  searchBottom
                   barReverse />
         </div>
+        
+        <Modal show={show} onHide={() => setShow(false)}>
+          <Modal.Header>
+          <Modal.Title>Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want delete {zone.nom_fr}!</Modal.Body>
+          <Modal.Footer>
+          <Button variant="primary" onClick={() => setShow(false)}>
+            Close
+          </Button>
+          <Button variant="danger" onClick={() => { deleteZone() }}>
+            Delete
+          </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
     )
-}}
-
-export default TableZone;
+}

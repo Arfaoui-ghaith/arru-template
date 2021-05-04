@@ -11,9 +11,10 @@ export default function MapFormAdd() {
     
     const [show, setShow] = React.useState(false);
     const [projet, setProjet] = React.useState(null);
-    const [nom, setNom] = React.useState("");
+    const [nom_fr, setNomFr] = React.useState("");
+    const [nom_ar, setNomAr] = React.useState("");
 
-    const handleProjetsChange = (e) => {
+    const handlesChange = (e) => {
         console.log(e.value)
 		setProjet(e.value);
 	}
@@ -22,23 +23,23 @@ export default function MapFormAdd() {
 
     const [mapLayers, setMapLayers] = React.useState([]);
 
-    const mapRef = React.useRef();
+    
 
     const fetchProjets = async () => {
 		try {
-			const url ='http://localhost:4000/api/v1/projets/';
+			const url ='http://localhost:4000/api/v1/zoneIntervention/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
 			  	url,
 			});
 	
-			console.log(res.data.projets);
+			console.log(res.data.zone_interventions);
 
 			if (res.status === 200) {
 				let projets_options = [];
-				for(const projet of res.data.projets){
-					let obj = { value: projet.id, label: projet.nom }
+				for(const projet of res.data.zone_interventions){
+					let obj = { value: projet.id, label: projet.nom_fr+" - "+ projet.nom_ar }
 					projets_options.push(obj);
 				}
 				setProjets(projets_options);
@@ -50,8 +51,9 @@ export default function MapFormAdd() {
 	}
 
     const addQuartier = async () => {
-		try {
-			const url =`http://localhost:4000/api/v1/quartiers/${projet}`;
+        console.log(mapLayers);
+		 try {
+			const url =`http://localhost:4000/api/v1/quartiers/`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',
@@ -77,12 +79,13 @@ export default function MapFormAdd() {
         console.log(e);
     
         const { layerType, layer } = e;
+
         if (layerType === "polygon") {
-            
           const { _leaflet_id } = layer;
-          
-          mapLayers.push({ id: _leaflet_id, nom: "", center: layer.getCenter(), latlngs: layer.getLatLngs()[0] });
+
+          mapLayers.push({ id: _leaflet_id, zone_intervention_id: projet, quartier: {nom_fr: "", nom_ar: ""}, center: layer.getCenter(), latlngs: layer.getLatLngs()[0] });
         }
+
         setShow(true);
         console.log(mapLayers);
     };
@@ -97,7 +100,7 @@ export default function MapFormAdd() {
         for(const layer of Object.values(_layers)){
             
             if(mapLayers[i].id === layer._leaflet_id){
-                mapLayers.splice(i,1,{ id: layer._leaflet_id, nom: mapLayers[i].nom, center: layer.getCenter(), latlngs: layer.getLatLngs()[0] });
+                mapLayers.splice(i,1,{ id: layer._leaflet_id, zone_intervention_id: projet, quartier: {nom_fr: mapLayers[i].quartier.nom, nom_ar: mapLayers[i].quartier.nom_ar}, center: layer.getCenter(), latlngs: layer.getLatLngs()[0] });
             }
         }
     }
@@ -111,9 +114,7 @@ export default function MapFormAdd() {
         layers: { _layers },
     } = e;
     
-        
     console.log(Object.values(_layers));
-
         
     for(let i=0; i<mapLayers.length; i++){
         for(const layer of Object.values(_layers)){
@@ -129,13 +130,10 @@ export default function MapFormAdd() {
     return (
         <React.Fragment>
         <Container>
-                
+                { projet ? 
                     <Card>
-                        <Card.Header>
-            
-                        </Card.Header>
                         <Card.Body>
-                            <MapContainer  center={[34.886917, 9.537499]} zoom={7} ref={mapRef}>
+                            <MapContainer  center={[34.886917, 9.537499]} zoom={7}>
                             <TileLayer
                                 attribution='&copy; <a href="http://osm.org/copyright">
                                 OpenStreetMap</a> contributors'
@@ -162,7 +160,8 @@ export default function MapFormAdd() {
                                 
                             </MapContainer >
                         </Card.Body>
-                    </Card>
+                    </Card> : ""
+                }
                     <Card>
                         <Card.Header>
                         <Select className="py-2"
@@ -170,7 +169,7 @@ export default function MapFormAdd() {
 							closeMenuOnSelect={false}
 							components={animatedComponents}
 							options={projets}
-                            onChange={handleProjetsChange}
+                            onChange={handlesChange}
 						/>	
                         </Card.Header>
                         <Card.Body>	  
@@ -188,16 +187,22 @@ export default function MapFormAdd() {
             <Modal.Title>Nom quartier</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+            <div className="row mb-3">
+                <label className="col-form-label col-sm-3 text-sm-left">nom en francais</label>
+                <div className="col-sm-9">
+                    <input type="text" className="form-control" onChange={(e) => setNomFr(e.target.value)} />
+                </div>
+            </div>
             <div className="row">
-                <label className="col-form-label col-sm-1 text-sm-left">nom </label>
-                <div className="col-sm-11">
-                    <input type="text" className="form-control" onChange={(e) => setNom(e.target.value)} />
+                <label className="col-form-label col-sm-3 text-sm-left">nom en arabe</label>
+                <div className="col-sm-9">
+                    <input type="text" className="form-control" onChange={(e) => setNomAr(e.target.value)} />
                 </div>
             </div>
             </Modal.Body>
             <Modal.Footer>
            
-            <Button variant="primary" onClick={() => { mapLayers[mapLayers.length - 1].nom = nom; setNom(""); setShow(false); }}>
+            <Button variant="primary" onClick={() => { mapLayers[mapLayers.length - 1].quartier.nom_fr = nom_fr; mapLayers[mapLayers.length - 1].quartier.nom_ar = nom_ar; setNomFr(""); setNomAr(""); setShow(false); }}>
                 Save
             </Button>
             </Modal.Footer>

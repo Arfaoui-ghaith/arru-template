@@ -1,21 +1,13 @@
-import React, { useRef } from 'react';
-import Carte from '../components/Carte';
-import Form from '../components/FormZone'
-import FormUpdate from '../components/FormUpdateZone'
-import 'react-toastify/dist/ReactToastify.css';
-import 'react-smart-data-table/dist/react-smart-data-table.css'
-import Print from '../components/PrintZone'
-
-
-
-export default function Zone(ref) {
-    const [zone, setZone] = React.useState([]);
-	
+import React from 'react'
+import FormCommune from './../components/FormCommune'
+import FormCommuneUpdate from './../components/FormCommuneUpdate'
+import Print from './../components/PrintCommune'
+export default function Communes() {
     return (
         <main className="content">
 				<div className="container-fluid p-0">
 
-					<h1 className="h3 mb-3">Gestion des Zones d'intervention</h1>
+					<h1 className="h3 mb-3">Gestion des Communes</h1>
 
 					<div className="row">
 					
@@ -38,7 +30,7 @@ export default function Zone(ref) {
 																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div className="card-body">
-																<Form   />
+																<FormCommune  />
 															</div>
 														</div>
 													</div>
@@ -58,7 +50,7 @@ export default function Zone(ref) {
 																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div className="card-body">
-																<FormUpdate   />
+																<FormCommuneUpdate />
 															</div>
 														</div>
 													</div>

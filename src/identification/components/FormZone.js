@@ -4,50 +4,30 @@ import makeAnimated from 'react-select/animated';
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useStoreState } from '../../context/store';
 
 export default function FormZone() {
 
 	const animatedComponents = makeAnimated();
-	const [show, setShow] = React.useState(false);
-	const [projet, setProjet] = React.useState({});
-	const [error, setError] = React.useState("");
-	const [municipalites, setMunicipalites] = React.useState([]);
-	const [selected, setSelected] = React.useState([]);
+
+	const [zone, setZone] = React.useState({});
 
 
-	const fetchMunicipalites = async () => {
-		try {
-			const url ='http://localhost:4000/api/v1/municipalites/';
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  	method: 'get',
-			  	url,
-			});
+	const { zoneEdit } = useStoreState();
 
-			if (res.status === 200) {
-				
-				let municipalites_options = [];
-				for(const municipalite of res.data.municipalites){
-					let obj = { value: municipalite.id, label: municipalite.nom+" "+municipalite.nom_ar }
-					municipalites_options.push(obj);
-				}
-				setMunicipalites(municipalites_options);
-			}
+	const [gouvernorats, setGouvernorats] = React.useState([]);
+	const [communes, setCommunes] = React.useState([]);
 
-			} catch (err) {
-				console.log(err.response.data.message);
-			}
-	}
+	const [gouvernorat, setGouvernorat] = React.useState(false);
 
-
-	const addProjet = async() => {
+	const addZone = async() => {
 		try{
-			const url ='http://localhost:4000/api/v1/projets/';
+			const url ='http://localhost:4000/api/v1/zoneIntervention/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',
 			  	url,
-				data: projet
+				data: zone
 			});
 
 			toast.success('Success', {
@@ -56,7 +36,7 @@ export default function FormZone() {
 				draggable: false
 			});
 
-			window.location.replace('/Projets');
+			window.location.replace('/zoneInterventions');
 
 		}catch(err){
 			console.log(err.response.data.message);
@@ -69,14 +49,62 @@ export default function FormZone() {
 		}
 	}
 
-	const handleMunicipalitesDefault = (e) => {
-		setSelected(e.map( x => x.value ));
-  	}
+	const fetchGouvernorats = async() => {
+		try{
+			const url ='http://localhost:4000/api/v1/gouvernorats/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+				data: zone
+			});
 
-	React.useEffect(() => {
-		fetchMunicipalites();
-	},[])
+			let options = [];
+			for(const gov of res.data.gouvernorats){
+				options.push({
+					label: gov.nom_fr+' - '+gov.nom_ar, value: gov.id
+				});
+			}
+
+			setGouvernorats(options);
+		}catch(err){
+			console.log(err.response.data.message);
+		}
+	}
+
+	const fetchCommunes = async(gov) => {
+		console.log(gouvernorat);
+		try{
+			const url = `http://localhost:4000/api/v1/gouvernorats/${gov}/communes/`;
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+				data: zone
+			});
+
+			console.log(url);
+			console.log(res.data.communes);
+
+			let optionsCommunes = [];
+			for(const com of res.data.communes){
+				optionsCommunes.push({
+					label: com.nom_fr+' - '+com.nom_ar, value: com.id
+				});
+			}
+
+			setCommunes(optionsCommunes);
+			
+		}catch(err){
+			console.log(err.response.data.message);
+		}
+	}
+
 	
+	React.useEffect(() => {
+		fetchGouvernorats();
+	},[]);
+
 	
     return (
         <div>
@@ -88,12 +116,14 @@ export default function FormZone() {
 						<Select
 							defaultValue="options"
 							components={animatedComponents}
-							options={municipalites}
-							onChange={(e) => { setProjet({...projet, municipalite_id: e.value})}}
+							options={gouvernorats}
+							onChange={(e) => { fetchCommunes(e.value); setGouvernorat(true)}}
 						/>							
 					</div>
 				</div>
 			</div>
+
+			{ gouvernorat ?
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Commune</label>
 				<div className="col-sm-9">
@@ -101,67 +131,69 @@ export default function FormZone() {
 						<Select
 							defaultValue="options"
 							components={animatedComponents}
-							options={municipalites}
-							onChange={(e) => { setProjet({...projet, municipalite_id: e.value})}}
+							options={communes}
+							onChange={(e) => { setZone({...zone, commune_id: e.value})}}
 						/>							
 					</div>
 				</div>
-			</div>
-            <div className="mb-3 row">
-                <label className="col-form-label col-sm-3 text-sm-left">quartiers </label>
-				<div className="col-sm-9">
-					<div className="boxes" >
-						<Select
-							defaultValue="options"
-							Multi
-							components={animatedComponents}
-							options={municipalites}
-							onChange={(e) => { setProjet({...projet, municipalite_id: e.value})}}
-						/>							
-					</div>
+			</div> : ''
+			}
+			<div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">Nom en francais</label>
+                <div className="col-sm-9">
+					<input type="text" className="form-control" placeholder="Nombre quartiers"
+					onChange={(e) => setZone({...zone, nom_fr: e.target.value})}/>
 				</div>
 			</div>
-			
+
+			<div className="mb-3 row">
+                <label className="col-form-label col-sm-3 text-sm-left">Nom en arabe</label>
+                <div className="col-sm-9">
+					<input type="text" className="form-control" placeholder="Nom en arabe"
+					onChange={(e) => setZone({...zone, nom_ar: e.target.value})}/>
+				</div>
+			</div>
+
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Nombre quartiers</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre quartiers"
-					onChange={(e) => setProjet({...projet, nbr_qaurtier: e.target.value})}/>
+					onChange={(e) => setZone({...zone, nbr_qaurtier: e.target.value * 1})}/>
 				</div>
 			</div>
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Surface Totale (Hectar)</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Surface Totale (Hectar)"
-					onChange={(e) => setProjet({...projet, nbr_maison: e.target.value})}/>
+					onChange={(e) => setZone({...zone, surface_totale: e.target.value * 1})}/>
 				</div>
 			</div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Surface Urbanisée (Hectar)</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Surface Urbanisée (Hectar)"
-					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+					onChange={(e) => setZone({...zone, surface_urbanisée_totale: e.target.value * 1})}/>
 				</div>
 			</div>
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Nombre de logements</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre de logements"
-					onChange={(e) => setProjet({...projet, nbr_maison: e.target.value})}/>
+					onChange={(e) => setZone({...zone, nombre_logements_totale: e.target.value * 1})}/>
 				</div>
 			</div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Nombre habitants</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre habitants"
-					onChange={(e) => setProjet({...projet, nbr_habitant: e.target.value})}/>
+					onChange={(e) => setZone({...zone, nombre_habitants_totale: e.target.value * 1})}/>
 				</div>
 			</div>
 
 			
 			<div className="mb-3 row">
 				<div className="col-sm-9">
-					<span  className="btn btn-primary" onClick={() => addProjet()}>Submit</span>
+					<span  className="btn btn-primary" onClick={() => addZone()}>Submit</span>
 				</div>
 			</div>
 

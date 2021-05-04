@@ -21,6 +21,10 @@ export default function Sidebar(props) {
 
 				<ul className="sidebar-nav">
 					
+					<li className="sidebar-header">
+						Droits d'accès
+					</li>
+
 					{ user.payload.interfaces.filter((el) => el.titre === "gestion des utilisateurs").length > 0 ?  
 					<SidebarItem title="Utilisateurs" icon="users" l="/Utilisateurs" selecteditem={selectedItem} setselecteditem={setSelectedItem}/>
 					: ""}
@@ -43,9 +47,12 @@ export default function Sidebar(props) {
 					<SidebarItem title="Projets" icon="clipboard" l="/Projets" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Quartiers" icon="map-pin" l="/Quartiers" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Critéres d'éligibilité" icon="filter" l="/Critéres d'éligibilité" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Zone d'intervention" icon="map" l="/Zone d'intervention" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Zone d'intervention" icon="map" l="/zoneInterventions" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Communes" icon="triangle" l="/communes" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					
 					<li className="sidebar-header">
 						profile
+					
 					</li>
 					<SidebarItem title="Mon profile" title2="settings" icon="user" l="/Profile" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="deconnection" icon="log-out" l="/login" selecteditem={selectedItem} setselecteditem={setSelectedItem} />

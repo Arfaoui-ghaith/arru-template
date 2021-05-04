@@ -2,7 +2,7 @@ import React from "react";
 import ReactToPrint from 'react-to-print-advanced';
 import ComponentToPrint from './TableZone';
 import FeatherIcon from 'feather-icons-react';
-
+import { Row, Col, Button } from 'react-bootstrap';
 
 const pageStyle = `
   @page {
@@ -25,12 +25,24 @@ class PrintZone extends React.Component {
     render() {
       return (
         <div>
-          <ReactToPrint
-            trigger={() => <button class="btn btn-primary float-right mr-5 mt-n3" size="primary"><FeatherIcon icon="printer" /></button>}
-            content={() => this.componentRef}
-            style={pageStyle}
-          />
-          <ComponentToPrint ref={(el) => (this.componentRef = el)} />
+          <Row className="mt-2">
+						<Col>
+            </Col>
+						<Col md="auto">
+              <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
+								<i className="fas fa-plus"></i> 
+							</Button>
+            </Col>
+						<Col xs lg="1">
+              <ReactToPrint
+                trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
+                content={() => this.componentRef}
+                style={pageStyle}
+              />
+						</Col>
+					</Row>
+          
+          <ComponentToPrint  />
         </div>
       );
     }

@@ -6,12 +6,13 @@ import axios from 'axios'
 
 import FeatherIcon from 'feather-icons-react';
 import MapFormAdd from '../components/MapFormAdd'
+
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
 export default function Quartiers() {
     const animatedComponents = makeAnimated();
+
     const [show, setShow] = React.useState(false);
-    
 
     return (
         <main className="content">

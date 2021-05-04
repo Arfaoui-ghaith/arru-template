@@ -16,11 +16,14 @@ import Projets from './identification/pages/Projets'
 import E404 from './identification/pages/E404'
 import Criteres from './identification/pages/Criteres'
 import Zone from './identification/pages/Zone'
+import Commune from './identification/pages/Communes'
 import Elig from './identification/pages/Eligible'
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
+import { StoreProvider } from './context/store';
 import DynamicRoutes from './utils/DynamicRoutes';
-import './App.css'
+import './App.css';
+import './Scroll.css';
 
 
 
@@ -29,6 +32,7 @@ function App() {
   return (
     <ApolloProvider>
     <AuthProvider>
+    <StoreProvider>
     <Router>
       
         <div className="wrapper">
@@ -48,14 +52,16 @@ function App() {
             <DynamicRoutes exact path="/Projets" component={Projets} guest />
             <DynamicRoutes exact path="/Eligible" component={Elig} guest />
             <DynamicRoutes exact path="/Critéres d'éligibilité" component={Criteres} guest />
-            <DynamicRoutes exact path="/Zone d'intervention" component={Zone} guest />
-            <DynamicRoutes exact path="/E404" component={E404} guest />
+            <DynamicRoutes exact path="/zoneInterventions" component={Zone} guest />
+            <DynamicRoutes exact path="/communes" component={Commune} guest />
+            <DynamicRoutes component={E404} guest />
           </Switch>
           <Footer />
           </div>
         </div>
       
     </Router>
+    </StoreProvider>
     </AuthProvider>
     </ApolloProvider>
   );

@@ -17,12 +17,8 @@ export default function Eligible() {
             <h1 className="h3 mb-3">Gestion des projets</h1>
 
             <div className="row">
-
-                <div className="col-2">
-                    <Carte />
-                </div>
             
-                <div className="col-5">
+                <div className="col-6">
                     <div className="card">
                         <div className="card-header">
                             <h5 className="card-title">Liste des projets éligibles</h5>
@@ -31,17 +27,17 @@ export default function Eligible() {
                             <Print />
                     </div>
                 
-            </div>
-            <div className="col-5">
-                    <div className="card">
-                        <div className="card-header">
-                            <h5 className="card-title">Liste des projets non éligibles</h5>
-                            
-                            </div>
-                            <Print />
-                    </div>
-                
-            </div>
+                </div>
+                <div className="col-6">
+                        <div className="card">
+                            <div className="card-header">
+                                <h5 className="card-title">Liste des projets non éligibles</h5>
+                                
+                                </div>
+                                <Print />
+                        </div>
+                    
+                </div>
             </div>
 
         </div>

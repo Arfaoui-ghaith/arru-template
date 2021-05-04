@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Carte from '../components/Carte';
 import Form from '../components/FormProjet'
+import FormProjetUpdate from './../components/FormProjetUpdate'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,7 +10,7 @@ import Print from '../components/PrintProjet'
 import FeatherIcon from 'feather-icons-react';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
-export default function Projets(ref) {
+export default function Projets() {
 
 	const [projets, setProjets] = React.useState([]);
 	const [show, setShow] = React.useState(false);
@@ -76,36 +77,13 @@ export default function Projets(ref) {
 					<h1 className="h3 mb-3">Gestion des projets</h1>
 
 					<div className="row">
-
-						<div className="col-3">
-							<Carte />
-						</div>
 					
-						<div className="col-9">
+						<div className="col-12">
 							<div className="card">
-								<div className="card-header">
-								<div className="row">
-
-									<div className="col-6">
-									<h5 className="card-title">Liste des projets</h5>
-									</div>
-									<div className="col-4">
-									<Button  class="btn btn-primary mb-4 mt-n3 mr-5 ml-5" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
-									<i class="fas fa-plus"></i> Ajouter Projet
-									</Button>
-									</div>
-									<div className="col-2">
-									<Button  class="btn btn-primary mb-4 mt-n3 mr-5 ml-5" size="primary" onClick={refreshPage}>
-									<FeatherIcon icon="filter" />
-									</Button>
-										</div>
-									</div>
-									</div>
-									
-									<Print />
+								<Print />
 							</div>
-						
-					</div>
+						</div>
+
 					</div>
 
 					<div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
@@ -139,7 +117,7 @@ export default function Projets(ref) {
 																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div className="card-body">
-																<Form   />
+																<FormProjetUpdate   />
 															</div>
 														</div>
 													</div>
