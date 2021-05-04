@@ -13,7 +13,7 @@ export default function Critere({title,nbr}){
 													<div className="col-auto">
 														<div className="avatar">
 															<a className="avatar-title" data-toggle="modal" data-target="#modif">
-															<div class="avatar-title rounded-circle bg-primary-light">
+															<div className="avatar-title rounded-circle bg-primary-light">
 																<FeatherIcon icon="edit" />
 																</div>
 															</a>

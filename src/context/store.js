@@ -6,6 +6,8 @@ const StoreDispatchContext = React.createContext();
 let zone = null;
 let projet = null;
 let commune = null;
+let gouvernorat = "BIZ";
+
 const storeReducer = (state, action) => {
     switch(action.type) {
         case 'zoneEdit' :
@@ -23,6 +25,11 @@ const storeReducer = (state, action) => {
                 ...state,
                 commune: action.payload
             }
+        case 'gouvernoratEdit' :
+            return {
+                ...state,
+                gouvernorat: action.payload
+            }
 
         default:
             throw new Error(`Unkonwn action type: ${action.type}`);
@@ -30,7 +37,7 @@ const storeReducer = (state, action) => {
 }
 
 export const StoreProvider = ({ children }) => {
-    const [state, dispatch] = React.useReducer(storeReducer, { zone, projet, commune });
+    const [state, dispatch] = React.useReducer(storeReducer, { zone, projet, commune, gouvernorat });
 
     return (
         <StoreDispatchContext.Provider value={dispatch}>
