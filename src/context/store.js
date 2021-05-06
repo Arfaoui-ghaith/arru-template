@@ -6,7 +6,11 @@ const StoreDispatchContext = React.createContext();
 let zone = null;
 let projet = null;
 let commune = null;
-let gouvernorat = "BIZ";
+let gouvernorat = localStorage.getItem('gouvernoratPriqh2');
+
+if(!gouvernorat){
+    gouvernorat = 'Bizerte';
+}
 
 const storeReducer = (state, action) => {
     switch(action.type) {
@@ -26,6 +30,7 @@ const storeReducer = (state, action) => {
                 commune: action.payload
             }
         case 'gouvernoratEdit' :
+            localStorage.setItem('gouvernoratPriqh2',action.payload);
             return {
                 ...state,
                 gouvernorat: action.payload

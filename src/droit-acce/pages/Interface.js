@@ -14,7 +14,7 @@ export default function Interface() {
 	  
 	const fetchInterfaces = async (e) => {
 		try {
-			const url ='http://localhost:4000/api/v1/fonctionalites/';
+			const url ='https://priqh2.herokuapp.com/api/v1/fonctionalites/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',

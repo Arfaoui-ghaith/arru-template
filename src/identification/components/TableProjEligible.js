@@ -1,7 +1,7 @@
-import React from 'react'
-import { MDBDataTableV5 } from 'mdbreact'
-import 'mdbreact/dist/css/mdb.css'
-import '@fortawesome/fontawesome-free/css/all.css'
+import React from 'react';
+import { MDBDataTableV5 } from 'mdbreact';
+import 'mdbreact/dist/css/mdb.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import FeatherIcon from 'feather-icons-react';
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
@@ -9,57 +9,54 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
-export default function TableProj() {
+export default function TableProjEligible() {
 
   const [datatable, setDatatable] = React.useState({});
   
   const [projet, setProjet] = React.useState({});
   const [show, setShow] = React.useState(false);
-  const dispatch = useStoreDispatch();
 
-  const deleteZone = async () => {
-		try {
-			const url =`https://priqh2.herokuapp.com/api/v1/projets/${projet.id}`;
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  	method: 'delete',
-			  	url,
-			});
+  const ineligible = async () => {
+    try{
+        const url =`https://priqh2.herokuapp.com/api/v1/criteres/ineligible/${projet.id}`;
+		const res = await axios({
+			headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			method: 'put',
+			url,
+		});
 
-			if (res.status === 203) {
-				toast.success('Success', {
-					position: 'top-right',
-					autoClose: 5000,
-					draggable: false
-				});
-				window.location.replace('/zoneInterventions');
-			}
+        toast.success('Success', {
+            position: 'top-right',
+            autoClose: 5000,
+            draggable: false
+        });
 
-			} catch (err) {
-				toast.error(err.response.data.message, {
-					position: 'top-right',
-					autoClose: 5000,
-					draggable: true
-				});
-				setShow(false);
-			}
-	}
+        window.location.replace('/Eligible');
 
-  const fetchProjets = async () => {
+    }catch(err){
+        console.log(err);
+        toast.error(err.response.data.message, {
+            position: 'top-right',
+            autoClose: 5000,
+            draggable: true
+        });
+    }
+  }
   
-    try {
-			const url ='https://priqh2.herokuapp.com/api/v1/projets/';
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  method: 'get',
-			  url,
-			});
 
+    const fetchProjets = async () => {
+        try {
+		const url ='https://priqh2.herokuapp.com/api/v1/projets/';
+		const res = await axios({
+			headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			method: 'get',
+			url
+		});
 		
-				console.log(res.data.projets);
-
         let projets = [];
         for(const projet of res.data.projets){
+            console.log(projet.eligible)
+        if(projet.eligible === true){
           projets.push({
               gouvernorat: projet.gouvernorat.nom,
               commune: projet.commune.nom,
@@ -89,9 +86,10 @@ export default function TableProj() {
               ca: projet.infrastructures.filter((infra)=> infra.type === "Assainissement")[0].cout,
               be: projet.etude && projet.etude.bureau ? projet.etude.bureau : '',
               ce: projet.etude && projet.etude.cout ? projet.etude.cout : '',
-              modifier :<span onClick={() => dispatch({ type:'projetEdit', payload: projet })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
-              supprimer : <span onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
+              action : <span onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="tool" /></span>,
           });
+        }
+            console.log();
         }
 
         setDatatable({
@@ -190,28 +188,21 @@ export default function TableProj() {
               field: 'ce',
             },
             {
-              label: 'Modifier',
-              field: 'modifier',
+              label: 'Actoin',
+              field: 'action',
               sort : 'disabled',
-              width: 50,
-            },
-            {
-              label: 'Supprimer',
-              field: 'supprimer',
-              sort : 'disabled',
-              width: 50,
-            },
+              width: 50
+            }
           ],
           rows: projets,
         });
 
-      
+        console.log(datatable);
 
-			} catch (err) {
-				console.log(err);
-			}
-  }
-
+		} catch (err) {
+			console.log(err);
+		}
+}
 
   
   React.useEffect(() => {
@@ -237,13 +228,13 @@ export default function TableProj() {
           <Modal.Header>
           <Modal.Title>Confirmation</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Are you sure you want delete {projet.id}!</Modal.Body>
+          <Modal.Body>Are you sure you want move {projet.id} to ineligible list!</Modal.Body>
           <Modal.Footer>
-          <Button variant="primary" onClick={() => setShow(false)}>
+          <Button variant="danger" onClick={() => setShow(false)}>
             Close
           </Button>
-          <Button variant="danger" onClick={() => { deleteZone() }}>
-            Delete
+          <Button variant="primary" onClick={() => ineligible()}>
+            Save
           </Button>
           </Modal.Footer>
         </Modal>

@@ -19,7 +19,7 @@ export default function Profile() {
                             <h5 className="card-title mb-0">Mon Profile </h5>
                         </div>
                         <div className="card-body text-center">
-                            <img src={user.payload.image === null ? "img/photos/user-01.png" : `http://localhost:4000/img/utilisateurs/${user.payload.image}`} alt="photo de profile" className="img-fluid rounded-circle mb-2" width="128" height="128" />
+                            <img src={user.payload.image === null ? "img/photos/user-01.png" : `https://priqh2.herokuapp.com/img/utilisateurs/${user.payload.image}`} alt="photo de profile" className="img-fluid rounded-circle mb-2" width="128" height="128" />
                             <h5 className="card-title mb-0">{user.payload.nom+" "+user.payload.prenom}</h5>
                             <div className="text-muted mb-2">{user.payload.email}</div>
 
@@ -58,7 +58,7 @@ export default function Profile() {
                         <div className="card-body h-100">
 
                             <div className="d-flex align-items-start">
-                                <img src={user.payload.image === null ? "img/photos/user-01.png" : `http://localhost:4000/img/utilisateurs/${user.payload.image}`} width="36" height="36" className="rounded-circle mr-2" alt="Vanessa Tucker" />
+                                <img src={user.payload.image === null ? "img/photos/user-01.png" : `https://priqh2.herokuapp.com/img/utilisateurs/${user.payload.image}`} width="36" height="36" className="rounded-circle mr-2" alt="Vanessa Tucker" />
                                 <div className="flex-grow-1">
                                     <small className="float-right text-navy">5m ago</small>
                                     Activities ....

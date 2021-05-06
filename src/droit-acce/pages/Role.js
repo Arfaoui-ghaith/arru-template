@@ -16,7 +16,7 @@ export default function Role() {
 	  
 	const fetchRoles = async (e) => {
 		try {
-			const url ='http://localhost:4000/api/v1/roles/';
+			const url ='https://priqh2.herokuapp.com/api/v1/roles/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -41,7 +41,7 @@ export default function Role() {
 		 var del=confirm("Are you sure you want to delete this role "+role.titre+" ?");
 		 if (del){
 			try{
-				const url =`http://localhost:4000/api/v1/roles/${role.id}`;
+				const url =`https://priqh2.herokuapp.com/api/v1/roles/${role.id}`;
 				const res = await axios({
 					headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 					  method: 'delete',

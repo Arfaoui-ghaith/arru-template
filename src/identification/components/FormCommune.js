@@ -14,7 +14,7 @@ export default function FormCommune() {
 
     const fetchGouvernorats = async () => {
 		try {
-			const url ='http://localhost:4000/api/v1/gouvernorats/';
+			const url ='https://priqh2.herokuapp.com/api/v1/gouvernorats/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -36,7 +36,7 @@ export default function FormCommune() {
 
     const addCommune = async () => {
 		try {
-			const url ='http://localhost:4000/api/v1/communes/';
+			const url ='https://priqh2.herokuapp.com/api/v1/communes/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',

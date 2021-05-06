@@ -22,7 +22,7 @@ export default function FormProjet() {
 
 	const fetchZonesInterventions = async () => {
 		try {
-			const url ='http://localhost:4000/api/v1/zoneIntervention/sans_projet';
+			const url ='https://priqh2.herokuapp.com/api/v1/zoneIntervention/sans_projet';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -47,7 +47,7 @@ export default function FormProjet() {
 
 	const addProjet = async() => {
 		try{
-			const url ='http://localhost:4000/api/v1/projets/';
+			const url ='https://priqh2.herokuapp.com/api/v1/projets/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',

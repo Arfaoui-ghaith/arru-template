@@ -13,7 +13,7 @@ export default function FormUpdateZoneEdit() {
 
     const updateZone = async() => {
 		try{
-			const url = `http://localhost:4000/api/v1/zoneIntervention/${zone.id}`;
+			const url = `https://priqh2.herokuapp.com/api/v1/zoneIntervention/${zone.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',

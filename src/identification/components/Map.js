@@ -16,7 +16,7 @@ export default function Map() {
 
   const fetchQuartiers = async () => {
 		try {
-			const url ='http://localhost:4000/api/v1/quartiers/';
+			const url ='https://priqh2.herokuapp.com/api/v1/quartiers/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -39,7 +39,7 @@ export default function Map() {
   const deleteQuartier = async (id) => {
     console.log(id);
 		try {
-			const url =`http://localhost:4000/api/v1/quartiers/${id}`;
+			const url =`https://priqh2.herokuapp.com/api/v1/quartiers/${id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',

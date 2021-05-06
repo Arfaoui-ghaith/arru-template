@@ -18,7 +18,7 @@ export default function TableZone() {
 
   const deleteZone = async () => {
 		try {
-			const url =`http://localhost:4000/api/v1/zoneIntervention/${zone.id}`;
+			const url =`https://priqh2.herokuapp.com/api/v1/zoneIntervention/${zone.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -47,7 +47,7 @@ export default function TableZone() {
   const fetchZonesInterventions = async () => {
   
     try {
-			const url ='http://localhost:4000/api/v1/zoneIntervention/';
+			const url ='https://priqh2.herokuapp.com/api/v1/zoneIntervention/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',

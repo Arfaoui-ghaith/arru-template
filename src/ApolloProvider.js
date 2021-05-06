@@ -12,7 +12,7 @@ import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
 
 let httpLink = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'https://priqh2.herokuapp.com/graphql',
 })
 
 const authLink = setContext((_, { headers }) => {

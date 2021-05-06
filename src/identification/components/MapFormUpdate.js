@@ -11,7 +11,7 @@ export default function MapFormAdd({ quartier }) {
     const editQuartier = async () => {
         /*console.log(mapLayers);
 		 try {
-			const url =`http://localhost:4000/api/v1/quartiers/`;
+			const url =`https://priqh2.herokuapp.com/api/v1/quartiers/`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',

@@ -18,7 +18,7 @@ export default function Projets() {
 
 	const fetchProjets = async () => {
 		try {
-			const url ='http://localhost:4000/api/v1/projets/';
+			const url ='https://priqh2.herokuapp.com/api/v1/projets/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -36,7 +36,7 @@ export default function Projets() {
 
 	const deleteProjet = async () => {
 		try {
-			const url =`http://localhost:4000/api/v1/projets/${projet.id}`;
+			const url =`https://priqh2.herokuapp.com/api/v1/projets/${projet.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
