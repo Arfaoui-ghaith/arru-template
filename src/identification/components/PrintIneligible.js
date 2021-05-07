@@ -1,5 +1,5 @@
 import React from "react";
-import ReactToPrint from 'react-to-print-advanced';
+//import ReactToPrint from 'react-to-print-advanced';
 import ComponentToPrint from './TableProjetIneligible';
 import FeatherIcon from 'feather-icons-react';
 import { Row, Col, Button } from 'react-bootstrap';
@@ -40,11 +40,7 @@ class PrintIneligible extends React.Component {
             </Col>
          
 			<Col md="auto">
-              <ReactToPrint
-                trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
-                content={() => this.componentRef}
-                style={pageStyle}
-              />
+              
 			</Col>
 			</Row>
           
