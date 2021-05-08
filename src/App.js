@@ -30,7 +30,7 @@ import './Scroll.css';
 function App() {
  
   return (
-    <ApolloProvider>
+    
     <AuthProvider>
     <StoreProvider>
     <Router>
@@ -64,7 +64,7 @@ function App() {
     </Router>
     </StoreProvider>
     </AuthProvider>
-    </ApolloProvider>
+    
   );
 }
 
