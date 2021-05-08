@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
-export default function TableProj() {
+const TableProj = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
   
@@ -222,6 +222,7 @@ export default function TableProj() {
       <div className="p-3">
         <ToastContainer />
         <MDBDataTableV5
+        ref={ref}
         style={{"marginLeft":"1%"}}
         responsive
         hover
@@ -249,5 +250,6 @@ export default function TableProj() {
         </Modal>
       </div>
     )
-}
-  
+});
+
+export default TableProj;

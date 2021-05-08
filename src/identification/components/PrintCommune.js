@@ -21,8 +21,8 @@ const pageStyle = `
     }
   }
 `;
-class PrintCommune extends React.Component {
-    render() {
+function PrintCommune() {
+  const componentRef = React.useRef();
       return (
         <div>
           <Row className="mt-2">
@@ -38,10 +38,9 @@ class PrintCommune extends React.Component {
 						</Col>
 					</Row>
           
-          <ComponentToPrint  />
+          <ComponentToPrint  ref={componentRef}/>
         </div>
       );
-    }
   }
   
   export default PrintCommune;

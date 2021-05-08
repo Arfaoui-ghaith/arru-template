@@ -1,5 +1,5 @@
 import React from "react";
-//import ReactToPrint from 'react-to-print-advanced';
+import ReactToPrint from 'react-to-print-advanced';
 import ComponentToPrint from './TableProj';
 import FeatherIcon from 'feather-icons-react';
 import { Row, Col, Button } from 'react-bootstrap';
@@ -25,9 +25,9 @@ const pageStyle = `
   }
 `;
 
-class PrintProjet extends React.Component {
+export default function PrintProjet() {
 
-    render() {
+      const componentRef = React.useRef();
 
       const test_eligible = async() => {
         try{
@@ -62,6 +62,7 @@ class PrintProjet extends React.Component {
           <ToastContainer />
           <Row className="mt-2">
 						<Col>
+         
             </Col>
 						<Col md="auto">
               <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
@@ -74,15 +75,17 @@ class PrintProjet extends React.Component {
 							</Button>
             </Col>
 						<Col md="auto">
-              
+            <ReactToPrint
+                trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
+                content={() => componentRef.current}
+                style={pageStyle}
+              />
 						</Col>
 					</Row>
           
-          <ComponentToPrint />
+          <ComponentToPrint ref={componentRef}/>
         </div>
       );
-    }
-  }
-  
-  export default PrintProjet;
+}
+
   

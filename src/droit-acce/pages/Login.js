@@ -33,7 +33,7 @@ export default function Login() {
 			  
 			  dispatch({ type:'LOGIN', payload: res.data.token });
 			  
-			  window.location.replace('/Utilisateurs');
+			  window.location.replace('/Projets');
 			}
 			} catch (err) {
 				console.log(err);

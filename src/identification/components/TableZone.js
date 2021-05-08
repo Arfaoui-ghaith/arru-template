@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
-export default function TableZone() {
+const TableZone = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
   const [show, setShow] = React.useState(false);
@@ -163,6 +163,7 @@ export default function TableZone() {
         <div className="p-3">
             
 									<MDBDataTableV5 
+                  ref={ref}
                   style={{"marginLeft":"1%"}}
                   responsive
                   hover
@@ -191,4 +192,6 @@ export default function TableZone() {
         </Modal>
       </>
     )
-}
+});
+
+export default TableZone;

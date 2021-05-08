@@ -8,33 +8,13 @@ import MapFormUpdate from './MapFormUpdate';
 const {BaseLayer} = LayersControl;
 
 
-export default function Map() {
-  const [quartiers, setQuartiers] = React.useState([]);
+export default function Map({ quartiers }) {
+
+  console.log(quartiers);
+  
   const [show, setShow] = React.useState(false);
   const [showEdit, setShowEdit] = React.useState(false);
   const [quartier, setQuartier] = React.useState({});
-
-  const fetchQuartiers = async () => {
-		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/quartiers/';
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  	method: 'get',
-			  	url,
-			});
-	
-			console.log(res.data.quartiers);
-
-			if (res.status === 200) {
-				setQuartiers(res.data.quartiers);
-			}
-
-      console.log(quartiers);
-
-			} catch (err) {
-				console.log(err);
-			}
-	}
 
   const deleteQuartier = async (id) => {
     console.log(id);
@@ -66,10 +46,6 @@ export default function Map() {
     return polys;
     
   }
-
-    React.useEffect(() => {
-        fetchQuartiers();
-    },[]);
   
   return (
     <Container>

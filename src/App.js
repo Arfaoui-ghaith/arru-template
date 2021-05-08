@@ -41,11 +41,12 @@ function App() {
           <Navbar />
           <Switch>
             <DynamicRoutes exact path="/Login" component={Login} guest />
-            <DynamicRoutes exact path="/Utilisateurs" component={Dashboard} authenticated interface="gestion des utilisateurs"/>
+            { 0 > 1 ?
+            <><DynamicRoutes exact path="/Utilisateurs" component={Dashboard} authenticated interface="gestion des utilisateurs"/>
             <DynamicRoutes exact path="/Roles" component={Role} authenticated interface="gestion des roles"/>
             <DynamicRoutes exact path="/Groupes" component={Group} authenticated interface="gestion des groupes"/>
             <DynamicRoutes exact path="/Interfaces" component={Interface} authenticated interface="gestion des interfaces"/>
-            <DynamicRoutes exact path="/Specifications" component={Specification} authenticated interface="gestion des groupes" />
+            <DynamicRoutes exact path="/Specifications" component={Specification} authenticated interface="gestion des groupes" /> </> : "" }
             <DynamicRoutes exact path="/Profile" component={Profile} authenticated />
             <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
             <DynamicRoutes exact path="/Quartiers" component={Quartiers} guest />
