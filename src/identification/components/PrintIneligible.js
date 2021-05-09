@@ -44,7 +44,7 @@ function PrintIneligible() {
                 trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
                 content={() => componentRef.current}
                 style={pageStyle}
-              />
+            />
 					</Col>
 			</Row>
           
