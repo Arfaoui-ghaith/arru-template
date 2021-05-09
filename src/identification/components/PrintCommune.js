@@ -1,5 +1,5 @@
 import React from "react";
-//import ReactToPrint from 'react-to-print-advanced';
+import ReactToPrint from 'react-to-print-advanced';
 import ComponentToPrint from './TableCommune';
 import FeatherIcon from 'feather-icons-react';
 import { Row, Col, Button } from 'react-bootstrap';
@@ -34,7 +34,11 @@ function PrintCommune() {
 							</Button>
             </Col>
 						<Col xs lg="1">
-              
+            <ReactToPrint
+              trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
+              content={() => componentRef.current}
+              style={pageStyle}
+            />
 						</Col>
 					</Row>
           
