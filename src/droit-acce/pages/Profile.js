@@ -58,7 +58,7 @@ export default function Profile() {
                         <div className="card-body h-100">
 
                             <div className="d-flex align-items-start">
-                                <img src={user.payload.image === null ? "img/photos/user-01.png" : `https://priqh2.herokuapp.com/img/utilisateurs/${user.payload.image}`} width="36" height="36" className="rounded-circle mr-2" alt="Vanessa Tucker" />
+                                <img src="img/photos/user-01.png" width="36" height="36" className="rounded-circle mr-2" alt="Vanessa Tucker" />
                                 <div className="flex-grow-1">
                                     <small className="float-right text-navy">5m ago</small>
                                     Activities ....
