@@ -49,12 +49,12 @@ function App() {
             <DynamicRoutes exact path="/Specifications" component={Specification} authenticated interface="gestion des groupes" /> </> : "" }
             <DynamicRoutes exact path="/Profile" component={Profile} authenticated />
             <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
-            <DynamicRoutes exact path="/Quartiers" component={Quartiers} guest />
-            <DynamicRoutes exact path="/Projets" component={Projets} guest />
-            <DynamicRoutes exact path="/Eligible" component={Elig} guest />
-            <DynamicRoutes exact path="/Critéres d'éligibilité" component={Criteres} guest />
-            <DynamicRoutes exact path="/zoneInterventions" component={Zone} guest />
-            <DynamicRoutes exact path="/communes" component={Commune} guest />
+            <DynamicRoutes exact path="/Quartiers" component={Quartiers} authenticated />
+            <DynamicRoutes exact path="/Projets" component={Projets} authenticated />
+            <DynamicRoutes exact path="/Eligible" component={Elig} authenticated />
+            <DynamicRoutes exact path="/Critéres d'éligibilité" component={Criteres} authenticated />
+            <DynamicRoutes exact path="/zoneInterventions" component={Zone} authenticated />
+            <DynamicRoutes exact path="/communes" component={Commune} authenticated />
             <DynamicRoutes component={E404} guest />
           </Switch>
           <Footer />
