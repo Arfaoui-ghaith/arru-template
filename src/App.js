@@ -1,4 +1,4 @@
-import ApolloProvider from './ApolloProvider';
+//import ApolloProvider from './ApolloProvider';
 import React from 'react'
 import Sidebar from './droit-acce/components/Sidebar'
 import Navbar from './droit-acce/components/Navbar'
