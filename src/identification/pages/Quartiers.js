@@ -8,6 +8,7 @@ import FeatherIcon from 'feather-icons-react';
 import MapFormAdd from '../components/MapFormAdd'
 
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import LoadingBar from 'react-top-loading-bar';
 
 export default function Quartiers() {
     const animatedComponents = makeAnimated();
@@ -18,7 +19,7 @@ export default function Quartiers() {
     const [gouvernorats, setGouvernorats] = React.useState([]);
     const [communes, setCommunes] = React.useState([]);
     const [quartiers, setQuartiers] = React.useState([]);
-
+    const [progress, setProgress] = React.useState(0);
     const fetchGouvernorats = async() => {
 		try{
 			const url ='https://priqh2.herokuapp.com/api/v1/gouvernorats/';
@@ -136,12 +137,17 @@ export default function Quartiers() {
 	}
 
     React.useEffect(() => {
+        setProgress(20);
         fetchQuartiers();
+        setProgress(50);
         fetchGouvernorats();
+        setProgress(100);
+        return () => setProgress(0);
     },[]);
 
     return (
         <main className="content">
+            <LoadingBar color='#1a2e8a' height='4px' progress={progress}  />
         <div className="container-fluid p-0">
 
             <h1 className="h3 mb-3">Gestion des quartiers</h1>

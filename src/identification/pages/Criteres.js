@@ -3,12 +3,13 @@ import Carte from '../components/Carte'
 import Critere from '../components/Critere'
 import axios from 'axios'
 import { useStoreState } from '../../context/store';
+import LoadingBar from 'react-top-loading-bar';
 
 export default function Criteres() {
     const {gouvernorat} = useStoreState();
 
     const [fiche, setFiche] = React.useState({});
-
+    const [progress, setProgress] = React.useState(0);
     const fetchCriteres = async (gouvernorat) => {
 		try {
 			const url =`https://priqh2.herokuapp.com/api/v1/criteres/gouvernorat/${gouvernorat.slice(0,3).toUpperCase()}`;
@@ -28,11 +29,14 @@ export default function Criteres() {
 	}
 
     React.useEffect(() => {
+        setProgress(100);
         fetchCriteres(gouvernorat);
+        return () => setProgress(0);
     },[gouvernorat]);
 
     return (
         <main className="content">
+            <LoadingBar color='#1a2e8a' height='4px' progress={progress}  />
 			<div className="container-fluid p-0">
 
 				<div className="mb-3">

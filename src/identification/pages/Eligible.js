@@ -7,11 +7,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import PrintEligible from '../components/PrintEligible';
 import PrintIneligible from '../components/PrintIneligible';
+import LoadingBar from 'react-top-loading-bar';
 
 export default function Eligible() {
+    const [progress, setProgress] = React.useState(0);
     
+    React.useEffect(() => {
+		setProgress(100);
+		return () => setProgress(0);
+	},[]);
+
     return (
     <main className="content">
+        <LoadingBar color='#1a2e8a' height='4px' progress={progress}  />
         <div className="container-fluid p-0">
 
             <h1 className="h3 mb-3">Gestion des projets</h1>
