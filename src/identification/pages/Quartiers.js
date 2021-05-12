@@ -20,6 +20,8 @@ export default function Quartiers() {
     const [communes, setCommunes] = React.useState([]);
     const [quartiers, setQuartiers] = React.useState([]);
     const [progress, setProgress] = React.useState(0);
+    const [loading, setLoading] = React.useState(true);
+
     const fetchGouvernorats = async() => {
 		try{
 			const url ='https://priqh2.herokuapp.com/api/v1/gouvernorats/';
@@ -59,12 +61,16 @@ export default function Quartiers() {
 
             console.log(quartiers);
 
+            setLoading(false);
+
 			} catch (err) {
 				console.log(err);
 			}
 	}
 
     const fetchGovQuartiers = async (gov) => {
+        setLoading(true);
+        
 		try {
 			const url ='https://priqh2.herokuapp.com/api/v1/quartiers/gouvernorat/'+gov;
 			const res = await axios({
@@ -76,10 +82,12 @@ export default function Quartiers() {
 			console.log("fetchQuartiers",res.data.quartiers);
 
 		
-				setQuartiers(res.data.quartiers);
+			setQuartiers(res.data.quartiers);
 		
 
             console.log(quartiers);
+
+            setLoading(false);
 
 			} catch (err) {
 				console.log(err);
@@ -87,6 +95,7 @@ export default function Quartiers() {
 	}
 
     const fetchComQuartiers = async (com) => {
+        setLoading(true);
 		try {
 			const url ='https://priqh2.herokuapp.com/api/v1/quartiers/commune/'+com.slice(4,8);
 			const res = await axios({
@@ -103,6 +112,8 @@ export default function Quartiers() {
 		
 
             console.log(quartiers);
+
+            setLoading(false);
 
 			} catch (err) {
 				console.log(err);
@@ -161,7 +172,7 @@ export default function Quartiers() {
                             <Col xs={12} md={9} >
                             <Card>
                                 <Card.Body>
-                                    <Map quartiers={quartiers}/>
+                                    <Map quartiers={quartiers} loading={loading} />
                                 </Card.Body>
                             </Card>
                             </Col>
@@ -177,7 +188,7 @@ export default function Quartiers() {
                                 
                                 <div className="mb-3 row">
                                     
-                                    <div className="col-sm-9">
+                                    <div className="col-sm-12">
                                         <div className="boxes" >
                                             <Select
                                                 placeholder="Gouvernorat"
@@ -192,7 +203,7 @@ export default function Quartiers() {
                                 { gouvernorat ?
                                 <div className="mb-3 row">
                                     
-                                    <div className="col-sm-9">
+                                    <div className="col-sm-12">
                                         <div className="boxes" >
                                             <Select
                                                 placeholder="Commune"
