@@ -108,7 +108,7 @@ export default function Map({ quartiers, loading, setLoading }) {
       { 
       quartiers.map((quartier, index) => ( 
       <Polygon key={index} pathOptions={{ color: 'blue' }} positions={multiPolygon(quartier.latlngs)}>
-        <Tooltip sticky>sticky Tooltip for Polygon</Tooltip>
+        <Tooltip sticky>{quartier.zone_intervention.nom_fr}</Tooltip>
       </Polygon> ))
       }
       
