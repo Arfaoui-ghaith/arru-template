@@ -8,11 +8,13 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap'
 
 const TableProjIneligible = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
-  
+  const [loading, setLoading] = React.useState(true);
+
   const [projet, setProjet] = React.useState({});
   const [show, setShow] = React.useState(false);
 
@@ -204,6 +206,8 @@ const TableProjIneligible = React.forwardRef((props, ref) => {
           rows: projets,
         });
 
+        setLoading(false);
+
 			} catch (err) {
 				console.log(err);
 			}
@@ -218,18 +222,31 @@ const TableProjIneligible = React.forwardRef((props, ref) => {
     return (
       <div className="p-3">
         <ToastContainer />
-        <MDBDataTableV5
-        ref={ref}
-        style={{"marginLeft":"1%"}}
-        responsive
-        hover
-        entriesOptions={[5, 20, 25]}
-        striped
-        pagesAmount={5}
-        data={datatable}
-        paging
-        searchBottom
-        barReverse />
+        {
+            loading ?
+            <div class="d-flex justify-content-center">
+            <Col md="auto" >
+            <Spinner
+							as="span"
+							animation="border"
+							size="lg"
+              variant="primary"
+							role="status"
+							aria-hidden="true"
+						/> </Col></div>: 
+            <MDBDataTableV5
+            ref={ref}
+            style={{"marginLeft":"1%"}}
+            responsive
+            hover
+            entriesOptions={[5, 20, 25]}
+            striped
+            pagesAmount={5}
+            data={datatable}
+            paging
+            searchBottom
+            barReverse />
+        }
 
         <Modal show={show} onHide={() => setShow(false)}>
           <Modal.Header>

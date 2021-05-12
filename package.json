@@ -23,7 +23,7 @@
     "leaflet": "1.7.1",
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^3.3.0",
-    "mdbreact": "^5.0.2",
+    "mdbreact": "5.0.2",
     "node-sass": "^5.0.0",
     "print-js": "^1.6.0",
     "react": "^17.0.2",

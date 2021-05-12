@@ -88,8 +88,7 @@ export default function Map({ quartiers }) {
             </Marker>
         ))
       }
-    
-    
+     
     { 
     quartiers.map((quartier, index) => ( 
     <Polygon key={index} pathOptions={{ color: 'blue' }} positions={multiPolygon(quartier.latlngs)}>

@@ -6,6 +6,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Spinner } from 'react-bootstrap'
 
 const pageStyle = `
   @page {
@@ -28,6 +29,7 @@ const pageStyle = `
 export default function PrintProjet() {
 
       const componentRef = React.useRef();
+      const [loading, setLoading] = React.useState(true);
 
       const test_eligible = async() => {
         try{
@@ -82,8 +84,21 @@ export default function PrintProjet() {
               />
 						</Col>
 					</Row>
+        
+          {
+            loading ?
+            <div class="d-flex justify-content-center">
+            <Col md="auto" >
+            <Spinner
+							as="span"
+							animation="border"
+							size="lg"
+              variant="primary"
+							role="status"
+							aria-hidden="true"
+						/> </Col></div>: ''}
+            <ComponentToPrint setLoading={setLoading} loading={loading} ref={componentRef}/>
           
-          <ComponentToPrint ref={componentRef}/>
         </div>
       );
 }

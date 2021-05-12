@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap'
 
 const TableZone = React.forwardRef((props, ref) => {
 
@@ -15,6 +16,7 @@ const TableZone = React.forwardRef((props, ref) => {
   const [show, setShow] = React.useState(false);
   const dispatch = useStoreDispatch();
   const [zone, setZone] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
 
   const deleteZone = async () => {
 		try {
@@ -145,7 +147,7 @@ const TableZone = React.forwardRef((props, ref) => {
         });
 
       }
-
+      setLoading(false);
 
 			} catch (err) {
 				console.log(err.response.data.message);
@@ -162,18 +164,31 @@ const TableZone = React.forwardRef((props, ref) => {
       <ToastContainer />
         <div className="p-3">
             
-									<MDBDataTableV5 
-                  ref={ref}
-                  style={{"marginLeft":"1%"}}
-                  responsive
-                  hover
-                  entriesOptions={[5, 20, 25]}
-                  striped
-                  pagesAmount={5}
-                  data={datatable}
-                  paging
-                  searchBottom
-                  barReverse />
+        {
+            loading ?
+            <div class="d-flex justify-content-center">
+            <Col md="auto" >
+            <Spinner
+							as="span"
+							animation="border"
+							size="lg"
+              variant="primary"
+							role="status"
+							aria-hidden="true"
+						/> </Col></div>: 
+            <MDBDataTableV5
+            ref={ref}
+            style={{"marginLeft":"1%"}}
+            responsive
+            hover
+            entriesOptions={[5, 20, 25]}
+            striped
+            pagesAmount={5}
+            data={datatable}
+            paging
+            searchBottom
+            barReverse />
+        }
         </div>
         
         <Modal show={show} onHide={() => setShow(false)}>

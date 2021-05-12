@@ -1,7 +1,7 @@
 import React from 'react'
 import { MDBDataTableV5 } from 'mdbreact'
 import 'mdbreact/dist/css/mdb.css'
-import '@fortawesome/fontawesome-free/css/all.css'
+//import '@fortawesome/fontawesome-free/css/all.css'
 import FeatherIcon from 'feather-icons-react';
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
@@ -205,7 +205,7 @@ const TableProj = React.forwardRef((props, ref) => {
           rows: projets,
         });
 
-      
+      props.setLoading(false);
 
 			} catch (err) {
 				console.log(err);
@@ -221,6 +221,8 @@ const TableProj = React.forwardRef((props, ref) => {
     return (
       <div className="p-3">
         <ToastContainer />
+        {
+        !props.loading ?
         <MDBDataTableV5
         ref={ref}
         style={{"marginLeft":"1%"}}
@@ -232,7 +234,8 @@ const TableProj = React.forwardRef((props, ref) => {
         data={datatable}
         paging
         searchBottom
-        barReverse />
+        barReverse /> : ''
+        }
 
         <Modal show={show} onHide={() => setShow(false)}>
           <Modal.Header>
