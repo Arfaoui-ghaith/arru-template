@@ -231,7 +231,8 @@ export default function TableProj() {
         data={datatable}
         paging
         searchBottom
-        barReverse />
+        barReverse
+         />
 
         <Modal show={show} onHide={() => setShow(false)}>
           <Modal.Header>

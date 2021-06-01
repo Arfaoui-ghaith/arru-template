@@ -48,7 +48,14 @@ export default function Sidebar(props) {
 					<SidebarItem title="Quartiers" icon="map-pin" l="/Quartiers" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Critéres d'éligibilité" icon="filter" l="/Critéres d'éligibilité" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Zone d'intervention" icon="map" l="/zoneInterventions" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Communes" icon="triangle" l="/communes" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Communes" icon="list" l="/communes" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					
+					<li className="sidebar-header">
+						Financement
+					</li>
+					<SidebarItem title="Beilleurs de fond" icon="users" l="/beilleurs" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Tranches" icon="pie-chart" l="/Tranches" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Budget" icon="dollar-sign" l="/Budget" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					
 					<li className="sidebar-header">
 						profile

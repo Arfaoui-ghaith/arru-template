@@ -18,6 +18,9 @@ import Criteres from './identification/pages/Criteres'
 import Zone from './identification/pages/Zone'
 import Commune from './identification/pages/Communes'
 import Elig from './identification/pages/Eligible'
+import Beilleurs from './identification/pages/Beilleurs'
+import Tranches from './identification/pages/Tranches'
+import Budget from './identification/pages/Budget'
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
 import { StoreProvider } from './context/store';
@@ -54,6 +57,9 @@ function App() {
             <DynamicRoutes exact path="/Critéres d'éligibilité" component={Criteres} guest />
             <DynamicRoutes exact path="/zoneInterventions" component={Zone} guest />
             <DynamicRoutes exact path="/communes" component={Commune} guest />
+            <DynamicRoutes exact path="/beilleurs" component={Beilleurs} guest />
+            <DynamicRoutes exact path="/Tranches" component={Tranches} guest />
+            <DynamicRoutes exact path="/Budget" component={Budget} guest />
             <DynamicRoutes component={E404} guest />
           </Switch>
           <Footer />
