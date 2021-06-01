@@ -33,7 +33,7 @@ export default function Dashboard() {
 	  
 	const fetchUsers = async (e) => {
 		try {
-			const url ='http://localhost:4000/api/v1/utilisateurs/';
+			const url ='https://priqh2.herokuapp.com/api/v1/utilisateurs/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -55,7 +55,7 @@ export default function Dashboard() {
 
 	const updateUser = async (id) => {
 		try {
-			const url =`http://localhost:4000/api/v1/utilisateurs/${id}`;
+			const url =`https://priqh2.herokuapp.com/api/v1/utilisateurs/${id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',
@@ -76,7 +76,7 @@ export default function Dashboard() {
 		var del=confirm("Are you sure you want to delete this user "+user.nom+" "+user.prenom+"?");
 		if (del){
 		   try{
-			   const url =`http://localhost:4000/api/v1/utilisateurs/${user.id}`;
+			   const url =`https://priqh2.herokuapp.com/api/v1/utilisateurs/${user.id}`;
 			   const res = await axios({
 				   headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 					 method: 'delete',

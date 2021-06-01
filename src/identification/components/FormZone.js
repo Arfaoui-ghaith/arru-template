@@ -22,7 +22,7 @@ export default function FormZone() {
 
 	const addZone = async() => {
 		try{
-			const url ='http://localhost:4000/api/v1/zoneIntervention/';
+			const url ='https://priqh2.herokuapp.com/api/v1/zoneIntervention/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',
@@ -51,7 +51,7 @@ export default function FormZone() {
 
 	const fetchGouvernorats = async() => {
 		try{
-			const url ='http://localhost:4000/api/v1/gouvernorats/';
+			const url ='https://priqh2.herokuapp.com/api/v1/gouvernorats/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -75,7 +75,7 @@ export default function FormZone() {
 	const fetchCommunes = async(gov) => {
 		console.log(gouvernorat);
 		try{
-			const url = `http://localhost:4000/api/v1/gouvernorats/${gov}/communes/`;
+			const url = `https://priqh2.herokuapp.com/api/v1/gouvernorats/${gov}/communes/`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',

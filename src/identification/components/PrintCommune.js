@@ -21,8 +21,8 @@ const pageStyle = `
     }
   }
 `;
-class PrintCommune extends React.Component {
-    render() {
+function PrintCommune() {
+  const componentRef = React.useRef();
       return (
         <div>
           <Row className="mt-2">
@@ -34,18 +34,17 @@ class PrintCommune extends React.Component {
 							</Button>
             </Col>
 						<Col xs lg="1">
-              <ReactToPrint
-                trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
-                content={() => this.componentRef}
-                style={pageStyle}
-              />
+            <ReactToPrint
+              trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
+              content={() => componentRef.current}
+              style={pageStyle}
+            />
 						</Col>
 					</Row>
           
-          <ComponentToPrint  />
+          <ComponentToPrint  ref={componentRef}/>
         </div>
       );
-    }
   }
   
   export default PrintCommune;

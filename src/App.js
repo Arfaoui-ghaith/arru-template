@@ -1,4 +1,4 @@
-import ApolloProvider from './ApolloProvider';
+//import ApolloProvider from './ApolloProvider';
 import React from 'react'
 import Sidebar from './droit-acce/components/Sidebar'
 import Navbar from './droit-acce/components/Navbar'
@@ -33,7 +33,7 @@ import './Scroll.css';
 function App() {
  
   return (
-    <ApolloProvider>
+    
     <AuthProvider>
     <StoreProvider>
     <Router>
@@ -48,7 +48,7 @@ function App() {
             <DynamicRoutes exact path="/Roles" component={Role} authenticated interface="gestion des roles"/>
             <DynamicRoutes exact path="/Groupes" component={Group} authenticated interface="gestion des groupes"/>
             <DynamicRoutes exact path="/Interfaces" component={Interface} authenticated interface="gestion des interfaces"/>
-            <DynamicRoutes exact path="/Specifications" component={Specification} authenticated interface="gestion des groupes" />
+            <DynamicRoutes exact path="/Specifications" component={Specification} authenticated interface="gestion des groupes" /> 
             <DynamicRoutes exact path="/Profile" component={Profile} authenticated />
             <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
             <DynamicRoutes exact path="/Quartiers" component={Quartiers} guest />
@@ -69,7 +69,7 @@ function App() {
     </Router>
     </StoreProvider>
     </AuthProvider>
-    </ApolloProvider>
+    
   );
 }
 

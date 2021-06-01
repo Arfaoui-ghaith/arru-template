@@ -2,9 +2,19 @@ import React from 'react'
 import FormCommune from './../components/FormCommune'
 import FormCommuneUpdate from './../components/FormCommuneUpdate'
 import Print from './../components/PrintCommune'
+import LoadingBar from 'react-top-loading-bar';
+
 export default function Communes() {
+	const [progress, setProgress] = React.useState(0);
+
+	React.useEffect(() => {
+		setProgress(100);
+		return () => setProgress(0);
+	},[]);
+
     return (
         <main className="content">
+			<LoadingBar color='#1a2e8a' height='4px' progress={progress}  />
 				<div className="container-fluid p-0">
 
 					<h1 className="h3 mb-3">Gestion des Communes</h1>

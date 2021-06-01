@@ -8,17 +8,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap'
 
-export default function TableZone() {
+const TableZone = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
   const [show, setShow] = React.useState(false);
   const dispatch = useStoreDispatch();
   const [zone, setZone] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
 
   const deleteZone = async () => {
 		try {
-			const url =`http://localhost:4000/api/v1/zoneIntervention/${zone.id}`;
+			const url =`https://priqh2.herokuapp.com/api/v1/zoneIntervention/${zone.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -47,7 +49,7 @@ export default function TableZone() {
   const fetchZonesInterventions = async () => {
   
     try {
-			const url ='http://localhost:4000/api/v1/zoneIntervention/';
+			const url ='https://priqh2.herokuapp.com/api/v1/zoneIntervention/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -145,7 +147,7 @@ export default function TableZone() {
         });
 
       }
-
+      setLoading(false);
 
 			} catch (err) {
 				console.log(err.response.data.message);
@@ -162,17 +164,31 @@ export default function TableZone() {
       <ToastContainer />
         <div className="p-3">
             
-									<MDBDataTableV5 
-                  style={{"marginLeft":"1%"}}
-                  responsive
-                  hover
-                  entriesOptions={[5, 20, 25]}
-                  striped
-                  pagesAmount={5}
-                  data={datatable}
-                  paging
-                  searchBottom
-                  barReverse />
+        {
+            loading ?
+            <div class="d-flex justify-content-center">
+            <Col md="auto" >
+            <Spinner
+							as="span"
+							animation="border"
+							size="lg"
+              variant="primary"
+							role="status"
+							aria-hidden="true"
+						/> </Col></div>: 
+            <MDBDataTableV5
+            ref={ref}
+            style={{"marginLeft":"1%"}}
+            responsive
+            hover
+            entriesOptions={[5, 20, 25]}
+            striped
+            pagesAmount={5}
+            data={datatable}
+            paging
+            searchBottom
+            barReverse />
+        }
         </div>
         
         <Modal show={show} onHide={() => setShow(false)}>
@@ -191,4 +207,6 @@ export default function TableZone() {
         </Modal>
       </>
     )
-}
+});
+
+export default TableZone;

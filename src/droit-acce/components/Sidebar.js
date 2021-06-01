@@ -20,7 +20,8 @@ export default function Sidebar(props) {
                 </span>
 
 				<ul className="sidebar-nav">
-					
+					{ 0 > 1 ?
+					<>
 					<li className="sidebar-header">
 						Droits d'accès
 					</li>
@@ -39,7 +40,9 @@ export default function Sidebar(props) {
 
 					{ user.payload.interfaces.filter((el) => el.titre === "gestion des fonctionalites").length > 0 ?
 					<SidebarItem title="Interfaces" icon="layout" l="/Interfaces" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					: "" }
+					: "" } </>: "" }
+						
+					
 
 					<li className="sidebar-header">
 						Identification des projets

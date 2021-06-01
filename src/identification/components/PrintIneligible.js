@@ -1,8 +1,11 @@
 import React from "react";
 import ReactToPrint from 'react-to-print-advanced';
-import ComponentToPrint from './TableZone';
+import ComponentToPrint from './TableProjetIneligible';
 import FeatherIcon from 'feather-icons-react';
 import { Row, Col, Button } from 'react-bootstrap';
+import axios from 'axios';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const pageStyle = `
   @page {
@@ -21,33 +24,35 @@ const pageStyle = `
     }
   }
 `;
-export default function PrintZone () {
+
+function PrintIneligible() {
 
   const componentRef = React.useRef();
 
       return (
         <div>
+          <ToastContainer />
           <Row className="mt-2">
-						<Col>
+			<Col>
             </Col>
-						<Col md="auto">
-              <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
-								<i className="fas fa-plus"></i> 
-							</Button>
+			<Col md="auto">
+                
             </Col>
-						<Col md="auto">
+         
+          <Col md="auto">
             <ReactToPrint
                 trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
                 content={() => componentRef.current}
                 style={pageStyle}
-              />
-						</Col>
-					</Row>
+            />
+					</Col>
+			</Row>
           
-          <ComponentToPrint   ref={componentRef}/>
+          <ComponentToPrint ref={componentRef}/>
         </div>
       );
     
   }
   
+export default PrintIneligible;
   

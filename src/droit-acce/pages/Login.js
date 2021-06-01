@@ -2,10 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import { useAuthDispatch } from '../../context/auth';
 import { useAuthState } from '../../context/auth';
+import { Button, Spinner } from 'react-bootstrap';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 
 	const { user } = useAuthState();
+	const [loading, setLoading] = React.useState(false);
 
 	/*if(user && window.history){
 		window.history.back();
@@ -17,33 +21,43 @@ export default function Login() {
 	const dispatch = useAuthDispatch();
 
 	const login = async (e) => {
+		setLoading(true);
 		e.preventDefault();
 		const data = { email, password };
 		try {
-			const url ='http://localhost:4000/api/v1/utilisateurs/login';
+			const url ='https://priqh2.herokuapp.com/api/v1/utilisateurs/login';
 			const res = await axios({
 			  method: 'post',
 			  url,
 			  data,
 			});
 	
+			toast.success('Success', {
+				position: 'top-right',
+				autoClose: 5000,
+				draggable: false
+			});
 			
-		
-			if (res.status === 200) {
-			  
-			  dispatch({ type:'LOGIN', payload: res.data.token });
-			  
-			  window.location.replace('/Utilisateurs');
-			}
+			dispatch({ type:'LOGIN', payload: res.data.token });
+			
+			window.location.replace('/Projets');
+			
 			} catch (err) {
-				console.log(err);
-				console.log("Alert");
+				setLoading(false);
+				
+				toast.error(err.response.data.message, {
+					position: 'top-right',
+					autoClose: 5000,
+					draggable: true
+				});
+				  
 			}
 	}
 
 	if(!user){
     return (
         <main className="d-flex w-100">
+		<ToastContainer />
 		<div className="container d-flex flex-column">
 			<div className="row vh-100">
 				<div className="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
@@ -76,7 +90,18 @@ export default function Login() {
 										</div>
 											
 										<div className="text-center mt-3">
-											 <span type="submit" className="btn btn-primary btn-primary" onClick={login}>Sign in</span> 
+											 <Button variant="primary" block onClick={login} disabled={loading}>{
+											 loading ?
+											 <Spinner
+												as="span"
+												animation="border"
+												size="sm"
+												role="status"
+												aria-hidden="true"
+												/>
+												:
+											 `Sign in`
+											 }</Button> 
 
 										</div>
 									</form>

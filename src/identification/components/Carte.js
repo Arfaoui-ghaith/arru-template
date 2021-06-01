@@ -18,7 +18,7 @@ export default function Carte() {
 							data-for='test'
 							map={Tunisia}
 							
-							onLocationFocus={(e) => dispatch({ type:'gouvernoratEdit', payload: e.target.ariaLabel.slice(0,3).toUpperCase() })}
+							onLocationFocus={(e) => dispatch({ type:'gouvernoratEdit', payload: e.target.ariaLabel })}
 							
 						/>
 			

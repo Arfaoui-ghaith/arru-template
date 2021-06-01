@@ -9,16 +9,17 @@ import 'react-smart-data-table/dist/react-smart-data-table.css'
 import Print from '../components/PrintProjet'
 import FeatherIcon from 'feather-icons-react';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import LoadingBar from 'react-top-loading-bar';
 
 export default function Projets() {
 
 	const [projets, setProjets] = React.useState([]);
 	const [show, setShow] = React.useState(false);
 	const [projet, setProjet] = React.useState({});
-
+	const [progress, setProgress] = React.useState(0);
 	const fetchProjets = async () => {
 		try {
-			const url ='http://localhost:4000/api/v1/projets/';
+			const url ='https://priqh2.herokuapp.com/api/v1/projets/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -36,7 +37,7 @@ export default function Projets() {
 
 	const deleteProjet = async () => {
 		try {
-			const url =`http://localhost:4000/api/v1/projets/${projet.id}`;
+			const url =`https://priqh2.herokuapp.com/api/v1/projets/${projet.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -63,8 +64,10 @@ export default function Projets() {
 	}
 
 	React.useEffect(() => {
+		setProgress(100);
 		fetchProjets();
-	},[])
+		return () => setProgress(0);
+	},[]);
 
 	const refreshPage = (e) => {
         window.location.replace("/eligible");
@@ -72,6 +75,7 @@ export default function Projets() {
 
     return (
         <main className="content">
+			<LoadingBar color='#1a2e8a' height='4px' progress={progress}  />
 				<div className="container-fluid p-0">
 
 					<h1 className="h3 mb-3">Gestion des projets</h1>

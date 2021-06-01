@@ -8,45 +8,63 @@ export default function FormProjetUpdate() {
 
     const {projet} = useStoreState();
 
-    const [drainage, setDrainage] = React.useState({
-        type: "Drainage", 
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].quantité : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].cout : ''});
 
-    const [eau, setEau] = React.useState({
-        type: "Eau potable",
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].quantité : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].cout : ''});
+    const loadValues = () => {
 
-    const [assainissement, setAssainissement] = React.useState({
-        type: "Assainissement",
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].quantité : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].cout : ''});
+        const drainage = {
+            type: "Drainage", 
+            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].quantité : '',
+            cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].cout : ''}
+        
+        const eau = {
+            type: "Eau potable",
+            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].quantité : '',
+            cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].cout : ''}
 
-    const [eclairage, setEclairage] = React.useState({
-        type: "Eclairage public",
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].quantité : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].cout : ''});
+        const assainissement = {
+            type: "Assainissement",
+            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].quantité : '',
+            cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].cout : ''
+        }
 
-    const [voirie, setVoirie] = React.useState({
-        type: "Voirie",
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].quantité : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].cout : ''});
+        const eclairage = {
+            type: "Eclairage public",
+            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].quantité : '',
+            cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].cout : ''}
+        
+        const voirie = {
+            type: "Voirie",
+            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].quantité : '',
+            cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].cout : ''}
+        
+        const etude = {
+            bureau: projet && projet.etude ? projet.etude.bureau : '',
+            cout: projet && projet.etude ? projet.etude.cout : ''}
 
-    const [etude, setEtude] = React.useState({
-        bureau: projet ? projet.etude.bureau : '',
-        cout: projet ? projet.etude.cout : ''});
+        return {drainage,eau,assainissement,eclairage,voirie,etude};
+    }
 
-    const [projetEdit, setProjetEdit] = React.useState({etude, infrastructures: [drainage, eau, assainissement, eclairage, voirie]});
+    const [drainage, setDrainage] = React.useState(loadValues().drainage);
+
+    const [eau, setEau] = React.useState(loadValues().eau);
+
+    const [assainissement, setAssainissement] = React.useState(loadValues().assainissement);
+
+    const [eclairage, setEclairage] = React.useState(loadValues().eclairage);
+
+    const [voirie, setVoirie] = React.useState(loadValues().voirie);
+
+    const [etude, setEtude] = React.useState(loadValues().etude);
 
     const updateProjet = async() => {
+
 		try{
-			const url = `http://localhost:4000/api/v1/projets/${projet.id}`;
+			const url = `https://priqh2.herokuapp.com/api/v1/projets/${projet.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',
 			  	url,
-				data: projetEdit
+				data: {etude, infrastructures: [drainage, eau, assainissement, eclairage, voirie]}
 			});
 
 			toast.success('Success', {
@@ -68,6 +86,18 @@ export default function FormProjetUpdate() {
 		}
 	}
 
+  React.useEffect(() => {
+    if(projet !== null){
+        const p = loadValues();
+        setDrainage(p.drainage);
+        setEau(p.eau);
+        setEclairage(p.eclairage);
+        setVoirie(p.voirie);
+        setAssainissement(p.assainissement);
+        setEtude(p.etude);
+    }
+  },[projet]);
+
     return (
         <div>
             <ToastContainer />
@@ -85,44 +115,44 @@ export default function FormProjetUpdate() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Voirie</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => setVoirie({...voirie, quantité: e.target.value})}
+					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => setVoirie({...voirie, quantité: e.target.value * 1})}
                     defaultValue={voirie.quantité}/>
 				</div>
                 <div className="col-sm-5">
-					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => setVoirie({...voirie, cout: e.target.value})}
+					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => setVoirie({...voirie, cout: e.target.value * 1})}
                     defaultValue={voirie.cout}/>
 				</div>
 			</div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Assainissement</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => setAssainissement({...assainissement, quantité: e.target.value})}
+					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => setAssainissement({...assainissement, quantité: e.target.value * 1})}
                     defaultValue={assainissement.quantité}/>
 				</div>
                 <div className="col-sm-5">
-					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => setAssainissement({...assainissement, cout: e.target.value})}
+					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => setAssainissement({...assainissement, cout: e.target.value * 1})}
                     defaultValue={assainissement.cout}/>
 				</div>
             </div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Eclairage Public</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="p.lumineux (km)" onChange={(e) => setEclairage({...eclairage, quantité: e.target.value})}
+					<input type="number" className="form-control" placeholder="p.lumineux (km)" onChange={(e) => setEclairage({...eclairage, quantité: e.target.value * 1})}
                     defaultValue={eclairage.quantité}/>
 				</div>
                 <div className="col-sm-5">
-					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => setEclairage({...eclairage, cout: e.target.value})}
+					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => setEclairage({...eclairage, cout: e.target.value * 1})}
                     defaultValue={eclairage.cout}/>
 				</div>
             </div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Eau potable</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => setEau({...eau, quantité: e.target.value})}
+					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => setEau({...eau, quantité: e.target.value * 1})}
                     defaultValue={eau.quantité}/>
 				</div>
                 <div className="col-sm-5">
-					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => setEau({...eau, cout: e.target.value})}
+					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => setEau({...eau, cout: e.target.value * 1})}
                     defaultValue={eau.cout}/>
 				</div>
             </div>
@@ -133,7 +163,7 @@ export default function FormProjetUpdate() {
                     defaultValue={etude.bureau}/>
 				</div>
                 <div className="col-sm-5">
-					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={ (e) => setEtude({ ...etude, cout: e.target.value }) }
+					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={ (e) => setEtude({ ...etude, cout: e.target.value * 1 }) }
                     defaultValue={etude.cout}/>
 				</div>
             </div>

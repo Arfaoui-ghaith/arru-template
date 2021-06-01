@@ -1,52 +1,55 @@
-import React from 'react'
-import { MDBDataTableV5 } from 'mdbreact'
-import 'mdbreact/dist/css/mdb.css'
-//import '@fortawesome/fontawesome-free/css/all.css'
+import React from 'react';
+import { MDBDataTableV5 } from 'mdbreact';
+import 'mdbreact/dist/css/mdb.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import FeatherIcon from 'feather-icons-react';
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap'
 
-const TableProj = React.forwardRef((props, ref) => {
+const TableProjIneligible = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
-  
+  const [loading, setLoading] = React.useState(true);
+
   const [projet, setProjet] = React.useState({});
   const [show, setShow] = React.useState(false);
-  const dispatch = useStoreDispatch();
 
-  const deleteZone = async () => {
-		try {
-			const url =`https://priqh2.herokuapp.com/api/v1/projets/${projet.id}`;
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  	method: 'delete',
-			  	url,
-			});
+  const eligible = async () => {
+    try{
+        const url =`https://priqh2.herokuapp.com/api/v1/criteres/eligible/${projet.id}`;
+		const res = await axios({
+			headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			method: 'put',
+			url,
+		});
 
-			if (res.status === 203) {
-				toast.success('Success', {
-					position: 'top-right',
-					autoClose: 5000,
-					draggable: false
-				});
-				window.location.replace('/zoneInterventions');
-			}
+        console.log(res);
 
-			} catch (err) {
-				toast.error(err.response.data.message, {
-					position: 'top-right',
-					autoClose: 5000,
-					draggable: true
-				});
-				setShow(false);
-			}
-	}
+        toast.success('Success', {
+            position: 'top-right',
+            autoClose: 5000,
+            draggable: false
+        });
+
+        window.location.replace('/Eligible');
+
+    }catch(err){
+        console.log(err);
+
+        toast.error(err.response.data.message, {
+            position: 'top-right',
+            autoClose: 5000,
+            draggable: true
+        });
+    }
+  }
+  
 
   const fetchProjets = async () => {
-  
     try {
 			const url ='https://priqh2.herokuapp.com/api/v1/projets/';
 			const res = await axios({
@@ -60,6 +63,9 @@ const TableProj = React.forwardRef((props, ref) => {
 
         let projets = [];
         for(const projet of res.data.projets){
+            
+        if(projet.eligible === false){
+            
           projets.push({
               gouvernorat: projet.gouvernorat.nom,
               commune: projet.commune.nom,
@@ -89,9 +95,9 @@ const TableProj = React.forwardRef((props, ref) => {
               ca: projet.infrastructures.filter((infra)=> infra.type === "Assainissement")[0].cout,
               be: projet.etude && projet.etude.bureau ? projet.etude.bureau : '',
               ce: projet.etude && projet.etude.cout ? projet.etude.cout : '',
-              modifier :<span onClick={() => dispatch({ type:'projetEdit', payload: projet })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
-              supprimer : <span onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
+              action : <span onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="tool" /></span>,
           });
+        }
         }
 
         setDatatable({
@@ -190,22 +196,17 @@ const TableProj = React.forwardRef((props, ref) => {
               field: 'ce',
             },
             {
-              label: 'Modifier',
-              field: 'modifier',
+              label: 'Actoin',
+              field: 'action',
               sort : 'disabled',
               width: 50,
             },
-            {
-              label: 'Supprimer',
-              field: 'supprimer',
-              sort : 'disabled',
-              width: 50,
-            },
+           
           ],
           rows: projets,
         });
 
-      props.setLoading(false);
+        setLoading(false);
 
 			} catch (err) {
 				console.log(err);
@@ -222,32 +223,42 @@ const TableProj = React.forwardRef((props, ref) => {
       <div className="p-3">
         <ToastContainer />
         {
-        !props.loading ?
-        <MDBDataTableV5
-        ref={ref}
-        style={{"marginLeft":"1%"}}
-        responsive
-        hover
-        entriesOptions={[5, 20, 25]}
-        striped
-        pagesAmount={5}
-        data={datatable}
-        paging
-        searchBottom
-        barReverse /> : ''
+            loading ?
+            <div class="d-flex justify-content-center">
+            <Col md="auto" >
+            <Spinner
+							as="span"
+							animation="border"
+							size="lg"
+              variant="primary"
+							role="status"
+							aria-hidden="true"
+						/> </Col></div>: 
+            <MDBDataTableV5
+            ref={ref}
+            style={{"marginLeft":"1%"}}
+            responsive
+            hover
+            entriesOptions={[5, 20, 25]}
+            striped
+            pagesAmount={5}
+            data={datatable}
+            paging
+            searchBottom
+            barReverse />
         }
 
         <Modal show={show} onHide={() => setShow(false)}>
           <Modal.Header>
           <Modal.Title>Confirmation</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Are you sure you want delete {projet.id}!</Modal.Body>
+          <Modal.Body>Are you sure you want move {projet.id} to eligible list!</Modal.Body>
           <Modal.Footer>
-          <Button variant="primary" onClick={() => setShow(false)}>
+          <Button variant="danger" onClick={() => setShow(false)}>
             Close
           </Button>
-          <Button variant="danger" onClick={() => { deleteZone() }}>
-            Delete
+          <Button variant="primary" onClick={() => eligible() }>
+            Save
           </Button>
           </Modal.Footer>
         </Modal>
@@ -255,4 +266,5 @@ const TableProj = React.forwardRef((props, ref) => {
     )
 });
 
-export default TableProj;
+export default TableProjIneligible;
+  

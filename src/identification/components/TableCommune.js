@@ -8,17 +8,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap'
 
-export default function TableZone() {
+const TableCommune = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
   const [show, setShow] = React.useState(false);
   const dispatch = useStoreDispatch();
   const [commune, setCommune] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
 
   const deleteCommune = async () => {
 		try {
-			const url =`http://localhost:4000/api/v1/communes/${commune.id}`;
+			const url =`https://priqh2.herokuapp.com/api/v1/communes/${commune.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -47,7 +49,7 @@ export default function TableZone() {
   const fetchCommunes = async () => {
   
     try {
-			const url ='http://localhost:4000/api/v1/communes/';
+			const url ='https://priqh2.herokuapp.com/api/v1/communes/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -104,7 +106,7 @@ export default function TableZone() {
         });
 
       }
-
+      setLoading(false);
 
 			} catch (err) {
 				console.log(err.response.data.message);
@@ -121,17 +123,31 @@ export default function TableZone() {
       <ToastContainer />
         <div className="p-3">
             
-									<MDBDataTableV5 
-                  style={{"marginLeft":"1%"}}
-                  responsive
-                  hover
-                  entriesOptions={[5, 20, 25]}
-                  striped
-                  pagesAmount={5}
-                  data={datatable}
-                  paging
-                  searchBottom
-                  barReverse />
+        {
+            loading ?
+            <div class="d-flex justify-content-center">
+            <Col md="auto" >
+            <Spinner
+							as="span"
+							animation="border"
+							size="lg"
+              variant="primary"
+							role="status"
+							aria-hidden="true"
+						/> </Col></div>: 
+            <MDBDataTableV5
+            ref={ref}
+            style={{"marginLeft":"1%"}}
+            responsive
+            hover
+            entriesOptions={[5, 20, 25]}
+            striped
+            pagesAmount={5}
+            data={datatable}
+            paging
+            searchBottom
+            barReverse />
+        }
         </div>
         <Modal show={show} onHide={() => setShow(false)}>
           <Modal.Header>
@@ -149,4 +165,6 @@ export default function TableZone() {
         </Modal>
       </>
     )
-}
+});
+
+export default TableCommune;
